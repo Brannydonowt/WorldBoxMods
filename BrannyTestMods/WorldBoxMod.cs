@@ -4,22 +4,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
-using BepInEx;
 using HarmonyLib;
+using NCMS;
+using static Config;
 
 namespace BrannyTestMods
 {
-    [BepInPlugin(pluginGuid, pluginName, pluginVersion)]
-    public class WorldBoxMod : BaseUnityPlugin
+    //[BepInPlugin(id, "BrannyTests", "0.1")]
+    [ModEntry]
+    public partial class WorldBoxMod : MonoBehaviour
     {
-        public const string pluginGuid = "branny.testmod";
         public const string pluginName = "Branny's Test Mod";
         public const string pluginVersion = "0.1";
+        public const string id = "branny.testmod";
+
+        public Harmony harmony;
 
         static bool initialized = false;
 
+        public void Awake()
+        {
+            harmony = new Harmony(id);
+            Helper.GodPowerTab.patch(harmony);
+            Patching(harmony);
+
+            //Helper.GodPowerTab.init();
+        }
+
         void Update() 
         {
+            if (!gameLoaded) return;
+
             if (!initialized) 
             {
                 init();
@@ -28,17 +43,21 @@ namespace BrannyTestMods
 
             if (Input.GetKeyDown(KeyCode.G)) 
             {
-                var giantTrait = AssetManager.traits.get("giant");
-
-                giantTrait.baseStats.scale += 1f; // default is 0.05f
                 var human = AssetManager.unitStats.get("unit_human");
-                human.traits.Add("giant");
+                human.traits.Add("Hedgehog");
             }
         }
 
         void init() 
         {
             Debug.Log("Branny mod, running!");
+            initTraits();
+            initDrops();
+        }
+
+        private void Patching(Harmony harmony)
+        {
+
         }
     }
 }
