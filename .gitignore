@@ -1,6 +1,8 @@
 #Ignore Worldbox Source Folder
 BrannyTestMods/worldbox/
+BrannyTestMods/wbxdcpl/
 /worldbox/
+/wbxdcpl/
 
 
 ## Ignore Visual Studio temporary files, build results, and
