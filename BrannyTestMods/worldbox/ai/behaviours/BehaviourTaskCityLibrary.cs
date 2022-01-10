@@ -1,0 +1,130 @@
+﻿using System;
+
+namespace ai.behaviours
+{
+	// Token: 0x020003AA RID: 938
+	public class BehaviourTaskCityLibrary : AssetLibrary<BehaviourTaskCity>
+	{
+		// Token: 0x06001416 RID: 5142 RVA: 0x000A9364 File Offset: 0x000A7564
+		public override void init()
+		{
+			base.init();
+			BehaviourTaskCity behaviourTaskCity = new BehaviourTaskCity();
+			behaviourTaskCity.id = "check_culture";
+			BehaviourTaskCity pAsset = behaviourTaskCity;
+			this.t = behaviourTaskCity;
+			this.add(pAsset);
+			this.t.addBeh(new CityBehCheckCulture());
+			BehaviourTaskCity behaviourTaskCity2 = new BehaviourTaskCity();
+			behaviourTaskCity2.id = "nothing";
+			pAsset = behaviourTaskCity2;
+			this.t = behaviourTaskCity2;
+			this.add(pAsset);
+			BehaviourTaskCity behaviourTaskCity3 = new BehaviourTaskCity();
+			behaviourTaskCity3.id = "wait1";
+			pAsset = behaviourTaskCity3;
+			this.t = behaviourTaskCity3;
+			this.add(pAsset);
+			this.t.addBeh(new CityBehRandomWait(0f, 1f));
+			BehaviourTaskCity behaviourTaskCity4 = new BehaviourTaskCity();
+			behaviourTaskCity4.id = "wait5";
+			pAsset = behaviourTaskCity4;
+			this.t = behaviourTaskCity4;
+			this.add(pAsset);
+			this.t.addBeh(new CityBehRandomWait(5f, 5f));
+			BehaviourTaskCity behaviourTaskCity5 = new BehaviourTaskCity();
+			behaviourTaskCity5.id = "random_wait_test";
+			pAsset = behaviourTaskCity5;
+			this.t = behaviourTaskCity5;
+			this.add(pAsset);
+			this.t.addBeh(new CityBehRandomWait(5f, 10f));
+			this.t.addBeh(new CityBehRandomWait(5f, 10f));
+			this.t.addBeh(new CityBehRandomWait(5f, 10f));
+			BehaviourTaskCity behaviourTaskCity6 = new BehaviourTaskCity();
+			behaviourTaskCity6.id = "do_checks";
+			pAsset = behaviourTaskCity6;
+			this.t = behaviourTaskCity6;
+			this.add(pAsset);
+			this.t.addBeh(new CityBehFindLeader());
+			this.t.addBeh(new CityBehRandomWait(0.1f, 1f));
+			this.t.addBeh(new CityBehCheckAttackZone());
+			this.t.addBeh(new CityBehRandomWait(0.1f, 1f));
+			this.t.addBeh(new CityBehCheckSettleTarget());
+			this.t.addBeh(new CityBehRandomWait(0.1f, 1f));
+			this.t.addBeh(new CityBehCheckCitizenTasks());
+			this.t.addBeh(new CityBehRandomWait(0.1f, 1f));
+			BehaviourTaskCity behaviourTaskCity7 = new BehaviourTaskCity();
+			behaviourTaskCity7.id = "produce_unit";
+			pAsset = behaviourTaskCity7;
+			this.t = behaviourTaskCity7;
+			this.add(pAsset);
+			this.t.addBeh(new CityBehProduceUnit());
+			BehaviourTaskCity behaviourTaskCity8 = new BehaviourTaskCity();
+			behaviourTaskCity8.id = "produce_boat";
+			pAsset = behaviourTaskCity8;
+			this.t = behaviourTaskCity8;
+			this.add(pAsset);
+			this.t.addBeh(new CityBehProduceBoat());
+			BehaviourTaskCity behaviourTaskCity9 = new BehaviourTaskCity();
+			behaviourTaskCity9.id = "border_growth";
+			pAsset = behaviourTaskCity9;
+			this.t = behaviourTaskCity9;
+			this.add(pAsset);
+			this.t.addBeh(new CityBehBorderGrowth());
+			BehaviourTaskCity behaviourTaskCity10 = new BehaviourTaskCity();
+			behaviourTaskCity10.id = "border_steal";
+			pAsset = behaviourTaskCity10;
+			this.t = behaviourTaskCity10;
+			this.add(pAsset);
+			this.t.addBeh(new CityBehBorderSteal());
+			BehaviourTaskCity behaviourTaskCity11 = new BehaviourTaskCity();
+			behaviourTaskCity11.id = "give_inventory_item";
+			pAsset = behaviourTaskCity11;
+			this.t = behaviourTaskCity11;
+			this.add(pAsset);
+			this.t.addBeh(new CityBehGiveInventoryItem());
+			BehaviourTaskCity behaviourTaskCity12 = new BehaviourTaskCity();
+			behaviourTaskCity12.id = "build";
+			pAsset = behaviourTaskCity12;
+			this.t = behaviourTaskCity12;
+			this.add(pAsset);
+			this.t.addBeh(new CityBehBuild());
+			BehaviourTaskCity behaviourTaskCity13 = new BehaviourTaskCity();
+			behaviourTaskCity13.id = "build_docks";
+			pAsset = behaviourTaskCity13;
+			this.t = behaviourTaskCity13;
+			this.add(pAsset);
+			this.t.addBeh(new CityBehBuildDocks());
+			BehaviourTaskCity behaviourTaskCity14 = new BehaviourTaskCity();
+			behaviourTaskCity14.id = "upgrade_random_building";
+			pAsset = behaviourTaskCity14;
+			this.t = behaviourTaskCity14;
+			this.add(pAsset);
+			this.t.addBeh(new CityBehUpgradeRandomBuilding());
+			BehaviourTaskCity behaviourTaskCity15 = new BehaviourTaskCity();
+			behaviourTaskCity15.id = "supply_kingdom_cities";
+			pAsset = behaviourTaskCity15;
+			this.t = behaviourTaskCity15;
+			this.add(pAsset);
+			this.t.addBeh(new CityBehSupplyKingdomCities());
+			BehaviourTaskCity behaviourTaskCity16 = new BehaviourTaskCity();
+			behaviourTaskCity16.id = "produce_resources";
+			pAsset = behaviourTaskCity16;
+			this.t = behaviourTaskCity16;
+			this.add(pAsset);
+			this.t.addBeh(new CityBehProduceResources());
+			BehaviourTaskCity behaviourTaskCity17 = new BehaviourTaskCity();
+			behaviourTaskCity17.id = "check_army";
+			pAsset = behaviourTaskCity17;
+			this.t = behaviourTaskCity17;
+			this.add(pAsset);
+			this.t.addBeh(new CityBehCheckArmy());
+			BehaviourTaskCity behaviourTaskCity18 = new BehaviourTaskCity();
+			behaviourTaskCity18.id = "check_pop_points";
+			pAsset = behaviourTaskCity18;
+			this.t = behaviourTaskCity18;
+			this.add(pAsset);
+			this.t.addBeh(new CityBehCheckPopPoints());
+		}
+	}
+}
