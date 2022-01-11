@@ -1,0 +1,23 @@
+Extended World Stats
+	Track more stats that happen in the world.
+		Teaches Stat Get
+	Have a seperate window with each new stat in a list
+		Teaches UI rendering
+	
+	Most Ruthless
+		Human with the most kills
+		Orc with the most kills
+		Elf with the most kills
+		...
+	Most Agressive Leader
+		King with Most Wars Declared
+	Most Peaceful Leader
+		King with fewest Wars fought
+			King "Reign" / Wars Fought...
+			
+	Character Stats
+		Houses Built
+		Trees Chopped
+		Children
+		
+		
