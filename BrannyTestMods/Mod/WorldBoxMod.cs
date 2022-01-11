@@ -61,6 +61,8 @@ namespace BrannyTestMods
             // Non working example
             Helper.Utils.HarmonyPatching(harmony, "postfix", AccessTools.Method(typeof(ActorTraitLibrary), "add"), AccessTools.Method(typeof(WorldBoxMod), "addTraits_postfix"));
             Debug.Log("PostFix TraitLibrary - add()");
+
+            stats_patch(harmony);
         }
 
         public static void addTraits_postfix(ActorTraitLibrary __instance) 

@@ -10,7 +10,7 @@ Extended World Stats
 	Have a seperate window with each new stat in a list
 		Teaches UI rendering
 	
-	Most Ruthless
+	Most Ruthless - ActorStatus() kills
 		Human with the most kills
 		Orc with the most kills
 		Elf with the most kills
@@ -25,5 +25,15 @@ Extended World Stats
 		Houses Built
 		Trees Chopped
 		Children
-		
+	
+Reduce Game Time
+	Make the Game Clock run much slower, but still have units fun to watch
+	
+More Moods
+	Add more meaningful moods to the game
+	
+Families
+	Create "Children" that are visibily weaker/younger
+	Connect Children to parents
+	
 
