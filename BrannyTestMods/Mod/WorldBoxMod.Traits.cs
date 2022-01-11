@@ -26,6 +26,17 @@ namespace BrannyTestMods
 			var hedgehogTrait = AssetManager.traits.get("Hedgehog");
 			hedgehogTrait.baseStats.damage = 10;
 			hedgehogTrait.baseStats.speed = 250;
+
+			AssetManager.traits.add(new ActorTrait
+			{
+				id = "Turtle",
+				icon = "iconVeteran",
+				group = TraitGroup.Genetic,
+				type = TraitType.Positive
+			});
+			var turtleTrait = AssetManager.traits.get("Turtle");
+			hedgehogTrait.baseStats.damage = 100;
+			hedgehogTrait.baseStats.speed = 1;
 		}
 	}
 }

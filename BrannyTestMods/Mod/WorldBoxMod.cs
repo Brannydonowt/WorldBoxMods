@@ -58,7 +58,15 @@ namespace BrannyTestMods
 
         private void Patching(Harmony harmony)
         {
+            // Non working example
+            Helper.Utils.HarmonyPatching(harmony, "postfix", AccessTools.Method(typeof(ActorTraitLibrary), "add"), AccessTools.Method(typeof(WorldBoxMod), "addTraits_postfix"));
+            Debug.Log("PostFix TraitLibrary - add()");
+        }
 
+        public static void addTraits_postfix(ActorTraitLibrary __instance) 
+        {
+            ActorTrait newTrait = __instance.list[__instance.list.Count() - 1];
+            Debug.Log("Added Trait: " + newTrait.id);
         }
     }
 }
