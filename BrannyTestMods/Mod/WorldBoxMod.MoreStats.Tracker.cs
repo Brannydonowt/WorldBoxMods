@@ -34,6 +34,8 @@ namespace BrannyTestMods
 				if (data.actorID == killLeader.actorID)
 				{
 					logKillLeadKill(__instance);
+					Helper.Reflection.CallMethod(__instance.GetType(), "addExperience", 30);
+					highestKills = kills;
 					return;
 				}
 			}
@@ -42,6 +44,8 @@ namespace BrannyTestMods
 			if (CompareKillLeader(data, kills)) 
 			{
 				logNewKillLead(__instance);
+				// Add the tyrant trait to the new kill leader
+				__instance.addTrait("Tyrant");
 			}
 		}
 
@@ -56,7 +60,6 @@ namespace BrannyTestMods
 			else
 			if (numKills == highestKills) 
 			{
-				Debug.Log("We have a contender for the most ruthless!");
 				Debug.Log(killer.firstName + " has reached " + highestKills + " total kills!");
 			}
 

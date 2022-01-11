@@ -18,25 +18,30 @@ namespace BrannyTestMods
         {
 			AssetManager.traits.add(new ActorTrait
 			{
-				id = "Hedgehog",
+				id = "Tyrant",
 				icon = "iconVeteran",
-				group = TraitGroup.Genetic,
+				group = TraitGroup.Personality,
 				type = TraitType.Positive
 			});
-			var hedgehogTrait = AssetManager.traits.get("Hedgehog");
-			hedgehogTrait.baseStats.damage = 10;
-			hedgehogTrait.baseStats.speed = 250;
+			var killLeaderTrait = AssetManager.traits.get("Tyrant");
+			killLeaderTrait.baseStats.damage = 25;
+			killLeaderTrait.baseStats.speed = 10;
+			killLeaderTrait.baseStats.scale = 0.2f;
+			Helper.Localization.addLocalization("trait_Tyrant", "Tyrant");
+
 
 			AssetManager.traits.add(new ActorTrait
 			{
-				id = "Turtle",
+				id = "Tryant Killer",
 				icon = "iconVeteran",
-				group = TraitGroup.Genetic,
+				group = TraitGroup.Personality,
 				type = TraitType.Positive
 			});
-			var turtleTrait = AssetManager.traits.get("Turtle");
-			hedgehogTrait.baseStats.damage = 100;
-			hedgehogTrait.baseStats.speed = 1;
+			var tyrantKillerTrait = AssetManager.traits.get("Tryant Killer");
+			tyrantKillerTrait.baseStats.damage = 35;
+			tyrantKillerTrait.baseStats.speed = 20;
+			tyrantKillerTrait.baseStats.scale = 0.3f;
+			Helper.Localization.addLocalization("trait_Tyrant Killer", "Tyrant Killer");
 		}
 	}
 }
