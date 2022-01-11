@@ -14,29 +14,18 @@ using HarmonyLib;
 
 namespace BrannyTestMods
 {
-	// Extension for WorldBox WorldLogs
-
-	// Example WorldLog
-	//public static void logNewKing(Kingdom pKingdom)
-	//{
-	//	WorldLogMessage worldLogMessage = new WorldLogMessage("king_new", pKingdom.name, pKingdom.king.data.firstName, null);
-	//	worldLogMessage.unit = pKingdom.king;
-	//	worldLogMessage.location = pKingdom.king.currentPosition;
-	//	worldLogMessage.color_special1 = pKingdom.kingdomColor.colorBorderOut;
-	//	worldLogMessage.color_special2 = pKingdom.kingdomColor.colorBorderOut;
-	//	ref worldLogMessage.add();
-	//}
-	//	WorldLog.logNewKingdom(kingdom);
-
-
 	public partial class WorldBoxMod
 	{
 		public static void logNewKillLead(Actor lead)
 		{
-			Debug.Log("Announcing new kill lead");
 			ActorStatus aStat = Helper.Reflection.GetActorData(lead);
 
-			WorldLogMessage worldLogMessage = new WorldLogMessage("kill_lead_new", aStat.firstName, aStat.kills.ToString(), null);
+			string aTitle = "kill_lead_" + aStat.firstName + "_" + aStat.kills;
+			string aMessage = aStat.firstName + " is the new world kill leader, with " + aStat.kills + " kills!";
+
+			Helper.Localization.addLocalization(aTitle, aMessage);
+
+			WorldLogMessage worldLogMessage = new WorldLogMessage(aTitle, aStat.firstName, aStat.kills.ToString(), null);
 			worldLogMessage.special1 = lead.kingdom.name;
 			worldLogMessage.special2 = aStat.firstName;
 			worldLogMessage.special3 = aStat.kills.ToString();
@@ -46,11 +35,37 @@ namespace BrannyTestMods
 			worldLogMessage.color_special2 = Color.red;  //lead.kingdom.kingdomColor.colorBorderOut;
 			List<WorldLogMessage> list = Helper.Reflection.GetWorldLogMessages(WorldLog.instance);
 			list.Add(worldLogMessage);
-			//Helper.Reflection.SetField(Helper.Reflection.GetWorldLogMessages(WorldLog.instance), "list", list);
-			Debug.Log("Added Message to list *shrug*");
 			
 			worldLogMessage.add();
-			//ref worldLogMessage.add();
+		}
+
+		public static void logKillLeadKill(Actor lead) 
+		{
+			ActorStatus aStat = Helper.Reflection.GetActorData(lead);
+
+			string aTitle = "kill_lead_" + aStat.firstName + "_" + aStat.kills + "_u";
+			string aMessage = "The world kill leader, " + aStat.firstName + ", has now claimed " + aStat.kills + " victims!";
+
+			Helper.Localization.addLocalization(aTitle, aMessage);
+
+			WorldLogMessage worldLogMessage = new WorldLogMessage(aTitle, aStat.firstName, aStat.kills.ToString(), null);
+			worldLogMessage.special1 = lead.kingdom.name;
+			worldLogMessage.special2 = aStat.firstName;
+			worldLogMessage.special3 = aStat.kills.ToString();
+			worldLogMessage.unit = lead;
+			worldLogMessage.location = lead.currentPosition;
+			worldLogMessage.color_special1 = Color.cyan; //lead.kingdom.kingdomColor.colorBorderOut;
+			worldLogMessage.color_special2 = Color.red;  //lead.kingdom.kingdomColor.colorBorderOut;
+			List<WorldLogMessage> list = Helper.Reflection.GetWorldLogMessages(WorldLog.instance);
+			list.Add(worldLogMessage);
+
+			worldLogMessage.add();
+		}
+
+		public static void logKillLeadDead(Actor lead) 
+		{
+			
+		
 		}
 	}
 }

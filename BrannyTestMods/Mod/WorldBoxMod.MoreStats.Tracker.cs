@@ -28,11 +28,20 @@ namespace BrannyTestMods
 			var data = Helper.Reflection.GetActorData(__instance);
 			int kills = data.kills;
 
+			if (killLeader != null)
+			{
+				// If the kill leader gets another kill
+				if (data.actorID == killLeader.actorID)
+				{
+					logKillLeadKill(__instance);
+					return;
+				}
+			}
+
+			// Compare this killer to our new kill leader
 			if (CompareKillLeader(data, kills)) 
 			{
 				logNewKillLead(__instance);
-				Debug.Log("We have a new kill leader!");
-				Debug.Log(data.firstName + " : " + kills + " kills");
 			}
 		}
 
