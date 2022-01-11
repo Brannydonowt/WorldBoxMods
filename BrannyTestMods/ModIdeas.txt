@@ -24,7 +24,6 @@ Extended World Stats
 	Most Peaceful Leader
 		King with fewest Wars fought
 			King "Reign" / Wars Fought...
-			
 	Character Stats
 		Houses Built
 		Trees Chopped

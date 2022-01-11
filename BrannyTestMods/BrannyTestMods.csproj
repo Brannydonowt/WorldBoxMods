@@ -115,7 +115,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Mod\GodPowerTab.cs" />
-    <Compile Include="Mod\Reflection.cs" />
     <Compile Include="Mod\Helper.cs" />
     <Compile Include="Mod\WorldBoxMod.Drops.cs" />
     <Compile Include="Mod\WorldBoxMod.MoreStats.Tracker.cs" />

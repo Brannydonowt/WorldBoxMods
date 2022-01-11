@@ -25,7 +25,7 @@ namespace BrannyTestMods
 
 		public static void increaseKillCount_postfix(Actor __instance)
 		{
-			var data = (ActorStatus)Reflection.GetField(__instance.GetType(), __instance, "data");
+			var data = Helper.Reflection.GetActorData(__instance);
 			int kills = data.kills;
 
 			if (CompareKillLeader(data, kills)) 
