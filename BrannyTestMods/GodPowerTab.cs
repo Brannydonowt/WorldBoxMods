@@ -1,4 +1,7 @@
-﻿using System;
+﻿extern alias ncms;
+using NCMS = ncms.NCMS;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +9,6 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-using ReflectionUtility;
 using static Config;
 using HarmonyLib;
 
@@ -57,9 +59,6 @@ namespace Helper
                     //var spriteForTab = Mod.EmbededResources.LoadSprite(PowerBox.WorldBoxMod.resources + ".powers.tabIcon.png");
                     //newTabButton.transform.Find("Icon").GetComponent<Image>().sprite = spriteForTab;
                     //newTabButton.transform.Find("Icon").GetComponent<Image>().sprite = Helper.Utils.LoadSprite(PowerBox.WorldBoxMod.resources + ".powers.tabIcon.png", 0, 0);
-
-
-
 
                     var OtherTab = NCMS.Utils.GameObjects.FindEvenInactive("Tab_Other");
                     foreach (Transform child in OtherTab.transform)

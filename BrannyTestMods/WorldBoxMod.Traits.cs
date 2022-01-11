@@ -1,4 +1,7 @@
-﻿using System;
+﻿extern alias ncms;
+using NCMS = ncms.NCMS;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

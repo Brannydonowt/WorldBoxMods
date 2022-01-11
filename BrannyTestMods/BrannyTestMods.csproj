@@ -42,6 +42,7 @@
     </Reference>
     <Reference Include="NCMS">
       <HintPath>Libs\NCMS.dll</HintPath>
+      <Aliases>ncms</Aliases>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
