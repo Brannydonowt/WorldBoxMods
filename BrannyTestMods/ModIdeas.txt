@@ -14,6 +14,10 @@ Extended World Stats
 		Human with the most kills
 		Orc with the most kills
 		Elf with the most kills
+	Most Food Eaten
+	Most Work Done
+	Most Babies
+	Most Weapons Produced
 		...
 	Most Agressive Leader
 		King with Most Wars Declared
