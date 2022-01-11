@@ -42,7 +42,7 @@
     </Reference>
     <Reference Include="NCMS">
       <HintPath>Libs\NCMS.dll</HintPath>
-      <Aliases>ncms</Aliases>
+      <Aliases>global</Aliases>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -114,12 +114,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GodPowerTab.cs" />
-    <Compile Include="Reflection.cs" />
-    <Compile Include="Helper.cs" />
-    <Compile Include="WorldBoxMod.Drops.cs" />
-    <Compile Include="WorldBoxMod.Traits.cs" />
-    <Compile Include="WorldBoxMod.cs" />
+    <Compile Include="Mod\GodPowerTab.cs" />
+    <Compile Include="Mod\Reflection.cs" />
+    <Compile Include="Mod\Helper.cs" />
+    <Compile Include="Mod\WorldBoxMod.Drops.cs" />
+    <Compile Include="Mod\WorldBoxMod.Traits.cs" />
+    <Compile Include="Mod\WorldBoxMod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

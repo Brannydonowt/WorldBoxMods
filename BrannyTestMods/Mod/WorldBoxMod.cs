@@ -1,5 +1,6 @@
-﻿extern alias ncms;
-using NCMS = ncms.NCMS;
+﻿//extern alias ncms;
+//using NCMS = ncms.NCMS;
+using NCMS;
 
 using System;
 using System.Collections.Generic;
@@ -8,14 +9,14 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using HarmonyLib;
-using BepInEx;
+//using BepInEx;
 using static Config;
 
 namespace BrannyTestMods
 {
-    [BepInPlugin(id, "BrannyTests", "0.1")]
-    //[ModEntry]
-    public partial class WorldBoxMod : BaseUnityPlugin
+    //[BepInPlugin(id, "BrannyTests", "0.1")]
+    [ModEntry]
+    public partial class WorldBoxMod : MonoBehaviour
     {
         public const string pluginName = "Branny's Test Mod";
         public const string pluginVersion = "0.1";
@@ -53,7 +54,6 @@ namespace BrannyTestMods
         {
             Debug.Log("Branny mod, running!");
             initTraits();
-            initDrops();
         }
 
         private void Patching(Harmony harmony)

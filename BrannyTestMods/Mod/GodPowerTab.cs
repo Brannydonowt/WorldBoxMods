@@ -1,5 +1,6 @@
-﻿extern alias ncms;
-using NCMS = ncms.NCMS;
+﻿//extern alias ncms;
+//using NCMS = ncms.NCMS;
+using NCMS;
 
 using System;
 using System.Collections.Generic;

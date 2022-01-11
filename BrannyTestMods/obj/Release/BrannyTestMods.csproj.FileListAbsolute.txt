@@ -32,6 +32,7 @@ C:\Users\Brand\GameDev\WorldBoxModding\BrannyMods\TestMod\WorldBoxMods\BrannyTes
 C:\Users\Brand\GameDev\WorldBoxModding\BrannyMods\TestMod\WorldBoxMods\BrannyTestMods\bin\Release\0Harmony.dll
 C:\Users\Brand\GameDev\WorldBoxModding\BrannyMods\TestMod\WorldBoxMods\BrannyTestMods\bin\Release\Assembly-CSharp.dll
 C:\Users\Brand\GameDev\WorldBoxModding\BrannyMods\TestMod\WorldBoxMods\BrannyTestMods\bin\Release\BepInEx.dll
+C:\Users\Brand\GameDev\WorldBoxModding\BrannyMods\TestMod\WorldBoxMods\BrannyTestMods\bin\Release\NCMS.dll
 C:\Users\Brand\GameDev\WorldBoxModding\BrannyMods\TestMod\WorldBoxMods\BrannyTestMods\bin\Release\Unity.Mathematics.dll
 C:\Users\Brand\GameDev\WorldBoxModding\BrannyMods\TestMod\WorldBoxMods\BrannyTestMods\bin\Release\Unity.Tasks.dll
 C:\Users\Brand\GameDev\WorldBoxModding\BrannyMods\TestMod\WorldBoxMods\BrannyTestMods\bin\Release\UnityEngine.CoreModule.dll
@@ -52,9 +53,7 @@ C:\Users\Brand\GameDev\WorldBoxModding\BrannyMods\TestMod\WorldBoxMods\BrannyTes
 C:\Users\Brand\GameDev\WorldBoxModding\BrannyMods\TestMod\WorldBoxMods\BrannyTestMods\bin\Release\UnityEngine.UI.dll
 C:\Users\Brand\GameDev\WorldBoxModding\BrannyMods\TestMod\WorldBoxMods\BrannyTestMods\bin\Release\UnityEngine.UIModule.dll
 C:\Users\Brand\GameDev\WorldBoxModding\BrannyMods\TestMod\WorldBoxMods\BrannyTestMods\bin\Release\UnityEngine.VFXModule.dll
-C:\Users\Brand\GameDev\WorldBoxModding\BrannyMods\TestMod\WorldBoxMods\BrannyTestMods\obj\Release\BrannyTestMods.csprojAssemblyReference.cache
 C:\Users\Brand\GameDev\WorldBoxModding\BrannyMods\TestMod\WorldBoxMods\BrannyTestMods\obj\Release\BrannyTestMods.csproj.CoreCompileInputs.cache
 C:\Users\Brand\GameDev\WorldBoxModding\BrannyMods\TestMod\WorldBoxMods\BrannyTestMods\obj\Release\BrannyTestMods.csproj.CopyComplete
 C:\Users\Brand\GameDev\WorldBoxModding\BrannyMods\TestMod\WorldBoxMods\BrannyTestMods\obj\Release\BrannyTestMods.dll
 C:\Users\Brand\GameDev\WorldBoxModding\BrannyMods\TestMod\WorldBoxMods\BrannyTestMods\obj\Release\BrannyTestMods.pdb
-C:\Users\Brand\GameDev\WorldBoxModding\BrannyMods\TestMod\WorldBoxMods\BrannyTestMods\bin\Release\NCMS.dll
