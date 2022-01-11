@@ -1,3 +1,9 @@
+Overall goal
+	I want to create a set of mods that add more depth to the game's existing mechanics.
+	Slow the game down, add more technology progression, add more life to the NPCs etc...
+	
+	THEN give more control to the player - managing kingdoms, relationships etc...
+
 Extended World Stats
 	Track more stats that happen in the world.
 		Teaches Stat Get
@@ -20,4 +26,4 @@ Extended World Stats
 		Trees Chopped
 		Children
 		
-		
+
