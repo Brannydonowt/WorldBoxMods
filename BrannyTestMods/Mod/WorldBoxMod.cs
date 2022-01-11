@@ -54,13 +54,15 @@ namespace BrannyTestMods
         {
             Debug.Log("Branny mod, running!");
             initTraits();
+
+            Helper.Localization.addLocalization("kill_lead_new", "There $wbcode$ is $discord_count$ a new $number$ kill $total_prem_powers$ leader!");
         }
 
         private void Patching(Harmony harmony)
         {
             // Non working example
             Helper.Utils.HarmonyPatching(harmony, "postfix", AccessTools.Method(typeof(ActorTraitLibrary), "add"), AccessTools.Method(typeof(WorldBoxMod), "addTraits_postfix"));
-            Debug.Log("PostFix TraitLibrary - add()");
+            Debug.Log("PostFix TraitLibrary DONE");
 
             stats_patch(harmony);
         }

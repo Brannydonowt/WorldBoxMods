@@ -30,6 +30,7 @@ namespace BrannyTestMods
 
 			if (CompareKillLeader(data, kills)) 
 			{
+				logNewKillLead(__instance);
 				Debug.Log("We have a new kill leader!");
 				Debug.Log(data.firstName + " : " + kills + " kills");
 			}

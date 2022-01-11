@@ -116,10 +116,12 @@
   <ItemGroup>
     <Compile Include="Mod\GodPowerTab.cs" />
     <Compile Include="Mod\Helper.cs" />
+    <Compile Include="Mod\WorldBoxMod.WorldLog.cs" />
     <Compile Include="Mod\WorldBoxMod.Drops.cs" />
     <Compile Include="Mod\WorldBoxMod.MoreStats.Tracker.cs" />
     <Compile Include="Mod\WorldBoxMod.Traits.cs" />
     <Compile Include="Mod\WorldBoxMod.cs" />
+    <Compile Include="Mod\WorldLog\WorldLogExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

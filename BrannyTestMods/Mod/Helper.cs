@@ -132,7 +132,22 @@ namespace Helper
     {
         public static ActorStatus GetActorData(Actor actor) 
         {
-            return (ActorStatus)Helper.Reflection.GetField(actor.GetType(), actor, "data");
+            return (ActorStatus)GetField(actor.GetType(), actor, "data");
+        }
+
+        public static ActorStats GetActorStats(Actor actor) 
+        {
+            return (ActorStats)GetField(actor.GetType(), actor, "stats");
+        }
+
+        public static List<WorldTile> GetActorPath(Actor actor) 
+        {
+            return GetField(actor.GetType(), actor, "current_path") as List<WorldTile>;
+        }
+
+        public static List<WorldLogMessage> GetWorldLogMessages(WorldLog instance) 
+        {
+            return GetField(instance.GetType(), instance, "list") as List<WorldLogMessage>;
         }
     }
 
@@ -161,6 +176,21 @@ namespace Helper
             BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
             FieldInfo field = originalObject.GetType().GetField(fieldName, bindFlags);
             field.SetValue(originalObject, newValue);
+        }
+    }
+
+    public static partial class Localization 
+    {
+        public static void addLocalization(string key, string value)
+        {
+            Dictionary<string, string> dictionary = (Dictionary<string, string>)Reflection.GetField(LocalizedTextManager.instance.GetType(), LocalizedTextManager.instance, "localizedText");
+            dictionary.Add(key, value);
+        }
+
+        public static string getLocalization(string key)
+        {
+            Dictionary<string, string> dictionary = (Dictionary<string, string>)Reflection.GetField(LocalizedTextManager.instance.GetType(), LocalizedTextManager.instance, "localizedText");
+            return dictionary[key];
         }
     }
 }

@@ -35,6 +35,21 @@ Reduce Game Time
 More Moods
 	Add more meaningful moods to the game
 	
+More Items
+	I want to expand the world with more items.
+	Items should become an essential part of the game.
+	Potions, tools, weapons, food, possesions, trophies
+	
+	Each item should be usable and beneficial to the user
+	
+	The goal here is to create tools to use in a further expansion/mod
+		With a more simulated economy, more roles
+		The NPCs will be able to become brewers, cooks, blacksmiths
+			Producing items, giving items to allies in order to help
+			Either in exchange for currency, or for war etc... 
+		Wars fought become much more reliant on the actual strenght of the town, rather than just numbers
+		This takes the existing tech tree to the next level.
+	
 Families
 	Create "Children" that are visibily weaker/younger
 	Connect Children to parents
