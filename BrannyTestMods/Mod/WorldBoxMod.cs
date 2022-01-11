@@ -55,7 +55,7 @@ namespace BrannyTestMods
             Debug.Log("Branny mod, running!");
             initTraits();
 
-            Helper.Localization.addLocalization("kill_lead_new", "There $wbcode$ is $discord_count$ a new $number$ kill $total_prem_powers$ leader!");
+            Helper.Localization.addSpecialLocalization("kill_lead_new", "$discord_count$ $power$ $number$ $wbcode$ $wbcode$ $wbcode$");
         }
 
         private void Patching(Harmony harmony)

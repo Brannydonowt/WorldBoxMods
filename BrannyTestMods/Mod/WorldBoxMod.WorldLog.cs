@@ -31,14 +31,15 @@ namespace BrannyTestMods
 
 	public partial class WorldBoxMod
 	{
-
-
 		public static void logNewKillLead(Actor lead)
 		{
 			Debug.Log("Announcing new kill lead");
 			ActorStatus aStat = Helper.Reflection.GetActorData(lead);
 
 			WorldLogMessage worldLogMessage = new WorldLogMessage("kill_lead_new", aStat.firstName, aStat.kills.ToString(), null);
+			worldLogMessage.special1 = lead.kingdom.name;
+			worldLogMessage.special2 = aStat.firstName;
+			worldLogMessage.special3 = aStat.kills.ToString();
 			worldLogMessage.unit = lead;
 			worldLogMessage.location = lead.currentPosition;
 			worldLogMessage.color_special1 = Color.cyan; //lead.kingdom.kingdomColor.colorBorderOut;

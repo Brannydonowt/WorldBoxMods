@@ -192,5 +192,16 @@ namespace Helper
             Dictionary<string, string> dictionary = (Dictionary<string, string>)Reflection.GetField(LocalizedTextManager.instance.GetType(), LocalizedTextManager.instance, "localizedText");
             return dictionary[key];
         }
+
+        public static void addSpecialLocalization(string key, string value) 
+        {
+            LocalizedText lText = new LocalizedText();
+            lText.key = key;
+            lText.specialTags = true;
+            LocalizedTextManager.addTextField(lText);
+            addLocalization(key, value);
+            LocalizedTextManager.updateTexts();
+            Debug.Log("Added: " + lText.key + "to the localization list");
+        }
     }
 }
