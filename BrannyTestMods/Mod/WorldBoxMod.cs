@@ -54,6 +54,11 @@ namespace BrannyTestMods
             Debug.Log("Branny mod, initialized!");
         }
 
+        public static void CloseAllUI() 
+        {
+            brannyCanvas.SetActive(false);
+        }
+
         private void Patching(Harmony harmony)
         {
             // Non working example

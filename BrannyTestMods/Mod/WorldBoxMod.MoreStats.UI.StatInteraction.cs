@@ -21,7 +21,7 @@ namespace BrannyTestMods
 
         private UnityAction onClickActions;
 
-        void Start() 
+        public void Setup() 
         {
             myButton = GetComponent<Button>();
             onClickActions += Interact;
@@ -42,6 +42,7 @@ namespace BrannyTestMods
         {
             Action showMethod = delegate () { TestAction(); };
             MapBox.instance.locateAndFollow(myActor, null, null);
+            WorldBoxMod.CloseAllUI();
         }
         void TestAction() { }
     }

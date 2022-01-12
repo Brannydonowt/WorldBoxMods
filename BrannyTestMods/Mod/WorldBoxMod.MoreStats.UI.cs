@@ -61,8 +61,8 @@ namespace BrannyTestMods
 
             GameObject entry = GetStatEntryWithName(statName);
             entry.AddComponent<StatInteraction>();
+            entry.GetComponent<StatInteraction>().Setup();
             entry.GetComponent<StatInteraction>().trackActor(a);
-            entry.GetComponent<StatInteraction>().myActor = a;
             entry.name = statName;
             Text titleText = entry.transform.GetChild(0).GetComponent<Text>();
             Text detailsText = entry.transform.GetChild(1).GetComponent<Text>();
