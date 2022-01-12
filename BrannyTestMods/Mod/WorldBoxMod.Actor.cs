@@ -15,25 +15,41 @@ using HarmonyLib;
 namespace BrannyTestMods
 {
 	// I need a class that can track any actor that may have existed at one point
-	public static class BrannyActorManager 
+	public static class BrannyActorManager
 	{
 		static Dictionary<string, BrannyActor> memorableActors = new Dictionary<string, BrannyActor>();
 
-		public static void RememberActor(Actor toRemember) 
-		{			
-			BrannyActor savedActor = new BrannyActor(toRemember);
+		static Dictionary<string, string> trackedLiveActors = new Dictionary<string, string>();
 
-			// We want to replace any saved data
-			if (memorableActors.ContainsKey(savedActor.actorID))
-				memorableActors.Remove(savedActor.actorID);
+		static List<string> trackedIds = new List<string>();
 
-			Debug.Log("Made Actor");
+		public static string RememberActor(Actor toRemember) 
+		{
+			BrannyActor savedActor;
+			ActorStatus stat = Helper.Reflection.GetActorData(toRemember);
+
+			if (trackedLiveActors.ContainsKey(stat.actorID))
+			{
+				// We are already tracking this actor, maybe update the information?
+				string t = "";
+				trackedLiveActors.TryGetValue(stat.actorID, out t);
+				memorableActors.TryGetValue(t, out savedActor);
+				// TODO - This might not be necessary
+				savedActor = new BrannyActor(toRemember);
+				savedActor._id = t;
+			}
+			else
+			{
+				savedActor = new BrannyActor(toRemember);
+				trackedLiveActors.Add(stat.actorID, savedActor._id);
+			}
+
 			memorableActors.Add(savedActor.actorID, savedActor);
-			Debug.Log("Adding to memorable actors");
+			return savedActor._id;
 		}
 
-		public static bool DoesActorExist(string id) 
-		{
+		public static bool DoesActorExist(string id)
+		{			
 			// Have we saved this actor id before?
 			if (memorableActors.ContainsKey(id))
 				return true;
@@ -41,7 +57,20 @@ namespace BrannyTestMods
 			return false;
 		}
 
-		public static Actor GetRememberedActor(string id) 
+		public static bool HasID(string id) 
+		{
+			if (trackedIds.Contains(id))
+				return true;
+			else
+				return false;
+		}
+
+		public static void AddTrackedID(string id) 
+		{
+			trackedIds.Add(id);
+		}
+
+		public static BrannyActor GetRememberedActor(string id)
 		{
 			if (DoesActorExist(id)) 
 			{
@@ -53,39 +82,87 @@ namespace BrannyTestMods
 			Debug.Log("We don't seem to have saved that requested actor");
 			return null;
 		}
+
+		public static ActorStatus GetRememberedActorStatus(string id) 
+		{
+			
+		}
 	}
 
 	// Memorable Actors will be cached as a BrannyActor and saved as a reference for future use.
 	// TODO - I'll need some serialization on this.
-	public class BrannyActor : Actor 
+	public class BrannyActor
 	{
-		public Actor basedOn;
+		public string _id;
+
+		public bool alive;
 		public string actorID;
+
+		public string firstName;
+		public string kingdom;
+
+		// Misc stats
+		public int kills;
+		public int age;
+		public int born;
+		public int children;
+
+		public string faveFood;
+
+		ActorGender gender;
 
 		public BrannyActor(Actor inActor) : base() 
 		{
-			Debug.Log("Branny actor constructor");
-			basedOn = inActor;
-			Debug.Log("Set based on");
-			actorID = Helper.Reflection.GetActorData(inActor).actorID;
-			Debug.Log("ID = : " + actorID);
+			ActorStatus stat = Helper.Reflection.GetActorData(inActor);
+			actorID = stat.actorID;
+
+			// We want to copy over any important stats that we want to track.
+			kills = stat.kills;
+			age = stat.age;
+			born = stat.bornTime;
+			
+			firstName = stat.firstName;
+			kingdom = inActor.kingdom.name;
+			children = stat.children;
+			faveFood = stat.favoriteFood;
+			gender = stat.gender;
+
+			_id = GenerateID();
+			BrannyActorManager.AddTrackedID(_id);
+		}
+
+		string GenerateID() 
+		{
+			string i = Toolbox.randomInt(1000, 10000).ToString();
+
+			if (BrannyActorManager.HasID(i))
+				return GenerateID();
+			else
+				return i;
+		}
+
+		public Actor getActor()
+		{
+			if (alive)
+			{
+				return MapBox.instance.getActorByID(actorID);
+			}
+			else 
+			{
+				Debug.Log("Requested Actor that is no longer alive.");
+				return null;
+			}
 		}
 
 		public ActorStatus getActorStatus() 
 		{
-			Debug.Log("Getting Status Object");
-			return Helper.Reflection.GetActorData(basedOn);
-		}
+			ActorStatus result = new ActorStatus();
+			result.actorID = actorID;
+			result.kills = kills;
+			result.age = age;
+			result.bornTime = born;
 
-		public ActorStats getActorStats() 
-		{
-			return Helper.Reflection.GetActorStats(basedOn);
-		}
-
-		public string getActorID()
-		{
-			Debug.Log("Getting actor ID");
-			return getActorStatus().actorID;
+			return result;
 		}
 	}
 	

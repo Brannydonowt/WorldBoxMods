@@ -83,21 +83,24 @@ namespace BrannyTestMods
 
         static void UpdateStatUI(string statName, string actorId, string[] stats) 
         {
-            Actor a = MapBox.instance.getActorByID(actorId);
+            BrannyActor actor = BrannyActorManager.GetRememberedActor(actorId);
+            //Actor a = MapBox.instance.getActorByID(actorId);
+            ActorStatus data = actor.getActorStatus();
 
             GameObject entry = GetStatEntryWithName(statName);
 
             string[] cData = new string[1];
             cData[0] = statName;
 
-            entry.AddComponent<ButtonInteraction>();
             ButtonInteraction button = entry.GetComponent<ButtonInteraction>();
 
             button.Setup();
-            button.trackActor(actorId);
-            button.AddCustomData(cData);
+            if (actor.alive)
+                button.trackActor(actor.actorID);
+            else
+                button.GetComponent<Button>().interactable = false;
 
-            createdButtons.Add(button);
+            button.AddCustomData(cData);
 
             entry.name = statName;
             Image iconImg = entry.transform.GetChild(0).GetComponent<Image>();
@@ -107,37 +110,40 @@ namespace BrannyTestMods
 
             titleText.text = statName;
             detailsText.text = format_details_string(stats);
-            statusText.text = format_status_string(actorId);
+            statusText.text = format_status_string(data);
         }
 
         static void UpdateMostRuthless(string actorId) 
         {
-            Actor a = MapBox.instance.getActorByID(actorId);
+            BrannyActor actor = BrannyActorManager.GetRememberedActor(actorId);
+            //Actor a = MapBox.instance.getActorByID(actorId);
+            ActorStatus data = actor.getActorStatus();
             // There's a chance the actor has died
-            if (a == null) 
+            if (actor == null)
             {
                 Debug.Log("Actor appears to have died, getting remembered state");
-                a = BrannyActorManager.GetRememberedActor(actorId);
-                if (a == null) 
-                {
-                    Debug.Log("Actor still not found after pulling from Branny Manager");
-                }
             }
 
-            var data = Helper.Reflection.GetActorData(a);
+            if (data == null) 
+            {
+                Debug.Log("We don't have any Branny actor data.");
+                return;
+            }
             
             string[] killerstats = new string[3];
             killerstats[0] = data.firstName;
-            killerstats[1] = a.kingdom.name;
+            killerstats[1] = actor.kingdom;
             killerstats[2] = data.kills.ToString();
 
-            UpdateStatUI("Most Kills", data.actorID, killerstats);
+            UpdateStatUI("Most Kills", actorId, killerstats);
         }
 
         static GameObject CreateStatEntry() 
         {
             Debug.Log("Creating a new stat entry");
             GameObject entry = Instantiate(statEntry, statParent.transform);
+            entry.AddComponent<ButtonInteraction>();
+            createdButtons.Add(entry.GetComponent<ButtonInteraction>());
             entry.SetActive(true);
             return entry;
         }
@@ -158,16 +164,12 @@ namespace BrannyTestMods
         }
 
 
-        static string format_status_string(string actorId) 
+        static string format_status_string(ActorStatus status) 
         {
-            Actor a = MapBox.instance.getActorByID(actorId);
-
-            var target = Helper.Reflection.GetActorData(a);
-
             string result = "";
-            string age = target.age.ToString();
-            string born = target.bornTime.ToString();
-            if (target.alive)
+            string age = status.age.ToString();
+            string born = status.bornTime.ToString();
+            if (status.alive)
             {
                 result = "Alive, Age: " + age;
             }

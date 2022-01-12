@@ -29,8 +29,6 @@ namespace BrannyTestMods
 		public static void consumeCityFoodItem_postfix(Actor __instance) 
 		{
 			var data = Helper.Reflection.GetActorData(__instance);
-
-
 		}
 
 		public static void increaseKillCount_postfix(Actor __instance)
@@ -47,8 +45,10 @@ namespace BrannyTestMods
 
 					highestKills = kills;
 
-					UpdateMostRuthless(data.actorID);
-					BrannyActorManager.RememberActor(__instance);
+					// Remember the actor (cache it)
+					// Update the stat, with the BrannyID - not game ID
+					string id = BrannyActorManager.RememberActor(__instance);
+					UpdateMostRuthless(id);
 					return;
 				}
 			}
@@ -59,7 +59,8 @@ namespace BrannyTestMods
 				logNewKillLead(__instance);
 				// Add the tyrant trait to the new kill leader
 				__instance.addTrait("Tyrant");
-				UpdateMostRuthless(data.actorID);
+				string id = BrannyActorManager.RememberActor(__instance);
+				UpdateMostRuthless(id);
 			}
 		}
 
