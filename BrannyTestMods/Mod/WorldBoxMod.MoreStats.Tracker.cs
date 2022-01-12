@@ -34,8 +34,11 @@ namespace BrannyTestMods
 				if (data.actorID == killLeader.actorID)
 				{
 					logKillLeadKill(__instance);
-					Helper.Reflection.CallMethod(__instance.GetType(), "addExperience", 30);
+
 					highestKills = kills;
+
+					UpdateMostRuthless(__instance);
+
 					return;
 				}
 			}
@@ -46,6 +49,7 @@ namespace BrannyTestMods
 				logNewKillLead(__instance);
 				// Add the tyrant trait to the new kill leader
 				__instance.addTrait("Tyrant");
+				UpdateMostRuthless(__instance);
 			}
 		}
 

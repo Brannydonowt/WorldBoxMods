@@ -25,7 +25,7 @@ namespace BrannyTestMods
 
 			Helper.Localization.addLocalization(aTitle, aMessage);
 
-			WorldLogMessage worldLogMessage = new WorldLogMessage(aMessage, aStat.firstName, aStat.kills.ToString(), null);
+			WorldLogMessage worldLogMessage = new WorldLogMessage(aTitle, aStat.firstName, aStat.kills.ToString(), null);
 			worldLogMessage.special1 = lead.kingdom.name;
 			worldLogMessage.special2 = aStat.firstName;
 			worldLogMessage.special3 = aStat.kills.ToString();

@@ -16,16 +16,16 @@ namespace BrannyTestMods
 {
     public partial class WorldBoxMod
     {
-        AssetBundle loadedAssetBundle;
+        static AssetBundle loadedAssetBundle;
 
-        bool assets_initialised;
+        static bool assets_initialised;
 
         void init_assets() 
         {
             LoadAssetBundle();
         }
 
-        public void LoadAssetBundle()
+        public static void LoadAssetBundle()
         {
             string bundlename = "brannywbox";
             loadedAssetBundle = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, bundlename));

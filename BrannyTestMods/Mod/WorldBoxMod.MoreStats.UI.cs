@@ -15,9 +15,9 @@ namespace BrannyTestMods
 {
     public partial class WorldBoxMod
     {
-        public GameObject brannyCanvas;
-        public GameObject statParent;
-        public GameObject statPanel;
+        public static GameObject brannyCanvas;
+        public static GameObject statParent;
+        public static GameObject statEntry;
 
         bool ui_initialized;
 
@@ -29,11 +29,9 @@ namespace BrannyTestMods
             Debug.Log("Initialising UI");
 
             brannyCanvas = GetGameObjectFromAssetBundle("BrannyCanvas");
-            Debug.Log("Got Canvas");
             statParent = brannyCanvas.transform.GetChild(0).GetChild(0).GetChild(0).gameObject;
-            Debug.Log("Got Parent");
-            statPanel = GetGameObjectFromAssetBundle("StatEntry");
-            Debug.Log("Got Entry");
+            Debug.Log(statParent.name);
+            statEntry = GetGameObjectFromAssetBundle("StatEntry");
 
             brannyCanvas.SetActive(false);
 
@@ -52,43 +50,57 @@ namespace BrannyTestMods
             if (Input.GetKeyDown(KeyCode.B))
             {
                 // This will display Branny UI
-                Debug.Log("Toggling Branny UI");
                 brannyCanvas.SetActive(!brannyCanvas.activeSelf);
+                statParent.SetActive(brannyCanvas.activeSelf);
             }
         }
 
-        void UpdateStatUI(string statName, string[] details) 
+        static void UpdateStatUI(string statName, Actor target, string[] stats) 
         {
-            GameObject statEntry = GetStatEntryWithName(statName);
-            statEntry.name = statName;
-            Text titleText = statEntry.transform.GetChild(0).GetComponent<Text>();
-            Text detailsText = statEntry.transform.GetChild(0).GetComponent<Text>();
+            GameObject entry = GetStatEntryWithName(statName);
+            entry.AddComponent<StatInteraction>();
+            entry.GetComponent<StatInteraction>().trackActor(target);
+            entry.name = statName;
+            Text titleText = entry.transform.GetChild(0).GetComponent<Text>();
+            Text detailsText = entry.transform.GetChild(1).GetComponent<Text>();
 
             titleText.text = statName;
-            detailsText.text = format_details_string(details);
+            detailsText.text = format_details_string(stats);
         }
 
-        GameObject CreateStatEntry() 
+        static void UpdateMostRuthless(Actor killer) 
         {
-            return Instantiate(statPanel, statParent.transform);
+            var data = Helper.Reflection.GetActorData(killer);
+
+            string[] killerstats = new string[3];
+            killerstats[0] = data.firstName;
+            killerstats[1] = killer.kingdom.name;
+            killerstats[2] = data.kills.ToString();
+
+            UpdateStatUI("Most Kills", killer, killerstats);
         }
 
-        GameObject GetStatEntryWithName(string name) 
+        static GameObject CreateStatEntry() 
+        {
+            Debug.Log("Creating a new stat entry");
+            GameObject entry = Instantiate(statEntry, statParent.transform);
+            entry.SetActive(true);
+            return entry;
+        }
+
+        static GameObject GetStatEntryWithName(string name) 
         {
             if (statParent.transform.Find(name))
+            {
                 return statParent.transform.Find(name).gameObject;
+            }
             else
                 return CreateStatEntry();
         }
 
-        string format_details_string(string[] details) 
+        static string format_details_string(string[] details) 
         {
-            string result = "";
-
-            foreach (string s in details)
-                result = result + " - " + s;
-
-            return result;
+            return details[0] + " - " + details[1] + " - Kills: " + details[2];
         }
 	}
 }

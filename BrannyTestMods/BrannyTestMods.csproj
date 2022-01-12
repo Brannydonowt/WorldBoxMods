@@ -134,6 +134,7 @@
     <Compile Include="Mod\GodPowerTab.cs" />
     <Compile Include="Mod\Helper.cs" />
     <Compile Include="Mod\WorldBoxMod.AssetLoading.cs" />
+    <Compile Include="Mod\WorldBoxMod.MoreStats.UI.StatInteraction.cs" />
     <Compile Include="Mod\WorldBoxMod.MoreStats.UI.cs" />
     <Compile Include="Mod\WorldBoxMod.WorldLog.cs" />
     <Compile Include="Mod\WorldBoxMod.Drops.cs" />
