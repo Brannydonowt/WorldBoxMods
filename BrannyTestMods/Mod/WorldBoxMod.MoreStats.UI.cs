@@ -64,8 +64,10 @@ namespace BrannyTestMods
             entry.GetComponent<StatInteraction>().Setup();
             entry.GetComponent<StatInteraction>().trackActor(a);
             entry.name = statName;
-            Text titleText = entry.transform.GetChild(0).GetComponent<Text>();
-            Text detailsText = entry.transform.GetChild(1).GetComponent<Text>();
+            Image iconImg = entry.transform.GetChild(0).GetComponent<Image>();
+            Text titleText = entry.transform.GetChild(1).GetComponent<Text>();
+            Text detailsText = entry.transform.GetChild(2).GetComponent<Text>();
+            Text statusText = entry.transform.GetChild(3).GetComponent<Text>();
 
             titleText.text = statName;
             detailsText.text = format_details_string(stats);

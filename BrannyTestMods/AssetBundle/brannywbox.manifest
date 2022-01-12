@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 251395904
+CRC: 173681686
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: c9e85fb7f00e56001f83138ca5a73dc9
+    Hash: 58599f147eb2e3f885f5b8969c3f2345
   TypeTreeHash:
     serializedVersion: 2
-    Hash: e03be349072851127d224709de028fe7
+    Hash: 14068e5ea15e468c28a92c574de4f264
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -19,6 +19,8 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 114
   Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
 - Class: 114
@@ -37,8 +39,6 @@ ClassTypes:
   Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 128
@@ -54,9 +54,12 @@ ClassTypes:
 SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/BundledAssets/brannywbox/StatPanel.prefab
+- Assets/BundledAssets/brannywbox/ui/background.jpg
 - Assets/BundledAssets/brannywbox/Roboto-Bold SDF.asset
+- Assets/BundledAssets/brannywbox/ui/ui and icons.png
 - Assets/BundledAssets/brannywbox/Roboto-Bold SDF - Drop Shadow.mat
 - Assets/BundledAssets/brannywbox/BrannyCanvas.prefab
+- Assets/BundledAssets/brannywbox/ui/bouttons.png
 - Assets/BundledAssets/brannywbox/StatEntry.prefab
 - Assets/BundledAssets/brannywbox/Roboto-Bold.ttf
 - Assets/BundledAssets/brannywbox/Roboto-Bold SDF - Surface.mat
