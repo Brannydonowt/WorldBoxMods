@@ -55,11 +55,14 @@ namespace BrannyTestMods
             }
         }
 
-        static void UpdateStatUI(string statName, Actor target, string[] stats) 
+        static void UpdateStatUI(string statName, string actorId, string[] stats) 
         {
+            Actor a = MapBox.instance.getActorByID(actorId);
+
             GameObject entry = GetStatEntryWithName(statName);
             entry.AddComponent<StatInteraction>();
-            entry.GetComponent<StatInteraction>().trackActor(target);
+            entry.GetComponent<StatInteraction>().trackActor(a);
+            entry.GetComponent<StatInteraction>().myActor = a;
             entry.name = statName;
             Text titleText = entry.transform.GetChild(0).GetComponent<Text>();
             Text detailsText = entry.transform.GetChild(1).GetComponent<Text>();
@@ -68,16 +71,18 @@ namespace BrannyTestMods
             detailsText.text = format_details_string(stats);
         }
 
-        static void UpdateMostRuthless(Actor killer) 
+        static void UpdateMostRuthless(string actorId) 
         {
-            var data = Helper.Reflection.GetActorData(killer);
+            Actor a = MapBox.instance.getActorByID(actorId);
+
+            var data = Helper.Reflection.GetActorData(a);
 
             string[] killerstats = new string[3];
             killerstats[0] = data.firstName;
-            killerstats[1] = killer.kingdom.name;
+            killerstats[1] = a.kingdom.name;
             killerstats[2] = data.kills.ToString();
 
-            UpdateStatUI("Most Kills", killer, killerstats);
+            UpdateStatUI("Most Kills", data.actorID, killerstats);
         }
 
         static GameObject CreateStatEntry() 

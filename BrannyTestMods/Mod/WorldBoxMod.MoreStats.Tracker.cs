@@ -37,7 +37,7 @@ namespace BrannyTestMods
 
 					highestKills = kills;
 
-					UpdateMostRuthless(__instance);
+					UpdateMostRuthless(data.actorID);
 
 					return;
 				}
@@ -49,7 +49,7 @@ namespace BrannyTestMods
 				logNewKillLead(__instance);
 				// Add the tyrant trait to the new kill leader
 				__instance.addTrait("Tyrant");
-				UpdateMostRuthless(__instance);
+				UpdateMostRuthless(data.actorID);
 			}
 		}
 

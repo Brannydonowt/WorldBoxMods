@@ -16,13 +16,14 @@ namespace BrannyTestMods
 {
     public class StatInteraction : MonoBehaviour
     {
-        private Actor myActor;
+        public Actor myActor;
         Button myButton;
 
         private UnityAction onClickActions;
 
         void Start() 
         {
+            myButton = GetComponent<Button>();
             onClickActions += Interact;
             myButton.onClick.AddListener(onClickActions);
         }
@@ -40,7 +41,7 @@ namespace BrannyTestMods
         void Interact()
         {
             Action showMethod = delegate () { TestAction(); };
-            MapBox.instance.locateAndFollow(myActor, showMethod, showMethod);
+            MapBox.instance.locateAndFollow(myActor, null, null);
         }
         void TestAction() { }
     }
