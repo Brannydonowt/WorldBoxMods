@@ -14,7 +14,7 @@ namespace BrannyTestMods
 {
     public partial class WorldBoxMod
     {
-        void initTraits() 
+        void init_traits() 
         {
 			AssetManager.traits.add(new ActorTrait
 			{

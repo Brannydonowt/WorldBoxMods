@@ -8,8 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using System.IO;
 using HarmonyLib;
-//using BepInEx;
 using static Config;
 
 namespace BrannyTestMods
@@ -43,19 +43,15 @@ namespace BrannyTestMods
             }
             initialized = true;
 
-            if (Input.GetKeyDown(KeyCode.G)) 
-            {
-                var human = AssetManager.unitStats.get("unit_human");
-                human.traits.Add("Hedgehog");
-            }
+            update_ui();
         }
 
-        void init() 
+        void init()
         {
-            Debug.Log("Branny mod, running!");
-            initTraits();
-
-            Helper.Localization.addSpecialLocalization("kill_lead_new", "$discord_count$ $power$ $number$ $wbcode$ $wbcode$ $wbcode$");
+            Debug.Log("Initializing Branny Mod");
+            init_assets();
+            init_traits();
+            Debug.Log("Branny mod, initialized!");
         }
 
         private void Patching(Harmony harmony)

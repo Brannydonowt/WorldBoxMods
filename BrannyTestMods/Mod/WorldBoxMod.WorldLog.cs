@@ -21,11 +21,11 @@ namespace BrannyTestMods
 			ActorStatus aStat = Helper.Reflection.GetActorData(lead);
 
 			string aTitle = "kill_lead_" + aStat.firstName + "_" + aStat.kills;
-			string aMessage = aStat.firstName + " is the new world kill leader, with " + aStat.kills + " kills!";
+			string aMessage = aStat.firstName + " is $name$ the new world kill $kingdom$ leader, with " + aStat.kills + " kills!";
 
 			Helper.Localization.addLocalization(aTitle, aMessage);
 
-			WorldLogMessage worldLogMessage = new WorldLogMessage(aTitle, aStat.firstName, aStat.kills.ToString(), null);
+			WorldLogMessage worldLogMessage = new WorldLogMessage(aMessage, aStat.firstName, aStat.kills.ToString(), null);
 			worldLogMessage.special1 = lead.kingdom.name;
 			worldLogMessage.special2 = aStat.firstName;
 			worldLogMessage.special3 = aStat.kills.ToString();
@@ -35,7 +35,8 @@ namespace BrannyTestMods
 			worldLogMessage.color_special2 = Color.red;  //lead.kingdom.kingdomColor.colorBorderOut;
 			List<WorldLogMessage> list = Helper.Reflection.GetWorldLogMessages(WorldLog.instance);
 			list.Add(worldLogMessage);
-			
+
+
 			worldLogMessage.add();
 		}
 
