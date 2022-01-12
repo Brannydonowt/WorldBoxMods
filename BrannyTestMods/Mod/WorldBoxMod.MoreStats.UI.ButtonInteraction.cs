@@ -26,6 +26,7 @@ namespace BrannyTestMods
 
         public void Setup() 
         {
+            customData = new string[0];
             myButton = GetComponent<Button>();
             onClickActions += Interact;
             myButton.onClick.AddListener(onClickActions);
@@ -33,6 +34,7 @@ namespace BrannyTestMods
 
         public void trackActor(string toTrack)
         {
+            myActorID = toTrack;
             myActor = MapBox.instance.getActorByID(myActorID);
         }
 
@@ -43,11 +45,7 @@ namespace BrannyTestMods
 
         public void AddCustomData(string[] data) 
         {
-            foreach (string s in data) 
-            {
-                if (!customData.Contains(s))
-                    customData.Append(s);
-            }
+            customData = data;
         }
 
         void Interact()

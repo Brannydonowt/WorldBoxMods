@@ -30,6 +30,8 @@ namespace BrannyTestMods
 
             Debug.Log("Initialising UI");
 
+            createdButtons = new List<ButtonInteraction>();
+
             brannyCanvas = GetGameObjectFromAssetBundle("BrannyCanvas");
             statParent = brannyCanvas.transform.GetChild(0).GetChild(0).GetChild(0).gameObject;
             Debug.Log(statParent.name);
@@ -61,14 +63,20 @@ namespace BrannyTestMods
 
         static void RefreshStatUI() 
         {
+            if (createdButtons.Count == 0)
+                return;
+
             foreach (ButtonInteraction b in createdButtons) 
             {
                 switch(b.customData[0])
                 {
                     case "Most Kills":
                         UpdateMostRuthless(b.myActorID);
+                        Debug.Log("Updating most kills");
                         break;
-                
+                    default:
+                        Debug.Log("Custom Data = " + b.customData[0]);
+                        break;
                 }
             }
         }
@@ -80,7 +88,7 @@ namespace BrannyTestMods
             GameObject entry = GetStatEntryWithName(statName);
 
             string[] cData = new string[1];
-            cData.Append(statName);
+            cData[0] = statName;
 
             entry.AddComponent<ButtonInteraction>();
             ButtonInteraction button = entry.GetComponent<ButtonInteraction>();
