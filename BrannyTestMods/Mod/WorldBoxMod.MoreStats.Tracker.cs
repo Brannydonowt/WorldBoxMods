@@ -20,7 +20,17 @@ namespace BrannyTestMods
 		public static void stats_patch(Harmony harmony) 
 		{
 			Helper.Utils.HarmonyPatching(harmony, "postfix", AccessTools.Method(typeof(Actor), "increaseKillCount"), AccessTools.Method(typeof(WorldBoxMod), "increaseKillCount_postfix"));
-			Debug.Log("PostFix increaseKillCount DONE");
+			Helper.Utils.HarmonyPatching(harmony, "postfix", AccessTools.Method(typeof(Actor), "consumeCityFoodItem"), AccessTools.Method(typeof(WorldBoxMod), "consumeCityFoodItem_postfix"));
+
+
+			Debug.Log("PostFix stats_patch DONE");
+		}
+
+		public static void consumeCityFoodItem_postfix(Actor __instance) 
+		{
+			var data = Helper.Reflection.GetActorData(__instance);
+
+
 		}
 
 		public static void increaseKillCount_postfix(Actor __instance)
