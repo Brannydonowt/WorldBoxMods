@@ -199,9 +199,4 @@ namespace BrannyTestMods
 			return result;
 		}
 	}
-	
-	public partial class WorldBoxMod
-	{
-		
-	}
 }
