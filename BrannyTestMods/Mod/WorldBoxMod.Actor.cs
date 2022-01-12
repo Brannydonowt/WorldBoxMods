@@ -99,6 +99,7 @@ namespace BrannyTestMods
 
 			// I may have to place the data back inside of the dictionary, we will see.
 			toKill.alive = false;
+			toKill.yod = MapBox.instance.mapStats.year;
 		}
 
 		public static void killHimself_prefix(Actor __instance) 
@@ -131,6 +132,7 @@ namespace BrannyTestMods
 		public int kills;
 		public int age;
 		public int born;
+		public int yod;
 		public int children;
 
 		public string faveFood;

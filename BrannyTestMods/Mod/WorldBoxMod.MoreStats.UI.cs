@@ -110,7 +110,7 @@ namespace BrannyTestMods
 
             titleText.text = statName;
             detailsText.text = format_details_string(stats);
-            statusText.text = format_status_string(data);
+            statusText.text = format_status_string(actor);
         }
 
         static void UpdateMostRuthless(string actorId) 
@@ -158,11 +158,16 @@ namespace BrannyTestMods
             return details[0] + " - " + details[1] + " - Kills: " + details[2];
         }
 
-        static string format_status_string(ActorStatus status) 
+
+        // TODO - Add YearBorn-YearDeath
+        static string format_status_string(BrannyActor actor) 
         {
+            ActorStatus status = actor.getActorStatus();
+
             string result = "";
             string age = status.age.ToString();
             string born = status.bornTime.ToString();
+            //MapBox.instance.mapStats.
 
             if (status.alive)
             {
@@ -170,8 +175,7 @@ namespace BrannyTestMods
             }
             else 
             {
-                int deathYear = status.bornTime + status.age;
-                result = "Dead, Y" + born + "-" + deathYear;
+                result = "Dead";
             }
 
             return result;
