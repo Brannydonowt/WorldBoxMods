@@ -17,6 +17,13 @@ namespace BrannyTestMods
 	// I need a class that can track any actor that may have existed at one point
 	public static class BrannyActorManager
 	{
+		public static void Branny_Actor_Patch(Harmony harmony) 
+		{
+			Helper.Utils.HarmonyPatching(harmony, "prefix", AccessTools.Method(typeof(Actor), "killHimself"), AccessTools.Method(typeof(BrannyActorManager), "killHimself_prefix"));
+			Debug.Log("Prefix Actor_killHimself DONE");
+		}
+
+
 		static Dictionary<string, BrannyActor> memorableActors = new Dictionary<string, BrannyActor>();
 
 		static Dictionary<string, string> trackedLiveActors = new Dictionary<string, string>();
@@ -89,6 +96,30 @@ namespace BrannyTestMods
 
 			Debug.Log("We don't seem to have saved that requested actor");
 			return null;
+		}
+
+		public static void KillRememberedActor(string id) 
+		{
+			BrannyActor toKill = GetRememberedActor(id);
+
+			trackedLiveActors.Remove(toKill.actorID);
+
+			// I may have to place the data back inside of the dictionary, we will see.
+			toKill.alive = false;
+		}
+
+		public static void killHimself_prefix(Actor __instance) 
+		{
+			ActorStatus data = Helper.Reflection.GetActorData(__instance);
+
+			// Did somebody we were tracking just die?
+			if (trackedLiveActors.ContainsKey(data.actorID)) 
+			{
+				Debug.Log("KILLING ACTOR WE WERE TRACKING");
+				string bId = "";
+				trackedLiveActors.TryGetValue(data.actorID, out bId);
+				KillRememberedActor(bId);
+			}
 		}
 	}
 
@@ -165,6 +196,7 @@ namespace BrannyTestMods
 		public ActorStatus getActorStatus() 
 		{
 			ActorStatus result = new ActorStatus();
+			result.alive = alive;
 			result.actorID = actorID;
 			result.firstName = firstName;
 			result.kills = kills;

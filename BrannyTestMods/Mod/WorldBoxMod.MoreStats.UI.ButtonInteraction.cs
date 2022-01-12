@@ -39,9 +39,14 @@ namespace BrannyTestMods
 
             BrannyActor b = BrannyActorManager.GetRememberedActor(myActorID);
 
-            if (b.alive) 
+            if (b.alive)
             {
                 actorId = b.actorID;
+                GetComponent<Button>().interactable = true;
+            }
+            else 
+            {
+                GetComponent<Button>().interactable = false;
             }
             
             myActor = MapBox.instance.getActorByID(actorId);

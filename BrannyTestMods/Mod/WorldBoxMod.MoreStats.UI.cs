@@ -169,6 +169,9 @@ namespace BrannyTestMods
             string result = "";
             string age = status.age.ToString();
             string born = status.bornTime.ToString();
+
+            Debug.Log("Updating Status - Stat owner is: " + status.alive);
+
             if (status.alive)
             {
                 result = "Alive, Age: " + age;
