@@ -25,9 +25,26 @@ namespace BrannyTestMods
 			memorableActors.Add(savedActor.getActorID(), savedActor);
 		}
 
-		public static bool DoesActorExist(Actor a) 
+		public static bool DoesActorExist(string id) 
 		{
-			if ()
+			// Have we saved this actor id before?
+			if (memorableActors.ContainsKey(id))
+				return true;
+
+			return false;
+		}
+
+		public static Actor GetRememberedActor(string id) 
+		{
+			if (DoesActorExist(id)) 
+			{
+				BrannyActor result;
+                _ = memorableActors.TryGetValue(id, out result);
+				return result;
+			}
+
+			Debug.Log("We don't seem to have saved that requested actor");
+			return null;
 		}
 	}
 

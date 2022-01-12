@@ -48,7 +48,7 @@ namespace BrannyTestMods
 					highestKills = kills;
 
 					UpdateMostRuthless(data.actorID);
-
+					BrannyActorManager.RememberActor(__instance);
 					return;
 				}
 			}

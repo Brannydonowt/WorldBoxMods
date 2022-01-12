@@ -113,6 +113,16 @@ namespace BrannyTestMods
         static void UpdateMostRuthless(string actorId) 
         {
             Actor a = MapBox.instance.getActorByID(actorId);
+            // There's a chance the actor has died
+            if (a == null) 
+            {
+                Debug.Log("Actor appears to have died, getting remembered state");
+                a = BrannyActorManager.GetRememberedActor(actorId);
+                if (a == null) 
+                {
+                    Debug.Log("Actor still not found after pulling from Branny Manager");
+                }
+            }
 
             var data = Helper.Reflection.GetActorData(a);
             
