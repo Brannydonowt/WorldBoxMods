@@ -23,7 +23,6 @@ namespace BrannyTestMods
 			Debug.Log("Prefix Actor_killHimself DONE");
 		}
 
-
 		static Dictionary<string, BrannyActor> memorableActors = new Dictionary<string, BrannyActor>();
 
 		static Dictionary<string, string> trackedLiveActors = new Dictionary<string, string>();
@@ -51,18 +50,13 @@ namespace BrannyTestMods
 				savedActor = new BrannyActor(toRemember);
 				trackedLiveActors.Add(stat.actorID, savedActor._id);
 				memorableActors.Add(savedActor._id, savedActor);
-				Debug.Log("Created new Saved Actor: " + savedActor._id);
 			}
 
-			Debug.Log("Added to memorable actors");
 			return savedActor._id;
 		}
 
 		public static bool DoesActorExist(string id)
 		{
-
-			Debug.Log("Checking if actor: " + id + " exists");
-
 			// Have we saved this actor id before?
 			if (memorableActors.ContainsKey(id))
 				return true;
@@ -90,7 +84,6 @@ namespace BrannyTestMods
 				BrannyActor result;
                 _ = memorableActors.TryGetValue(id, out result);
 
-				Debug.Log("Got remembered actor: " + result._id);
 				return result;
 			}
 
@@ -115,7 +108,6 @@ namespace BrannyTestMods
 			// Did somebody we were tracking just die?
 			if (trackedLiveActors.ContainsKey(data.actorID)) 
 			{
-				Debug.Log("KILLING ACTOR WE WERE TRACKING");
 				string bId = "";
 				trackedLiveActors.TryGetValue(data.actorID, out bId);
 				KillRememberedActor(bId);
@@ -188,7 +180,6 @@ namespace BrannyTestMods
 			}
 			else 
 			{
-				Debug.Log("Requested Actor that is no longer alive.");
 				return null;
 			}
 		}

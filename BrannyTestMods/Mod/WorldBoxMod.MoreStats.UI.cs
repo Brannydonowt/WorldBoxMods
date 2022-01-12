@@ -119,10 +119,6 @@ namespace BrannyTestMods
             //Actor a = MapBox.instance.getActorByID(actorId);
             ActorStatus data = actor.getActorStatus();
             // There's a chance the actor has died
-            if (actor == null)
-            {
-                Debug.Log("Actor appears to have died, getting remembered state");
-            }
 
             if (data == null) 
             {
@@ -140,7 +136,6 @@ namespace BrannyTestMods
 
         static GameObject CreateStatEntry() 
         {
-            Debug.Log("Creating a new stat entry");
             GameObject entry = Instantiate(statEntry, statParent.transform);
             entry.AddComponent<ButtonInteraction>();
             createdButtons.Add(entry.GetComponent<ButtonInteraction>());
@@ -163,14 +158,11 @@ namespace BrannyTestMods
             return details[0] + " - " + details[1] + " - Kills: " + details[2];
         }
 
-
         static string format_status_string(ActorStatus status) 
         {
             string result = "";
             string age = status.age.ToString();
             string born = status.bornTime.ToString();
-
-            Debug.Log("Updating Status - Stat owner is: " + status.alive);
 
             if (status.alive)
             {
@@ -178,7 +170,8 @@ namespace BrannyTestMods
             }
             else 
             {
-                result = "Dead, Y" + born + "-" + (born + age).ToString();
+                int deathYear = status.bornTime + status.age;
+                result = "Dead, Y" + born + "-" + deathYear;
             }
 
             return result;
