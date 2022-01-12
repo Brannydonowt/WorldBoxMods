@@ -17,12 +17,19 @@ namespace BrannyTestMods
 	// I need a class that can track any actor that may have existed at one point
 	public static class BrannyActorManager 
 	{
-		static Dictionary<string, BrannyActor> memorableActors;
+		static Dictionary<string, BrannyActor> memorableActors = new Dictionary<string, BrannyActor>();
 
 		public static void RememberActor(Actor toRemember) 
-		{
+		{			
 			BrannyActor savedActor = new BrannyActor(toRemember);
-			memorableActors.Add(savedActor.getActorID(), savedActor);
+
+			// We want to replace any saved data
+			if (memorableActors.ContainsKey(savedActor.actorID))
+				memorableActors.Remove(savedActor.actorID);
+
+			Debug.Log("Made Actor");
+			memorableActors.Add(savedActor.actorID, savedActor);
+			Debug.Log("Adding to memorable actors");
 		}
 
 		public static bool DoesActorExist(string id) 
@@ -52,26 +59,34 @@ namespace BrannyTestMods
 	// TODO - I'll need some serialization on this.
 	public class BrannyActor : Actor 
 	{
-		public BrannyActor(Actor inActor) 
+		public Actor basedOn;
+		public string actorID;
+
+		public BrannyActor(Actor inActor) : base() 
 		{
-			
+			Debug.Log("Branny actor constructor");
+			basedOn = inActor;
+			Debug.Log("Set based on");
+			actorID = Helper.Reflection.GetActorData(inActor).actorID;
+			Debug.Log("ID = : " + actorID);
 		}
 
 		public ActorStatus getActorStatus() 
 		{
-			return Helper.Reflection.GetActorData(this);
+			Debug.Log("Getting Status Object");
+			return Helper.Reflection.GetActorData(basedOn);
 		}
 
 		public ActorStats getActorStats() 
 		{
-			return Helper.Reflection.GetActorStats(this);
+			return Helper.Reflection.GetActorStats(basedOn);
 		}
 
-		public string getActorID() 
+		public string getActorID()
 		{
+			Debug.Log("Getting actor ID");
 			return getActorStatus().actorID;
 		}
-
 	}
 	
 	public partial class WorldBoxMod
