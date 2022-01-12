@@ -141,7 +141,7 @@ namespace BrannyTestMods
 
 		private ActorStatus status;
 
-		public BrannyActor(Actor inActor) : base() 
+		public BrannyActor(Actor inActor)
 		{
 			ActorStatus stat = Helper.Reflection.GetActorData(inActor);
 			actorID = stat.actorID;

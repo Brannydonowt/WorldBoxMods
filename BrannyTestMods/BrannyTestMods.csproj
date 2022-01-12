@@ -131,7 +131,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Mod\AssetLoading\AssetLoader.cs" />
-    <Compile Include="Mod\GodPowerTab.cs" />
     <Compile Include="Mod\Helper.cs" />
     <Compile Include="Mod\WorldBoxMod.AssetLoading.cs" />
     <Compile Include="Mod\WorldBoxMod.Actor.cs" />
