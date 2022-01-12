@@ -35,7 +35,16 @@ namespace BrannyTestMods
         public void trackActor(string toTrack)
         {
             myActorID = toTrack;
-            myActor = MapBox.instance.getActorByID(myActorID);
+            string actorId = "";
+
+            BrannyActor b = BrannyActorManager.GetRememberedActor(myActorID);
+
+            if (b.alive) 
+            {
+                actorId = b.actorID;
+            }
+            
+            myActor = MapBox.instance.getActorByID(actorId);
         }
 
         public Actor GetTrackedActor()

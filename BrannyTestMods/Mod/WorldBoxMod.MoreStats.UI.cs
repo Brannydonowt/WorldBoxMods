@@ -96,7 +96,7 @@ namespace BrannyTestMods
 
             button.Setup();
             if (actor.alive)
-                button.trackActor(actor.actorID);
+                button.trackActor(actor._id);
             else
                 button.GetComponent<Button>().interactable = false;
 

@@ -37,19 +37,25 @@ namespace BrannyTestMods
 				// TODO - This might not be necessary
 				savedActor = new BrannyActor(toRemember);
 				savedActor._id = t;
+				memorableActors[savedActor._id] = savedActor;
 			}
 			else
 			{
 				savedActor = new BrannyActor(toRemember);
 				trackedLiveActors.Add(stat.actorID, savedActor._id);
+				memorableActors.Add(savedActor._id, savedActor);
+				Debug.Log("Created new Saved Actor: " + savedActor._id);
 			}
 
-			memorableActors.Add(savedActor.actorID, savedActor);
+			Debug.Log("Added to memorable actors");
 			return savedActor._id;
 		}
 
 		public static bool DoesActorExist(string id)
-		{			
+		{
+
+			Debug.Log("Checking if actor: " + id + " exists");
+
 			// Have we saved this actor id before?
 			if (memorableActors.ContainsKey(id))
 				return true;
@@ -76,16 +82,13 @@ namespace BrannyTestMods
 			{
 				BrannyActor result;
                 _ = memorableActors.TryGetValue(id, out result);
+
+				Debug.Log("Got remembered actor: " + result._id);
 				return result;
 			}
 
 			Debug.Log("We don't seem to have saved that requested actor");
 			return null;
-		}
-
-		public static ActorStatus GetRememberedActorStatus(string id) 
-		{
-			
 		}
 	}
 
@@ -111,6 +114,8 @@ namespace BrannyTestMods
 
 		ActorGender gender;
 
+		private ActorStatus status;
+
 		public BrannyActor(Actor inActor) : base() 
 		{
 			ActorStatus stat = Helper.Reflection.GetActorData(inActor);
@@ -127,6 +132,9 @@ namespace BrannyTestMods
 			faveFood = stat.favoriteFood;
 			gender = stat.gender;
 
+			alive = true;
+
+			status = getActorStatus();
 			_id = GenerateID();
 			BrannyActorManager.AddTrackedID(_id);
 		}
@@ -158,6 +166,7 @@ namespace BrannyTestMods
 		{
 			ActorStatus result = new ActorStatus();
 			result.actorID = actorID;
+			result.firstName = firstName;
 			result.kills = kills;
 			result.age = age;
 			result.bornTime = born;
