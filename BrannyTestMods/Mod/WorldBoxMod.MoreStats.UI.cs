@@ -21,6 +21,8 @@ namespace BrannyTestMods
 
         bool ui_initialized;
 
+        static List<ButtonInteraction> createdButtons;
+
         void init_ui()
         {
             if (!assets_initialised)
@@ -52,6 +54,22 @@ namespace BrannyTestMods
                 // This will display Branny UI
                 brannyCanvas.SetActive(!brannyCanvas.activeSelf);
                 statParent.SetActive(brannyCanvas.activeSelf);
+
+                RefreshStatUI();
+            }
+        }
+
+        static void RefreshStatUI() 
+        {
+            foreach (ButtonInteraction b in createdButtons) 
+            {
+                switch(b.customData[0])
+                {
+                    case "Most Kills":
+                        UpdateMostRuthless(b.myActorID);
+                        break;
+                
+                }
             }
         }
 
@@ -60,9 +78,19 @@ namespace BrannyTestMods
             Actor a = MapBox.instance.getActorByID(actorId);
 
             GameObject entry = GetStatEntryWithName(statName);
-            entry.AddComponent<StatInteraction>();
-            entry.GetComponent<StatInteraction>().Setup();
-            entry.GetComponent<StatInteraction>().trackActor(a);
+
+            string[] cData = new string[1];
+            cData.Append(statName);
+
+            entry.AddComponent<ButtonInteraction>();
+            ButtonInteraction button = entry.GetComponent<ButtonInteraction>();
+
+            button.Setup();
+            button.trackActor(actorId);
+            button.AddCustomData(cData);
+
+            createdButtons.Add(button);
+
             entry.name = statName;
             Image iconImg = entry.transform.GetChild(0).GetComponent<Image>();
             Text titleText = entry.transform.GetChild(1).GetComponent<Text>();
@@ -71,6 +99,7 @@ namespace BrannyTestMods
 
             titleText.text = statName;
             detailsText.text = format_details_string(stats);
+            statusText.text = format_status_string(actorId);
         }
 
         static void UpdateMostRuthless(string actorId) 
@@ -78,7 +107,7 @@ namespace BrannyTestMods
             Actor a = MapBox.instance.getActorByID(actorId);
 
             var data = Helper.Reflection.GetActorData(a);
-
+            
             string[] killerstats = new string[3];
             killerstats[0] = data.firstName;
             killerstats[1] = a.kingdom.name;
@@ -108,6 +137,28 @@ namespace BrannyTestMods
         static string format_details_string(string[] details) 
         {
             return details[0] + " - " + details[1] + " - Kills: " + details[2];
+        }
+
+
+        static string format_status_string(string actorId) 
+        {
+            Actor a = MapBox.instance.getActorByID(actorId);
+
+            var target = Helper.Reflection.GetActorData(a);
+
+            string result = "";
+            string age = target.age.ToString();
+            string born = target.bornTime.ToString();
+            if (target.alive)
+            {
+                result = "Alive, Age: " + age;
+            }
+            else 
+            {
+                result = "Dead, Y" + born + "-" + (born + age).ToString();
+            }
+
+            return result;
         }
 	}
 }

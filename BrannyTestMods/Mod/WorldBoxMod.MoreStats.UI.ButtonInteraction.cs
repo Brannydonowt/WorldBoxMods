@@ -14,12 +14,15 @@ using HarmonyLib;
 
 namespace BrannyTestMods
 {
-    public class StatInteraction : MonoBehaviour
+    public class ButtonInteraction : MonoBehaviour
     {
-        public Actor myActor;
+        public string myActorID;
         Button myButton;
+        private Actor myActor;
 
-        private UnityAction onClickActions;
+        public UnityAction onClickActions;
+
+        public string[] customData;
 
         public void Setup() 
         {
@@ -28,9 +31,9 @@ namespace BrannyTestMods
             myButton.onClick.AddListener(onClickActions);
         }
 
-        public void trackActor(Actor toTrack)
+        public void trackActor(string toTrack)
         {
-            myActor = toTrack;
+            myActor = MapBox.instance.getActorByID(myActorID);
         }
 
         public Actor GetTrackedActor()
@@ -38,12 +41,20 @@ namespace BrannyTestMods
             return myActor;
         }
 
+        public void AddCustomData(string[] data) 
+        {
+            foreach (string s in data) 
+            {
+                if (!customData.Contains(s))
+                    customData.Append(s);
+            }
+        }
+
         void Interact()
         {
-            Action showMethod = delegate () { TestAction(); };
+            trackActor(myActorID);
             MapBox.instance.locateAndFollow(myActor, null, null);
             WorldBoxMod.CloseAllUI();
         }
-        void TestAction() { }
     }
 }
