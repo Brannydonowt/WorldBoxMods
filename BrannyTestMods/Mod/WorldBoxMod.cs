@@ -66,7 +66,7 @@ namespace BrannyTestMods
             Debug.Log("PostFix TraitLibrary DONE");
 
             stats_patch(harmony);
-            BrannyActorManager.Branny_Actor_Patch(harmony);
+            BrannyActorManager.Branny_Actor_Patch();
 
         }
 

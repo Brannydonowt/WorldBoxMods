@@ -18,10 +18,14 @@ namespace BrannyTestMods
         public static GameObject brannyCanvas;
         public static GameObject statParent;
         public static GameObject statEntry;
+        public static GameObject statList;
+        public static GameObject statListEntry;
 
         bool ui_initialized;
 
         static List<ButtonInteraction> createdButtons;
+
+        static Dictionary<string, int> 
 
         void init_ui()
         {
@@ -34,8 +38,9 @@ namespace BrannyTestMods
 
             brannyCanvas = GetGameObjectFromAssetBundle("BrannyCanvas");
             statParent = brannyCanvas.transform.GetChild(0).GetChild(0).GetChild(0).gameObject;
-            Debug.Log(statParent.name);
             statEntry = GetGameObjectFromAssetBundle("StatEntry");
+            statList = GetGameObjectFromAssetBundle("StatList");
+            statListEntry = GetGameObjectFromAssetBundle("StatListEntry");
 
             brannyCanvas.SetActive(false);
 
@@ -71,7 +76,7 @@ namespace BrannyTestMods
                 switch(b.customData[0])
                 {
                     case "Most Kills":
-                        UpdateMostRuthless(b.myActorID);
+                        UpdateMostRuthless(b.myActorID, 0);
                         Debug.Log("Updating most kills");
                         break;
                     default:
@@ -79,6 +84,17 @@ namespace BrannyTestMods
                         break;
                 }
             }
+        }
+
+        static void CreateNewStatLeaderboard(string type, List<LeaderboardEntry> leaderboard) 
+        {
+            
+        }
+
+        // Creates a new entry for a stat leaderboard at given position
+        static void CreateNewStatLeaderboardEntry(string actorId, int position) 
+        {
+            
         }
 
         static void UpdateStatUI(string statName, string actorId, string[] stats) 
@@ -113,7 +129,7 @@ namespace BrannyTestMods
             statusText.text = format_status_string(actor);
         }
 
-        static void UpdateMostRuthless(string actorId) 
+        static void UpdateMostRuthless(string actorId, int position)
         {
             BrannyActor actor = BrannyActorManager.GetRememberedActor(actorId);
             //Actor a = MapBox.instance.getActorByID(actorId);

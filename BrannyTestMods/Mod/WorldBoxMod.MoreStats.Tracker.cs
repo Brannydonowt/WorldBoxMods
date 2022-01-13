@@ -12,11 +12,8 @@ using HarmonyLib;
 
 namespace BrannyTestMods
 {
-    public partial class WorldBoxMod
-    {
-		public static ActorStatus killLeader;
-		public static int highestKills;
-
+	public partial class WorldBoxMod
+	{
 		public static void stats_patch(Harmony harmony) 
 		{
 			Helper.Utils.HarmonyPatching(harmony, "postfix", AccessTools.Method(typeof(Actor), "increaseKillCount"), AccessTools.Method(typeof(WorldBoxMod), "increaseKillCount_postfix"));
@@ -36,6 +33,11 @@ namespace BrannyTestMods
 			var data = Helper.Reflection.GetActorData(__instance);
 			int kills = data.kills;
 
+			if (tryAddToLeaderboard("Kills", data.actorID, kills)) 
+			{
+				// New entry stuff
+			}
+
 			if (killLeader != null)
 			{
 				// If the kill leader gets another kill
@@ -48,7 +50,7 @@ namespace BrannyTestMods
 					// Remember the actor (cache it)
 					// Update the stat, with the BrannyID - not game ID
 					string id = BrannyActorManager.RememberActor(__instance);
-					UpdateMostRuthless(id);
+					UpdateMostRuthless(id, 0);
 					return;
 				}
 			}
@@ -60,25 +62,8 @@ namespace BrannyTestMods
 				// Add the tyrant trait to the new kill leader
 				__instance.addTrait("Tyrant");
 				string id = BrannyActorManager.RememberActor(__instance);
-				UpdateMostRuthless(id);
+				UpdateMostRuthless(id, 0);
 			}
-		}
-
-		public static bool CompareKillLeader(ActorStatus killer, int numKills) 
-		{
-			if (numKills > highestKills)
-			{
-				killLeader = killer;
-				highestKills = numKills;
-				return true;
-			}
-			else
-			if (numKills == highestKills) 
-			{
-				Debug.Log(killer.firstName + " has reached " + highestKills + " total kills!");
-			}
-
-			return false;
 		}
 	}
 }
