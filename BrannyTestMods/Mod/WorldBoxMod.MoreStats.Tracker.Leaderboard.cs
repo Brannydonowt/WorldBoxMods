@@ -120,7 +120,7 @@ namespace BrannyTestMods
 				List<LeaderboardEntry> leaderboard = GetLeaderboardFromType(type);
 				
 				// If more than 10 entries, chop the last
-				if (leaderboard.Count >= 10)
+				if (leaderboard.Count > 10)
 					leaderboard.RemoveAt(leaderboard.Count - 1);
 
 				// Check to see if our new actor is already on the leaderboard

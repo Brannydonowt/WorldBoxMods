@@ -219,9 +219,15 @@ namespace BrannyTestMods
             name.text = data.firstName;
             statAmount.text = l.statValue + " Kills";
             if (bActor.alive)
+            {
                 status.text = "Alive";
+                status.color = new Color(66, 238, 73, 255);
+            }
             else
+            {
                 status.text = "Dead";
+                status.color = new Color(238, 77, 67, 255);
+            }
         }
 
         static void UpdateStatUI(string statName, string actorId, string[] stats) 
