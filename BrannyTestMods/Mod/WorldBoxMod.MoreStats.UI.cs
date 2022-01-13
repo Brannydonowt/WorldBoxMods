@@ -99,7 +99,8 @@ namespace BrannyTestMods
             list.GetComponent<ButtonInteraction>().Setup();
             list.AddComponent<UnfoldList>();
             UnfoldList myList = list.GetComponent<UnfoldList>();
-            list.GetComponent<Button>().onClick.AddListener(myList.TogglePanel());
+            myList.Setup();
+            list.GetComponent<Button>().onClick.AddListener(myList.TogglePanel);
             list.SetActive(true);
             list.name = type;
             CustomiseStatList(list.transform, type);

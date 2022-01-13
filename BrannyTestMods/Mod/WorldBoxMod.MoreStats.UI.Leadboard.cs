@@ -19,14 +19,22 @@ namespace BrannyTestMods
 
         static bool open = false;
 
-        private void Start()
+        public void Setup()
         {
             // We want our transform to cover the height of our first child (the stat title)
+            Debug.Log("Getting base height");
             baseHeight = transform.GetChild(0).GetComponent<RectTransform>().rect.height;
+            Debug.Log("Getting my rect transform");
+            myRect = GetComponent<RectTransform>();
+            Debug.Log("Getting item parent");
+            itemParent = transform.GetChild(1);
+            Debug.Log("Getting layout group");
+            layoutGroup = itemParent.GetComponent<VerticalLayoutGroup>();
         }
 
         public void TogglePanel()
         {
+            Debug.Log("Toggling panel");
             // if open, set the height to the base height
             if (open)
             {
@@ -43,12 +51,13 @@ namespace BrannyTestMods
 
         public void SetTransformHeight(float height)
         {
+            Debug.Log("Setting height");
             myRect.sizeDelta = new Vector2(myRect.rect.width, height);
         }
 
         public void UnfoldPanel()
         {
-            Debug.Log("Doing the thing");
+            Debug.Log("Showing panel");
             numChildren = itemParent.childCount;
 
             float totalHeight = GetChildHeight() * numChildren;
@@ -59,6 +68,7 @@ namespace BrannyTestMods
 
         public float GetChildHeight()
         {
+            Debug.Log("Getting child height");
             RectTransform entry = itemParent.GetChild(0).GetComponent<RectTransform>();
             float height = entry.rect.height;
             return height;
@@ -66,6 +76,7 @@ namespace BrannyTestMods
 
         public float GetAdditionalHeight()
         {
+            Debug.Log("Getting addtional height");
             float result = 0;
 
             result += layoutGroup.padding.top;
