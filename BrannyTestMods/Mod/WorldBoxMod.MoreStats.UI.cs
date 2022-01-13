@@ -86,12 +86,50 @@ namespace BrannyTestMods
             }
         }
 
+        static void UpdateStatLeaderboard(string type, List<LeaderboardEntry> leaderboard) 
+        {
+            if (statParent.transform.Find(type))
+            {
+                Debug.Log("We already have a leaderboard, we need to update the stats");
+
+                GameObject list = statParent.transform.Find(type).gameObject;
+                UnfoldList myList = list.transform.GetChild(0).gameObject.AddComponent<UnfoldList>();
+                
+                if (myList.open)
+                    myList.UnfoldPanel();
+
+                // Should get all children
+                foreach (Transform child in list.transform.GetChild(1)) 
+                {
+                    Destroy(child.gameObject);
+                }
+
+                Debug.Log("Stepping through new leaderboard");
+                int step = 0;
+                foreach (LeaderboardEntry l in leaderboard)
+                {
+                    Debug.Log(step + ": " + "POS: " + l.position + " STAT: " + l.statValue + " INDEX: " + leaderboard.IndexOf(l));
+                    step++;
+
+                    l.UpdatePosition(leaderboard.IndexOf(l));
+                    GameObject entry = CreateNewStatLeaderboardEntry(l, type);
+                    entry.transform.SetParent(list.transform.GetChild(1));
+                    entry.transform.SetSiblingIndex(leaderboard.IndexOf(l));
+                    entry.SetActive(true);
+                }
+            }
+            else 
+            {
+                CreateNewStatLeaderboard(type, leaderboard);
+            }
+        }
+
         static GameObject CreateNewStatLeaderboard(string type, List<LeaderboardEntry> leaderboard)
         {
             if (statParent.transform.Find(type)) 
             {
                 Debug.Log("Destroying existing parent");
-                Destroy(statParent.transform.Find(type));
+                Destroy(statParent.transform.Find(type).gameObject);
             }
 
             GameObject list = Instantiate(statList, statParent.transform);
@@ -108,9 +146,10 @@ namespace BrannyTestMods
             
             foreach (LeaderboardEntry l in leaderboard) 
             {
+                l.UpdatePosition(leaderboard.IndexOf(l));
                 GameObject entry = CreateNewStatLeaderboardEntry(l, type);
                 entry.transform.SetParent(list.transform.GetChild(1));
-                entry.transform.SetSiblingIndex(l.position + 1);
+                entry.transform.SetSiblingIndex(l.position);
                 entry.SetActive(true);
             }
 
@@ -186,7 +225,8 @@ namespace BrannyTestMods
             Text statAmount = listEntry.GetChild(2).gameObject.GetComponent<Text>();
             Text status = listEntry.GetChild(3).gameObject.GetComponent<Text>();
 
-            rank.text = "#" + l.position + 1;
+            int rankValue = l.position + 1;
+            rank.text = "#" + rankValue;
             name.text = data.firstName;
             statAmount.text = l.statValue + " Kills";
             if (bActor.alive)

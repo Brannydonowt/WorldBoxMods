@@ -18,7 +18,7 @@ namespace BrannyTestMods
 
         public static int numChildren;
 
-        static bool open = false;
+        public bool open = false;
 
         public void Setup()
         {

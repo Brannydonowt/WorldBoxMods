@@ -28,6 +28,11 @@ namespace BrannyTestMods
 				this.position = pos;
 				this.statValue = statValue;
 			}
+
+			public void UpdatePosition(int pos) 
+			{
+				position = pos;
+			}
 		}
 
 		public static List<LeaderboardEntry> killLeaderboard = new List<LeaderboardEntry>();
@@ -45,22 +50,23 @@ namespace BrannyTestMods
 				return 0;
 			}
 
+			int bestIndex = 999;
+
+			if (targetLeaderboard.Count < 10)
+				bestIndex = targetLeaderboard.Count;
+
 			int lastEntry = targetLeaderboard[targetLeaderboard.Count - 1].statValue;
-			Debug.Log("Last place on the leaderboard has stat value of: " + lastEntry);
 			// if our stat is higher than that of the last entry on the leaderboard
 			if (numStat > lastEntry)
 			{
-				Debug.Log("Our stat: " + numStat + " is greater than leaderboard entry: " + lastEntry);
-				int bestIndex = 999;
 				foreach (LeaderboardEntry e in targetLeaderboard)
 				{
-					Debug.Log("Checking against entry: " + e.statValue);
 					// The new entry belongs higher
 					if (numStat > e.statValue)
 					{
-						Debug.Log("our stat is higher, best index = " + bestIndex);
 						if (targetLeaderboard.IndexOf(e) < bestIndex)
 						{
+							Debug.Log("our stat " + numStat + " is higher than current " + e.statValue + ", best index = " + bestIndex);
 							bestIndex = targetLeaderboard.IndexOf(e);
 							Debug.Log("We have a new best index of: " + bestIndex);
 						}
@@ -74,7 +80,7 @@ namespace BrannyTestMods
 			}
 			else 
 			{
-				return 999;
+				return bestIndex;
 			}
 		}
 
@@ -119,21 +125,66 @@ namespace BrannyTestMods
 				// If more than 10 entries, chop the last
 				if (leaderboard.Count >= 10)
 					leaderboard.RemoveAt(leaderboard.Count - 1);
-				
+
+				// Check to see if our new actor is already on the leaderboard
+
 				LeaderboardEntry newEntry = new LeaderboardEntry(_id, pos, numStat);
+
+				if (CheckActorOnLeaderboard(newEntry, leaderboard))
+				{
+					Debug.Log("Removing actor from leaderboard");
+					RemoveActorFromLeaderboard(newEntry.actorId, leaderboard);
+				}
+
 				leaderboard.Insert(pos, newEntry);
 
+				foreach (LeaderboardEntry e in leaderboard)
+				{
+					e.UpdatePosition(leaderboard.IndexOf(e));
+				}
+
 				if (pos == 0)
+				{
 					// Do something special
 					Debug.Log("Brand new leader");
+				}
 
-				CreateNewStatLeaderboard(type, leaderboard);
+				UpdateStatLeaderboard(type, leaderboard);
 
 				return true;
 			}
 
 			Debug.Log("Reached end of tryAdd method");
 			return false;
+		}
+
+		public static bool CheckActorOnLeaderboard(LeaderboardEntry entry, List<LeaderboardEntry> leaderboard) 
+		{
+			bool result = false;
+
+			foreach (LeaderboardEntry e in leaderboard) 
+			{
+				if (e.actorId == entry.actorId)
+					result = true;
+			}
+
+			return result;
+		}
+
+		public static void RemoveActorFromLeaderboard(string actorId, List<LeaderboardEntry> leaderboard)
+		{
+			int targetIndex = 999;
+
+			foreach (LeaderboardEntry e in leaderboard) 
+			{
+				if (e.actorId == actorId) 
+				{
+					targetIndex = leaderboard.IndexOf(e);
+				}
+			}
+
+			if (targetIndex != 999)
+				leaderboard.RemoveAt(targetIndex);
 		}
 
 		// Returns true if the stat is higher than in the leaderboard
@@ -148,11 +199,18 @@ namespace BrannyTestMods
 				return true;
 			}
 
-			// If our value is higher than the current heightest
-			if (numStat > targetLeaderboard[targetLeaderboard.Count - 1].statValue) 
+			if (targetLeaderboard.Count >= 10)
 			{
-				Debug.Log("New Leaderboard entry "+ numStat + " belongs on the leaderboard");
-				return true;	
+				// If our value is higher than the current heightest
+				if (numStat > targetLeaderboard[targetLeaderboard.Count - 1].statValue)
+				{
+					Debug.Log("New Leaderboard entry " + numStat + " belongs on the leaderboard");
+					return true;
+				}
+			}
+			else 
+			{
+				return true;
 			}
 
 			Debug.Log("statvalue: " + numStat + " is not high enough to get onto the leaderboard");
