@@ -40,20 +40,30 @@ namespace BrannyTestMods
 			// if there are none in this leaderboard
 			// TO-DO add new leaderboard creation
 			if (targetLeaderboard.Count <= 0)
+			{
+				Debug.Log("Leaderboard doesn't exist, so pos = 0");
 				return 0;
+			}
 
 			int lastEntry = targetLeaderboard[targetLeaderboard.Count - 1].statValue;
+			Debug.Log("Last place on the leaderboard has stat value of: " + lastEntry);
 			// if our stat is higher than that of the last entry on the leaderboard
 			if (numStat > lastEntry)
 			{
+				Debug.Log("Our stat: " + numStat + " is greater than leaderboard entry: " + lastEntry);
 				int bestIndex = 999;
 				foreach (LeaderboardEntry e in targetLeaderboard)
 				{
+					Debug.Log("Checking against entry: " + e.statValue);
 					// The new entry belongs higher
 					if (numStat > e.statValue)
 					{
-						if (bestIndex < targetLeaderboard.IndexOf(e))
+						Debug.Log("our stat is higher, best index = " + bestIndex);
+						if (targetLeaderboard.IndexOf(e) < bestIndex)
+						{
 							bestIndex = targetLeaderboard.IndexOf(e);
+							Debug.Log("We have a new best index of: " + bestIndex);
+						}
 					}
 				}
 
@@ -133,14 +143,19 @@ namespace BrannyTestMods
 
 			// Are there any entries yet?
 			if (targetLeaderboard.Count <= 0)
+			{
+				Debug.Log("Leaderboard does not exist, creating a new one and adding num stat");
 				return true;
+			}
 
 			// If our value is higher than the current heightest
-			if (targetLeaderboard[targetLeaderboard.Count - 1].statValue > numStat) 
+			if (numStat > targetLeaderboard[targetLeaderboard.Count - 1].statValue) 
 			{
+				Debug.Log("New Leaderboard entry "+ numStat + " belongs on the leaderboard");
 				return true;	
 			}
 
+			Debug.Log("statvalue: " + numStat + " is not high enough to get onto the leaderboard");
 			return false;
 		}
 	}
