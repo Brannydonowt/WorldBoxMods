@@ -29,7 +29,6 @@ namespace BrannyTestMods
         public void Awake()
         {
             harmony = new Harmony(id);
-            Helper.GodPowerTab.patch(harmony);
             Patching(harmony);
         }
 
@@ -66,7 +65,7 @@ namespace BrannyTestMods
             Debug.Log("PostFix TraitLibrary DONE");
 
             stats_patch(harmony);
-            BrannyActorManager.Branny_Actor_Patch();
+            BrannyActorManager.Branny_Actor_Patch(harmony);
 
         }
 

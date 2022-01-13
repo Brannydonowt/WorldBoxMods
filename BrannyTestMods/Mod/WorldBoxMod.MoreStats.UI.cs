@@ -23,9 +23,9 @@ namespace BrannyTestMods
 
         bool ui_initialized;
 
-        static List<ButtonInteraction> createdButtons;
+        static List<GameObject> createdElements = new List<GameObject>();
 
-        static Dictionary<string, int> 
+        static List<ButtonInteraction> createdButtons;
 
         void init_ui()
         {
@@ -86,15 +86,113 @@ namespace BrannyTestMods
             }
         }
 
-        static void CreateNewStatLeaderboard(string type, List<LeaderboardEntry> leaderboard) 
+        static GameObject CreateNewStatLeaderboard(string type, List<LeaderboardEntry> leaderboard)
         {
+            if (statParent.transform.Find(type)) 
+            {
+                Debug.Log("Destroying existing parent");
+                Destroy(statParent.transform.Find(type));
+            }
+
+            GameObject list = Instantiate(statList, statParent.transform);
+            list.AddComponent<ButtonInteraction>();
+            list.GetComponent<ButtonInteraction>().Setup();
+            list.AddComponent<UnfoldList>();
+            UnfoldList myList = list.GetComponent<UnfoldList>();
+            list.GetComponent<Button>().onClick.AddListener(myList.TogglePanel());
+            list.SetActive(true);
+            list.name = type;
+            CustomiseStatList(list.transform, type);
             
+            createdElements.Add(list);
+            
+            foreach (LeaderboardEntry l in leaderboard) 
+            {
+                GameObject entry = CreateNewStatLeaderboardEntry(l, type);
+                entry.transform.SetParent(list.transform.GetChild(1));
+                entry.transform.SetSiblingIndex(l.position + 1);
+                entry.SetActive(true);
+            }
+
+            return list;
         }
 
         // Creates a new entry for a stat leaderboard at given position
-        static void CreateNewStatLeaderboardEntry(string actorId, int position) 
+        static GameObject CreateNewStatLeaderboardEntry(LeaderboardEntry l, string type) 
         {
-            
+            int statName = l.statValue;
+;
+            BrannyActor bActor = BrannyActorManager.GetRememberedActor(l.actorId);
+
+            GameObject entry = Instantiate(statListEntry);
+            entry.AddComponent<ButtonInteraction>();
+            ButtonInteraction button = entry.GetComponent<ButtonInteraction>();
+            entry.SetActive(true);
+
+            CustomiseStatListEntry(entry.transform, type, l);
+
+            string[] cData = new string[1];
+            cData[0] = type;
+
+            button.Setup();
+            button.trackActor(l.actorId);
+            button.AddCustomData(cData);
+
+            return entry;
+        }
+
+        static void CustomiseStatList(Transform listEntry, string type) 
+        {
+            Transform root = listEntry.GetChild(0);
+            Image icon = root.GetChild(0).gameObject.GetComponent<Image>();
+            Text title = root.GetChild(1).gameObject.GetComponent<Text>();
+            Text details = root.GetChild(2).gameObject.GetComponent<Text>();
+            Text alive = root.GetChild(3).gameObject.GetComponent<Text>();
+
+            switch (type) 
+            {
+                case "Kills":
+                    title.text = "Top Killers";
+                    details.text = "Grants the \"BloodThirsty\" Trait";
+                    alive.text = "";
+                    break; 
+                default:
+                    title.text = "broken";
+                    details.text = "This is broken, please let the dev know what you expect it to be.";
+                    alive.text = "";     
+                    break;
+            }
+        }
+
+        static void CustomiseStatListEntry(Transform listEntry, string type, LeaderboardEntry l)
+        {
+            string statDisplayName = "";
+
+            switch (type)
+            {
+                case "Kills":
+                    statDisplayName = "Most Kills";
+                    break;
+                default:
+                    statDisplayName = "Something has gone wrong...";
+                    break;
+            }
+
+            BrannyActor bActor = BrannyActorManager.GetRememberedActor(l.actorId);
+            ActorStatus data = bActor.getActorStatus();
+
+            Text rank = listEntry.GetChild(0).gameObject.GetComponent<Text>();
+            Text name = listEntry.GetChild(1).gameObject.GetComponent<Text>();
+            Text statAmount = listEntry.GetChild(2).gameObject.GetComponent<Text>();
+            Text status = listEntry.GetChild(3).gameObject.GetComponent<Text>();
+
+            rank.text = "#" + l.position + 1;
+            name.text = data.firstName;
+            statAmount.text = l.statValue + " Kills";
+            if (bActor.alive)
+                status.text = "Alive";
+            else
+                status.text = "Dead";
         }
 
         static void UpdateStatUI(string statName, string actorId, string[] stats) 

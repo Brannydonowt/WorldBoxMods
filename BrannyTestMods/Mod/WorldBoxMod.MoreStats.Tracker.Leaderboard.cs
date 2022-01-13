@@ -14,7 +14,7 @@ namespace BrannyTestMods
 {
 	public partial class WorldBoxMod
 	{
-		public static ActorStatus killLeader;
+		public ActorStatus killLeader;
 
 		public struct LeaderboardEntry
 		{
@@ -30,8 +30,8 @@ namespace BrannyTestMods
 			}
 		}
 
-		public static List<LeaderboardEntry> killLeaderboard;
-		public static List<LeaderboardEntry> childrenLeaderboard;
+		public static List<LeaderboardEntry> killLeaderboard = new List<LeaderboardEntry>();
+		public static List<LeaderboardEntry> childrenLeaderboard = new List<LeaderboardEntry>();
 
 		public static int GetPositionOnLeaderboard(string type, int numStat) 
 		{
@@ -40,7 +40,7 @@ namespace BrannyTestMods
 			// if there are none in this leaderboard
 			// TO-DO add new leaderboard creation
 			if (targetLeaderboard.Count <= 0)
-				return 999;
+				return 0;
 
 			int lastEntry = targetLeaderboard[targetLeaderboard.Count - 1].statValue;
 			// if our stat is higher than that of the last entry on the leaderboard
@@ -68,7 +68,7 @@ namespace BrannyTestMods
 			}
 		}
 
-		static List<LeaderboardEntry> GetLeaderboardFromType(string type) 
+		public static List<LeaderboardEntry> GetLeaderboardFromType(string type) 
 		{
 			List<LeaderboardEntry> targetLeaderboard;
 
@@ -88,9 +88,9 @@ namespace BrannyTestMods
 			return targetLeaderboard;
 		}
 
-		static public bool tryAddToLeaderboard(string type, string actorId, int numStat) 
+		public static bool tryAddToLeaderboard(string type, string actorId, int numStat) 
 		{
-			if (CompareStatToLeaderboards(type, actorId, numStat)) 
+			if (CompareStatToLeaderboards(type, numStat)) 
 			{
 				int pos = GetPositionOnLeaderboard(type, numStat);
 
@@ -100,10 +100,17 @@ namespace BrannyTestMods
 					return false;
 				}
 
+				Actor mActor = MapBox.instance.getActorByID(actorId);
+
+				string _id = BrannyActorManager.RememberActor(mActor);
+
 				List<LeaderboardEntry> leaderboard = GetLeaderboardFromType(type);
+				
+				// If more than 10 entries, chop the last
 				if (leaderboard.Count >= 10)
 					leaderboard.RemoveAt(leaderboard.Count - 1);
-				LeaderboardEntry newEntry = new LeaderboardEntry(actorId, pos, numStat);
+				
+				LeaderboardEntry newEntry = new LeaderboardEntry(_id, pos, numStat);
 				leaderboard.Insert(pos, newEntry);
 
 				if (pos == 0)
@@ -120,7 +127,7 @@ namespace BrannyTestMods
 		}
 
 		// Returns true if the stat is higher than in the leaderboard
-		static public bool CompareStatToLeaderboards(string type, string ActorId, int numStat) 
+		public static bool CompareStatToLeaderboards(string type, int numStat) 
 		{
 			List<LeaderboardEntry> targetLeaderboard = GetLeaderboardFromType(type);
 

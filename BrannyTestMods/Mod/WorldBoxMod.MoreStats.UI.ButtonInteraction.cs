@@ -20,7 +20,7 @@ namespace BrannyTestMods
         Button myButton;
         private Actor myActor;
 
-        public UnityAction onClickActions;
+        public static UnityAction onClickActions;
 
         public string[] customData;
 
@@ -28,7 +28,6 @@ namespace BrannyTestMods
         {
             customData = new string[0];
             myButton = GetComponent<Button>();
-            onClickActions += Interact;
             myButton.onClick.AddListener(onClickActions);
         }
 
@@ -50,6 +49,7 @@ namespace BrannyTestMods
             }
             
             myActor = MapBox.instance.getActorByID(actorId);
+            onClickActions +=  Interact;
         }
 
         public Actor GetTrackedActor()

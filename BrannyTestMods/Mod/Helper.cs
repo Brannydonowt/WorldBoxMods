@@ -193,7 +193,6 @@ namespace Helper
             return dictionary[key];
         }
 
-        // This is not the way to go about this...
         public static void addSpecialLocalization(string key, string value) 
         {
             LocalizedText lText = new LocalizedText();

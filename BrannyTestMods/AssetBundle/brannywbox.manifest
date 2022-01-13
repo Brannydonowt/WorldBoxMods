@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3097494257
+CRC: 173644789
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: d09bd187a6a5afde1c1370fd99c0cddc
+    Hash: d0dc1e65d538fab538ebdade641a72c5
   TypeTreeHash:
     serializedVersion: 2
     Hash: 89ac8c1a91316a2e44735b8a96b84cfb
@@ -60,9 +60,11 @@ Assets:
 - Assets/BundledAssets/brannywbox/Roboto-Bold SDF.asset
 - Assets/BundledAssets/brannywbox/ui/ui and icons.png
 - Assets/BundledAssets/brannywbox/Roboto-Bold SDF - Drop Shadow.mat
+- Assets/BundledAssets/brannywbox/StatList.prefab
 - Assets/BundledAssets/brannywbox/BrannyCanvas.prefab
 - Assets/BundledAssets/brannywbox/ui/bouttons.png
 - Assets/BundledAssets/brannywbox/StatEntry.prefab
 - Assets/BundledAssets/brannywbox/Roboto-Bold.ttf
+- Assets/BundledAssets/brannywbox/StatListEntry.prefab
 - Assets/BundledAssets/brannywbox/Roboto-Bold SDF - Surface.mat
 Dependencies: []
