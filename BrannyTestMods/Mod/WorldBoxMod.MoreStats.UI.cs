@@ -90,13 +90,8 @@ namespace BrannyTestMods
         {
             if (statParent.transform.Find(type))
             {
-                Debug.Log("We already have a leaderboard, we need to update the stats");
-
                 GameObject list = statParent.transform.Find(type).gameObject;
-                UnfoldList myList = list.transform.GetChild(0).gameObject.AddComponent<UnfoldList>();
-                
-                if (myList.open)
-                    myList.UnfoldPanel();
+                UnfoldList myList = list.transform.GetChild(0).gameObject.GetComponent<UnfoldList>();
 
                 // Should get all children
                 foreach (Transform child in list.transform.GetChild(1)) 
@@ -104,18 +99,18 @@ namespace BrannyTestMods
                     Destroy(child.gameObject);
                 }
 
-                Debug.Log("Stepping through new leaderboard");
-                int step = 0;
                 foreach (LeaderboardEntry l in leaderboard)
                 {
-                    Debug.Log(step + ": " + "POS: " + l.position + " STAT: " + l.statValue + " INDEX: " + leaderboard.IndexOf(l));
-                    step++;
-
                     l.UpdatePosition(leaderboard.IndexOf(l));
                     GameObject entry = CreateNewStatLeaderboardEntry(l, type);
                     entry.transform.SetParent(list.transform.GetChild(1));
-                    entry.transform.SetSiblingIndex(leaderboard.IndexOf(l));
+                    entry.transform.SetSiblingIndex(l.position);
                     entry.SetActive(true);
+                }
+
+                if (myList.open)
+                {
+                    myList.UnfoldPanel();
                 }
             }
             else 
@@ -126,12 +121,6 @@ namespace BrannyTestMods
 
         static GameObject CreateNewStatLeaderboard(string type, List<LeaderboardEntry> leaderboard)
         {
-            if (statParent.transform.Find(type)) 
-            {
-                Debug.Log("Destroying existing parent");
-                Destroy(statParent.transform.Find(type).gameObject);
-            }
-
             GameObject list = Instantiate(statList, statParent.transform);
             ButtonInteraction button = list.transform.GetChild(0).gameObject.AddComponent<ButtonInteraction>();
             button.Setup();

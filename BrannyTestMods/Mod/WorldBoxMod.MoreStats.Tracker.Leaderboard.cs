@@ -46,7 +46,6 @@ namespace BrannyTestMods
 			// TO-DO add new leaderboard creation
 			if (targetLeaderboard.Count <= 0)
 			{
-				Debug.Log("Leaderboard doesn't exist, so pos = 0");
 				return 0;
 			}
 
@@ -66,9 +65,7 @@ namespace BrannyTestMods
 					{
 						if (targetLeaderboard.IndexOf(e) < bestIndex)
 						{
-							Debug.Log("our stat " + numStat + " is higher than current " + e.statValue + ", best index = " + bestIndex);
 							bestIndex = targetLeaderboard.IndexOf(e);
-							Debug.Log("We have a new best index of: " + bestIndex);
 						}
 					}
 				}
@@ -132,7 +129,6 @@ namespace BrannyTestMods
 
 				if (CheckActorOnLeaderboard(newEntry, leaderboard))
 				{
-					Debug.Log("Removing actor from leaderboard");
 					RemoveActorFromLeaderboard(newEntry.actorId, leaderboard);
 				}
 
@@ -154,7 +150,6 @@ namespace BrannyTestMods
 				return true;
 			}
 
-			Debug.Log("Reached end of tryAdd method");
 			return false;
 		}
 
@@ -195,7 +190,6 @@ namespace BrannyTestMods
 			// Are there any entries yet?
 			if (targetLeaderboard.Count <= 0)
 			{
-				Debug.Log("Leaderboard does not exist, creating a new one and adding num stat");
 				return true;
 			}
 
@@ -204,7 +198,6 @@ namespace BrannyTestMods
 				// If our value is higher than the current heightest
 				if (numStat > targetLeaderboard[targetLeaderboard.Count - 1].statValue)
 				{
-					Debug.Log("New Leaderboard entry " + numStat + " belongs on the leaderboard");
 					return true;
 				}
 			}
@@ -213,7 +206,6 @@ namespace BrannyTestMods
 				return true;
 			}
 
-			Debug.Log("statvalue: " + numStat + " is not high enough to get onto the leaderboard");
 			return false;
 		}
 	}
