@@ -35,8 +35,8 @@ namespace BrannyTestMods
 
 			if (tryAddToLeaderboard("Kills", data.actorID, kills)) 
 			{
-				// New entry stuff
-				Debug.Log("Added to new Leaderboard");
+				string _id = BrannyActorManager.RememberActor(__instance);
+				BrannyActorManager.AddTraitToActor("Bloodthirsty", _id);
 			}
 
 			//// Compare this killer to our new kill leader

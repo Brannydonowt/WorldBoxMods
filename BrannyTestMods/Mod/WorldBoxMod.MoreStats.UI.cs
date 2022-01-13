@@ -62,7 +62,7 @@ namespace BrannyTestMods
                 brannyCanvas.SetActive(!brannyCanvas.activeSelf);
                 statParent.SetActive(brannyCanvas.activeSelf);
 
-                RefreshStatUI();
+                //RefreshStatUI();
             }
         }
 
@@ -77,7 +77,6 @@ namespace BrannyTestMods
                 {
                     case "Most Kills":
                         UpdateMostRuthless(b.myActorID, 0);
-                        Debug.Log("Updating most kills");
                         break;
                     default:
                         Debug.Log("Custom Data = " + b.customData[0]);
@@ -153,8 +152,11 @@ namespace BrannyTestMods
             BrannyActor bActor = BrannyActorManager.GetRememberedActor(l.actorId);
 
             GameObject entry = Instantiate(statListEntry);
-            entry.AddComponent<ButtonInteraction>();
-            ButtonInteraction button = entry.GetComponent<ButtonInteraction>();
+            TrackActor track = entry.AddComponent<TrackActor>();
+            track.trackActor(l.actorId);
+            ButtonInteraction button = entry.AddComponent<ButtonInteraction>();
+            button.Setup();
+            button.AddListener(entry);
             entry.SetActive(true);
 
             CustomiseStatListEntry(entry.transform, type, l);
@@ -162,8 +164,6 @@ namespace BrannyTestMods
             string[] cData = new string[1];
             cData[0] = type;
 
-            button.Setup();
-            button.trackActor(l.actorId);
             button.AddCustomData(cData);
 
             return entry;
@@ -221,12 +221,12 @@ namespace BrannyTestMods
             if (bActor.alive)
             {
                 status.text = "Alive";
-                status.color = new Color(66, 238, 73, 255);
+                status.color = new Color(66, 238, 73);
             }
             else
             {
                 status.text = "Dead";
-                status.color = new Color(238, 77, 67, 255);
+                status.color = new Color(238, 77, 67);
             }
         }
 
@@ -243,11 +243,11 @@ namespace BrannyTestMods
 
             ButtonInteraction button = entry.GetComponent<ButtonInteraction>();
 
-            button.Setup();
-            if (actor.alive)
-                button.trackActor(actor._id);
-            else
-                button.GetComponent<Button>().interactable = false;
+            //button.Setup();
+            //if (actor.alive)
+            //    .trackActor(actor._id);
+            //else
+            //    button.GetComponent<Button>().interactable = false;
 
             button.AddCustomData(cData);
 

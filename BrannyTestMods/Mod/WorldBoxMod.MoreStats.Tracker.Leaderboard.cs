@@ -142,7 +142,6 @@ namespace BrannyTestMods
 				if (pos == 0)
 				{
 					// Do something special
-					Debug.Log("Brand new leader");
 				}
 
 				UpdateStatLeaderboard(type, leaderboard);

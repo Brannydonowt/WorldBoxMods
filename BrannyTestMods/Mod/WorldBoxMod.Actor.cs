@@ -102,6 +102,22 @@ namespace BrannyTestMods
 			toKill.yod = MapBox.instance.mapStats.year;
 		}
 
+		// Add a trait to an actor, if they are alive.
+		public static void AddTraitToActor(string trait, string id) 
+		{
+			BrannyActor a = GetRememberedActor(id);
+
+			if (a.alive)
+			{
+				Actor actor = a.getActor();
+				actor.addTrait(trait);
+			}
+			else 
+			{
+				Debug.Log("this actor is dead, cannot add trait to a dead actor");
+			}
+		}
+
 		public static void killHimself_prefix(Actor __instance) 
 		{
 			ActorStatus data = Helper.Reflection.GetActorData(__instance);
