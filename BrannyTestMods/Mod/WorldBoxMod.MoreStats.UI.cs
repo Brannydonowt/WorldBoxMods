@@ -95,12 +95,11 @@ namespace BrannyTestMods
             }
 
             GameObject list = Instantiate(statList, statParent.transform);
-            list.AddComponent<ButtonInteraction>();
-            list.GetComponent<ButtonInteraction>().Setup();
-            list.AddComponent<UnfoldList>();
-            UnfoldList myList = list.GetComponent<UnfoldList>();
+            ButtonInteraction button = list.transform.GetChild(0).gameObject.AddComponent<ButtonInteraction>();
+            button.Setup();
+            UnfoldList myList = list.transform.GetChild(0).gameObject.AddComponent<UnfoldList>();
             myList.Setup();
-            list.GetComponent<Button>().onClick.AddListener(myList.TogglePanel);
+            button.AddListener(myList.gameObject);
             list.SetActive(true);
             list.name = type;
             CustomiseStatList(list.transform, type);

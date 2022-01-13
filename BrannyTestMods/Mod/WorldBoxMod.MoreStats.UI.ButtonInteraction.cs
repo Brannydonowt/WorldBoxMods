@@ -24,11 +24,15 @@ namespace BrannyTestMods
 
         public string[] customData;
 
+        public List<GameObject> listeners = new List<GameObject>();
+
         public void Setup() 
         {
             customData = new string[0];
             myButton = GetComponent<Button>();
+            onClickActions += Interact;
             myButton.onClick.AddListener(onClickActions);
+            myButton.interactable = true;
         }
 
         public void trackActor(string toTrack)
@@ -62,11 +66,23 @@ namespace BrannyTestMods
             customData = data;
         }
 
-        void Interact()
+        public void AddListener(GameObject g) 
         {
-            trackActor(myActorID);
-            MapBox.instance.locateAndFollow(myActor, null, null);
-            WorldBoxMod.CloseAllUI();
+            Debug.Log("Adding listener");
+            listeners.Add(g);
+        }
+
+        void Interact()
+        { 
+            foreach (GameObject g in listeners) 
+            {
+                g.SendMessage("OnInteract");
+            }
+
+            // TODO Move this into it's own seperate component
+            //trackActor(myActorID);
+            //MapBox.instance.locateAndFollow(myActor, null, null);
+            //WorldBoxMod.CloseAllUI();
         }
     }
 }
