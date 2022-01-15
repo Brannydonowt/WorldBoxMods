@@ -25,7 +25,7 @@ namespace BrannyTestMods
             LoadAssetBundle();
         }
 
-        public static void LoadAssetBundle()
+        public void LoadAssetBundle()
         {
             string bundlename = "brannywbox";
             loadedAssetBundle = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, "AssetBundle", bundlename));
@@ -48,7 +48,6 @@ namespace BrannyTestMods
                 return null;
             }
 
-            Debug.Log("Have asset bundle, pulling asset");
             var prefab = loadedAssetBundle.LoadAsset<GameObject>(name);
             GameObject result = Instantiate(prefab) as GameObject;
             result.SetActive(false);

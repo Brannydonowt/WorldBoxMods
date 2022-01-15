@@ -15,19 +15,17 @@ namespace BrannyTestMods
 {
     public partial class WorldBoxMod
     {
-        public static GameObject brannyCanvas;
+        public GameObject brannyCanvas;
         //public GameObject statParent;
-        public static GameObject statEntry;
-        public static GameObject statList;
-        public static GameObject statListEntry;
+        public GameObject statEntry;
+        public GameObject statList;
+        public GameObject statListEntry;
 
-        public static Transform statParent;
+        public Transform statParent;
 
         bool ui_initialized;
 
-        static List<GameObject> createdElements = new List<GameObject>();
-
-        static List<ButtonInteraction> createdButtons;
+        List<GameObject> createdElements = new List<GameObject>();
 
         void init_ui()
         {
@@ -35,8 +33,6 @@ namespace BrannyTestMods
                 return;
 
             Debug.Log("Initialising UI");
-
-            createdButtons = new List<ButtonInteraction>();
 
             brannyCanvas = GetGameObjectFromAssetBundle("BrannyCanvas");
             statParent = brannyCanvas.transform.GetChild(0).GetChild(0).GetChild(0);
@@ -66,7 +62,7 @@ namespace BrannyTestMods
             }
         }
 
-        static void UpdateStatLeaderboard(string type, List<LeaderboardEntry> leaderboard) 
+        void UpdateStatLeaderboard(string type, List<LeaderboardEntry> leaderboard) 
         {
             if (statParent.transform.Find(type))
             {
@@ -76,7 +72,7 @@ namespace BrannyTestMods
                 // Get all children and update them to the values of the new leaderboard
                 foreach (Transform child in list.transform.GetChild(1)) 
                 {
-                    Debug.Log("Child Name: " + child.name);
+                    Debug.Log("Child Name: " + child.transform.name);
                     int pos = int.Parse(child.name);
                     UpdateEntry(child, type, leaderboard[pos]);
                     child.GetComponent<TrackActor>().trackActor(leaderboard[pos].actorId);
@@ -102,7 +98,7 @@ namespace BrannyTestMods
             }
         }
 
-        static GameObject CreateNewStatLeaderboard(string type, List<LeaderboardEntry> leaderboard)
+        GameObject CreateNewStatLeaderboard(string type, List<LeaderboardEntry> leaderboard)
         {
             GameObject list = UnityEngine.Object.Instantiate(statList, statParent.transform); //Instantiate(statList, statParent.transform);
             ButtonInteraction button = list.transform.GetChild(0).gameObject.AddComponent<ButtonInteraction>();
@@ -131,7 +127,7 @@ namespace BrannyTestMods
         }
 
         // Creates a new entry for a stat leaderboard at given position
-        static GameObject CreateNewStatLeaderboardEntry(LeaderboardEntry l, string type) 
+        GameObject CreateNewStatLeaderboardEntry(LeaderboardEntry l, string type) 
         {
             int statName = l.statValue;
 ;
@@ -155,14 +151,14 @@ namespace BrannyTestMods
             return entry;
         }
 
-        static void UpdateEntry(Transform listEntry, string type, LeaderboardEntry l) 
+        void UpdateEntry(Transform listEntry, string type, LeaderboardEntry l) 
         {
             CustomiseStatListEntry(listEntry, type, l);
         }
 
         // This needs to work somehow with the modular approach
         // For now, hardcoded for each type of leaderboard
-        static void CustomiseStatList(Transform listEntry, string type) 
+        void CustomiseStatList(Transform listEntry, string type) 
         {
             Transform root = listEntry.GetChild(0);
             Image icon = root.GetChild(0).gameObject.GetComponent<Image>();
@@ -190,7 +186,7 @@ namespace BrannyTestMods
             }
         }
 
-        static void CustomiseStatListEntry(Transform listEntry, string type, LeaderboardEntry l)
+        void CustomiseStatListEntry(Transform listEntry, string type, LeaderboardEntry l)
         {
             string statDisplayName = "";
 
@@ -228,14 +224,14 @@ namespace BrannyTestMods
             }
         }
 
-        static string format_details_string(string[] details) 
+        string format_details_string(string[] details) 
         {
             return details[0] + " - " + details[1] + " - Kills: " + details[2];
         }
 
 
         // TODO - Add YearBorn-YearDeath
-        static string format_status_string(BrannyActor actor) 
+        string format_status_string(BrannyActor actor) 
         {
             ActorStatus status = actor.getActorStatus();
 

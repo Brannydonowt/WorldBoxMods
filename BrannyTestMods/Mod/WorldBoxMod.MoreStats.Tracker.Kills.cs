@@ -14,7 +14,7 @@ namespace BrannyTestMods
 {
 	public partial class WorldBoxMod
 	{
-		public static void CompareToKillLeaderboard(Actor __instance) 
+		public void CompareToKillLeaderboard(Actor __instance) 
 		{
 			var data = Helper.Reflection.GetActorData(__instance);
 			int kills = data.kills;
@@ -25,10 +25,10 @@ namespace BrannyTestMods
 				string _id = BrannyActorManager.RememberActor(__instance);
 				BrannyActorManager.AddTraitToActor("Bloodthirsty", _id);
 
-				//if (TryAddStat("most_ruthless", data.actorID, kills)) 
-				//{
-				//	Debug.Log("Added most ruthless!");
-				//}
+				if (TryAddStat("most_ruthless", data.actorID, kills)) 
+				{
+					Debug.Log("Added most ruthless!");
+				}
 			}
 		}
 	}

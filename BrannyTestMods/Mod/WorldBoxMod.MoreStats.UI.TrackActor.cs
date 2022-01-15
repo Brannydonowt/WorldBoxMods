@@ -44,7 +44,7 @@ namespace BrannyTestMods
             if (!hasActor || !isActorAlive()) { return; }
 
             MapBox.instance.locateAndFollow(myActor, null, null);
-            WorldBoxMod.CloseAllUI();
+            WorldBoxMod.instance.CloseAllUI();
         }
 
         public void OnInteract() 

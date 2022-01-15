@@ -26,8 +26,13 @@ namespace BrannyTestMods
 
         static bool initialized = false;
 
+        public static WorldBoxMod instance;
+
         public void Awake()
         {
+            // We want the mod to have an instance
+            WorldBoxMod.instance = this;
+
             harmony = new Harmony(id);
             Patching(harmony);
         }
@@ -53,7 +58,7 @@ namespace BrannyTestMods
             Debug.Log("Branny mod, initialized!");
         }
 
-        public static void CloseAllUI() 
+        public void CloseAllUI()
         {
             brannyCanvas.SetActive(false);
         }

@@ -136,7 +136,7 @@
     <Compile Include="Mod\WorldBoxMod.MoreStats.Tracker.Kills.cs" />
     <Compile Include="Mod\WorldBoxMod.MoreStats.Tracker.Leaderboard.cs" />
     <Compile Include="Mod\WorldBoxMod.MoreStats.UI.TrackActor.cs" />
-    <Compile Include="Mod\WorldBoxMod.MoreStats.UI.Leadboard.cs" />
+    <Compile Include="Mod\WorldBoxMod.MoreStats.UI.Leaderboard.cs" />
     <Compile Include="Mod\WorldBoxMod.MoreStats.UI.ButtonInteraction.cs" />
     <Compile Include="Mod\WorldBoxMod.MoreStats.UI.cs" />
     <Compile Include="Mod\WorldBoxMod.WorldLog.cs" />

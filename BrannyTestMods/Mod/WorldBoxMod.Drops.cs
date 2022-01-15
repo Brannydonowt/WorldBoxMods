@@ -23,10 +23,5 @@ namespace BrannyTestMods
 		//	default_scale = 0.2f,
 		//	action_landed = new DropsAction(DropsLibrary.action_water_bomb)
 		//});
-
-		public static void action_santa_bomb(WorldTile pTile = null, string pDropID = null)
-		{
-			MapAction.damageWorld(pTile, 10, AssetManager.terraform.get("santa_bomb"));
-		}
 	}
 }

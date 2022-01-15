@@ -35,12 +35,9 @@ namespace BrannyTestMods
 			}
 		}
 
-		public static List<LeaderboardEntry> killLeaderboard = new List<LeaderboardEntry>();
-		public static List<LeaderboardEntry> childrenLeaderboard = new List<LeaderboardEntry>();
+		public Dictionary<string, List<LeaderboardEntry>> leaderboards = new Dictionary<string, List<LeaderboardEntry>>();
 
-		public static Dictionary<string, List<LeaderboardEntry>> leaderboards = new Dictionary<string, List<LeaderboardEntry>>();
-
-		public static int GetPositionOnLeaderboard(string type, int numStat) 
+		public int GetPositionOnLeaderboard(string type, int numStat) 
 		{
 			List<LeaderboardEntry> targetLeaderboard = GetLeaderboardFromType(type);
 
@@ -83,7 +80,7 @@ namespace BrannyTestMods
 			}
 		}
 
-		public static List<LeaderboardEntry> GetLeaderboardFromType(string type) 
+		public List<LeaderboardEntry> GetLeaderboardFromType(string type) 
 		{
 			if (leaderboards.ContainsKey(type))
 			{
@@ -97,7 +94,7 @@ namespace BrannyTestMods
 			}
 		}
 
-		public static List<LeaderboardEntry> CreateNewLeaderboard(string type) 
+		public List<LeaderboardEntry> CreateNewLeaderboard(string type) 
 		{
 			List <LeaderboardEntry> l = new List<LeaderboardEntry>();
 			leaderboards.Add(type, l);
@@ -105,7 +102,7 @@ namespace BrannyTestMods
 			return l;
 		}
 
-		public static bool tryAddToLeaderboard(string type, string actorId, int numStat) 
+		public bool tryAddToLeaderboard(string type, string actorId, int numStat) 
 		{
 			if (CompareStatToLeaderboards(type, numStat)) 
 			{
@@ -156,7 +153,7 @@ namespace BrannyTestMods
 
 		// Compares a stat value against an existing single stat (non-leaderboard entry)
 		// TODO - Break pieces of code from this method and tryAddStatToLeaderbaord into more reusable methods //less dupe code por favor
-		public static bool TryAddStat(string type, string actorId, int numStat) 
+		public bool TryAddStat(string type, string actorId, int numStat) 
 		{
 			if (CompareStatToLeaderboards(type, numStat)) 
 			{
@@ -199,7 +196,7 @@ namespace BrannyTestMods
 			return false;
 		}
 
-		public static bool CheckActorOnLeaderboard(LeaderboardEntry entry, List<LeaderboardEntry> leaderboard) 
+		public bool CheckActorOnLeaderboard(LeaderboardEntry entry, List<LeaderboardEntry> leaderboard) 
 		{
 			bool result = false;
 
@@ -212,7 +209,7 @@ namespace BrannyTestMods
 			return result;
 		}
 
-		public static void RemoveActorFromLeaderboard(string actorId, List<LeaderboardEntry> leaderboard)
+		public void RemoveActorFromLeaderboard(string actorId, List<LeaderboardEntry> leaderboard)
 		{
 			int targetIndex = 999;
 
@@ -229,7 +226,7 @@ namespace BrannyTestMods
 		}
 
 		// Returns true if the stat is higher than in the leaderboard
-		public static bool CompareStatToLeaderboards(string type, int numStat) 
+		public bool CompareStatToLeaderboards(string type, int numStat) 
 		{
 			List<LeaderboardEntry> targetLeaderboard = GetLeaderboardFromType(type);
 

@@ -16,7 +16,7 @@ namespace BrannyTestMods
 {
 	public partial class WorldBoxMod
 	{
-		public static void logNewKillLead(Actor lead)
+		public void logNewKillLead(Actor lead)
 		{
 			ActorStatus aStat = Helper.Reflection.GetActorData(lead);
 
@@ -40,7 +40,7 @@ namespace BrannyTestMods
 			worldLogMessage.add();
 		}
 
-		public static void logKillLeadKill(Actor lead) 
+		public void logKillLeadKill(Actor lead) 
 		{
 			ActorStatus aStat = Helper.Reflection.GetActorData(lead);
 
