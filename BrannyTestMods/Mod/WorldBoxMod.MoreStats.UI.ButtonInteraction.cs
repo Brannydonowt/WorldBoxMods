@@ -16,9 +16,7 @@ namespace BrannyTestMods
 {
     public class ButtonInteraction : MonoBehaviour
     {
-        public string myActorID;
         Button myButton;
-        private Actor myActor;
 
         public UnityAction onClickActions;
 
@@ -42,7 +40,7 @@ namespace BrannyTestMods
 
         public void AddListener(GameObject g) 
         {
-            Debug.Log("Adding listener");
+            Debug.Log("Adding Listener to object:  " + g.name);
             listeners.Add(g);
         }
 

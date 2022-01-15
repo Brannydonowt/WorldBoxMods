@@ -95,29 +95,13 @@ namespace BrannyTestMods
 			{
 				return CreateNewLeaderboard(type);
 			}
-
-			List<LeaderboardEntry> targetLeaderboard;
-
-			switch (type)
-			{
-				case "Kills":
-					targetLeaderboard = killLeaderboard;
-					break;
-				case "Children":
-					targetLeaderboard = childrenLeaderboard;
-					break;
-				default:
-					targetLeaderboard = childrenLeaderboard;
-					break;
-			}
-
-			return targetLeaderboard;
 		}
 
 		public static List<LeaderboardEntry> CreateNewLeaderboard(string type) 
 		{
 			List <LeaderboardEntry> l = new List<LeaderboardEntry>();
 			leaderboards.Add(type, l);
+			Debug.Log("Created new leaderboard: " + type);
 			return l;
 		}
 
@@ -159,13 +143,56 @@ namespace BrannyTestMods
 					e.UpdatePosition(leaderboard.IndexOf(e));
 				}
 
-				if (pos == 0)
-				{
-					// Do something special
-				}
+				leaderboards.Remove(type);
+				leaderboards.Add(type, leaderboard);
 
 				UpdateStatLeaderboard(type, leaderboard);
 
+				return true;
+			}
+
+			return false;
+		}
+
+		// Compares a stat value against an existing single stat (non-leaderboard entry)
+		// TODO - Break pieces of code from this method and tryAddStatToLeaderbaord into more reusable methods //less dupe code por favor
+		public static bool TryAddStat(string type, string actorId, int numStat) 
+		{
+			if (CompareStatToLeaderboards(type, numStat)) 
+			{
+				int pos = GetPositionOnLeaderboard(type, numStat);
+
+				Debug.Log("Stat pos = " + pos);
+
+				if (pos == 999) 
+				{
+					return false;
+				}
+
+				Actor mActor = MapBox.instance.getActorByID(actorId);
+
+				string _id = BrannyActorManager.RememberActor(mActor);
+
+				List<LeaderboardEntry> leaderboard = GetLeaderboardFromType(type);
+
+				LeaderboardEntry newEntry = new LeaderboardEntry(_id, pos, numStat);
+
+				if (CheckActorOnLeaderboard(newEntry, leaderboard))
+				{
+					RemoveActorFromLeaderboard(newEntry.actorId, leaderboard);
+				}
+
+				leaderboard.Insert(0, newEntry);
+
+				foreach (LeaderboardEntry e in leaderboard)
+				{
+					e.UpdatePosition(leaderboard.IndexOf(e));
+				}
+
+				leaderboards.Remove(type);
+				leaderboards.Add(type, leaderboard);
+
+				UpdateStatLeaderboard(type, leaderboard);
 				return true;
 			}
 
@@ -214,7 +241,7 @@ namespace BrannyTestMods
 
 			if (targetLeaderboard.Count >= 10)
 			{
-				// If our value is higher than the current heightest
+				// If our value is higher than the current heighest
 				if (numStat > targetLeaderboard[targetLeaderboard.Count - 1].statValue)
 				{
 					return true;

@@ -20,10 +20,15 @@ namespace BrannyTestMods
 			int kills = data.kills;
 
 			// Try to add to the "KillsLeaderboard
-			if (tryAddToLeaderboard("Kills", data.actorID, kills))
+			if (tryAddToLeaderboard("top_killers", data.actorID, kills))
 			{
 				string _id = BrannyActorManager.RememberActor(__instance);
 				BrannyActorManager.AddTraitToActor("Bloodthirsty", _id);
+
+				//if (TryAddStat("most_ruthless", data.actorID, kills)) 
+				//{
+				//	Debug.Log("Added most ruthless!");
+				//}
 			}
 		}
 	}

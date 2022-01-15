@@ -16,10 +16,12 @@ namespace BrannyTestMods
     public partial class WorldBoxMod
     {
         public static GameObject brannyCanvas;
-        public static GameObject statParent;
+        //public GameObject statParent;
         public static GameObject statEntry;
         public static GameObject statList;
         public static GameObject statListEntry;
+
+        public static Transform statParent;
 
         bool ui_initialized;
 
@@ -37,7 +39,7 @@ namespace BrannyTestMods
             createdButtons = new List<ButtonInteraction>();
 
             brannyCanvas = GetGameObjectFromAssetBundle("BrannyCanvas");
-            statParent = brannyCanvas.transform.GetChild(0).GetChild(0).GetChild(0).gameObject;
+            statParent = brannyCanvas.transform.GetChild(0).GetChild(0).GetChild(0);
             statEntry = GetGameObjectFromAssetBundle("StatEntry");
             statList = GetGameObjectFromAssetBundle("StatList");
             statListEntry = GetGameObjectFromAssetBundle("StatListEntry");
@@ -60,28 +62,7 @@ namespace BrannyTestMods
             {
                 // This will display Branny UI
                 brannyCanvas.SetActive(!brannyCanvas.activeSelf);
-                statParent.SetActive(brannyCanvas.activeSelf);
-
-                //RefreshStatUI();
-            }
-        }
-
-        static void RefreshStatUI() 
-        {
-            if (createdButtons.Count == 0)
-                return;
-
-            foreach (ButtonInteraction b in createdButtons) 
-            {
-                switch(b.customData[0])
-                {
-                    case "Most Kills":
-                        UpdateMostRuthless(b.myActorID, 0);
-                        break;
-                    default:
-                        Debug.Log("Custom Data = " + b.customData[0]);
-                        break;
-                }
+                statParent.gameObject.SetActive(brannyCanvas.activeSelf);
             }
         }
 
@@ -92,20 +73,23 @@ namespace BrannyTestMods
                 GameObject list = statParent.transform.Find(type).gameObject;
                 UnfoldList myList = list.transform.GetChild(0).gameObject.GetComponent<UnfoldList>();
 
-                // Should get all children
+                // Get all children and update them to the values of the new leaderboard
                 foreach (Transform child in list.transform.GetChild(1)) 
                 {
-                    Destroy(child.gameObject);
+                    Debug.Log("Child Name: " + child.name);
+                    int pos = int.Parse(child.name);
+                    UpdateEntry(child, type, leaderboard[pos]);
+                    child.GetComponent<TrackActor>().trackActor(leaderboard[pos].actorId);
                 }
 
-                foreach (LeaderboardEntry l in leaderboard)
-                {
-                    l.UpdatePosition(leaderboard.IndexOf(l));
-                    GameObject entry = CreateNewStatLeaderboardEntry(l, type);
-                    entry.transform.SetParent(list.transform.GetChild(1));
-                    entry.transform.SetSiblingIndex(l.position);
-                    entry.SetActive(true);
-                }
+                //foreach (LeaderboardEntry l in leaderboard)
+                //{
+                //    l.UpdatePosition(leaderboard.IndexOf(l));
+                //    GameObject entry = CreateNewStatLeaderboardEntry(l, type);
+                //    entry.transform.SetParent(list.transform.GetChild(1));
+                //    entry.transform.SetSiblingIndex(l.position);
+                //    entry.SetActive(true);
+                //}
 
                 if (myList.open)
                 {
@@ -120,7 +104,7 @@ namespace BrannyTestMods
 
         static GameObject CreateNewStatLeaderboard(string type, List<LeaderboardEntry> leaderboard)
         {
-            GameObject list = Instantiate(statList, statParent.transform);
+            GameObject list = UnityEngine.Object.Instantiate(statList, statParent.transform); //Instantiate(statList, statParent.transform);
             ButtonInteraction button = list.transform.GetChild(0).gameObject.AddComponent<ButtonInteraction>();
             button.Setup();
             UnfoldList myList = list.transform.GetChild(0).gameObject.AddComponent<UnfoldList>();
@@ -136,6 +120,8 @@ namespace BrannyTestMods
             {
                 l.UpdatePosition(leaderboard.IndexOf(l));
                 GameObject entry = CreateNewStatLeaderboardEntry(l, type);
+                entry.name = l.position.ToString();
+                Debug.Log(entry.name);
                 entry.transform.SetParent(list.transform.GetChild(1));
                 entry.transform.SetSiblingIndex(l.position);
                 entry.SetActive(true);
@@ -169,6 +155,13 @@ namespace BrannyTestMods
             return entry;
         }
 
+        static void UpdateEntry(Transform listEntry, string type, LeaderboardEntry l) 
+        {
+            CustomiseStatListEntry(listEntry, type, l);
+        }
+
+        // This needs to work somehow with the modular approach
+        // For now, hardcoded for each type of leaderboard
         static void CustomiseStatList(Transform listEntry, string type) 
         {
             Transform root = listEntry.GetChild(0);
@@ -179,11 +172,16 @@ namespace BrannyTestMods
 
             switch (type) 
             {
-                case "Kills":
+                case "top_killers":
                     title.text = "Top Killers";
                     details.text = "Grants the \"BloodThirsty\" Trait";
                     alive.text = "";
-                    break; 
+                    break;
+                case "most_ruthless":
+                    title.text = "Most Ruthless";
+                    details.text = "Grants the \"Tyrant\" Trait";
+                    alive.text = "";
+                    break;
                 default:
                     title.text = "broken";
                     details.text = "This is broken, please let the dev know what you expect it to be.";
@@ -228,78 +226,6 @@ namespace BrannyTestMods
                 status.text = "Dead";
                 status.color = new Color(238, 77, 67);
             }
-        }
-
-        static void UpdateStatUI(string statName, string actorId, string[] stats) 
-        {
-            BrannyActor actor = BrannyActorManager.GetRememberedActor(actorId);
-            //Actor a = MapBox.instance.getActorByID(actorId);
-            ActorStatus data = actor.getActorStatus();
-
-            GameObject entry = GetStatEntryWithName(statName);
-
-            string[] cData = new string[1];
-            cData[0] = statName;
-
-            ButtonInteraction button = entry.GetComponent<ButtonInteraction>();
-
-            //button.Setup();
-            //if (actor.alive)
-            //    .trackActor(actor._id);
-            //else
-            //    button.GetComponent<Button>().interactable = false;
-
-            button.AddCustomData(cData);
-
-            entry.name = statName;
-            Image iconImg = entry.transform.GetChild(0).GetComponent<Image>();
-            Text titleText = entry.transform.GetChild(1).GetComponent<Text>();
-            Text detailsText = entry.transform.GetChild(2).GetComponent<Text>();
-            Text statusText = entry.transform.GetChild(3).GetComponent<Text>();
-
-            titleText.text = statName;
-            detailsText.text = format_details_string(stats);
-            statusText.text = format_status_string(actor);
-        }
-
-        static void UpdateMostRuthless(string actorId, int position)
-        {
-            BrannyActor actor = BrannyActorManager.GetRememberedActor(actorId);
-            //Actor a = MapBox.instance.getActorByID(actorId);
-            ActorStatus data = actor.getActorStatus();
-            // There's a chance the actor has died
-
-            if (data == null) 
-            {
-                Debug.Log("We don't have any Branny actor data.");
-                return;
-            }
-            
-            string[] killerstats = new string[3];
-            killerstats[0] = data.firstName;
-            killerstats[1] = actor.kingdom;
-            killerstats[2] = data.kills.ToString();
-
-            UpdateStatUI("Most Kills", actorId, killerstats);
-        }
-
-        static GameObject CreateStatEntry() 
-        {
-            GameObject entry = Instantiate(statEntry, statParent.transform);
-            entry.AddComponent<ButtonInteraction>();
-            createdButtons.Add(entry.GetComponent<ButtonInteraction>());
-            entry.SetActive(true);
-            return entry;
-        }
-
-        static GameObject GetStatEntryWithName(string name) 
-        {
-            if (statParent.transform.Find(name))
-            {
-                return statParent.transform.Find(name).gameObject;
-            }
-            else
-                return CreateStatEntry();
         }
 
         static string format_details_string(string[] details) 
