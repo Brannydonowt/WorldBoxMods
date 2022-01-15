@@ -28,7 +28,7 @@ namespace BrannyTestMods
         public static void LoadAssetBundle()
         {
             string bundlename = "brannywbox";
-            loadedAssetBundle = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, bundlename));
+            loadedAssetBundle = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, "AssetBundle", bundlename));
             if (loadedAssetBundle == null)
             {
                 Debug.Log("Failed to load AssetBundle");

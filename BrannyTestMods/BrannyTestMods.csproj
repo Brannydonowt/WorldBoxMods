@@ -133,6 +133,7 @@
     <Compile Include="Mod\Helper.cs" />
     <Compile Include="Mod\WorldBoxMod.AssetLoading.cs" />
     <Compile Include="Mod\WorldBoxMod.Actor.cs" />
+    <Compile Include="Mod\WorldBoxMod.MoreStats.Tracker.Kills.cs" />
     <Compile Include="Mod\WorldBoxMod.MoreStats.Tracker.Leaderboard.cs" />
     <Compile Include="Mod\WorldBoxMod.MoreStats.UI.TrackActor.cs" />
     <Compile Include="Mod\WorldBoxMod.MoreStats.UI.Leadboard.cs" />

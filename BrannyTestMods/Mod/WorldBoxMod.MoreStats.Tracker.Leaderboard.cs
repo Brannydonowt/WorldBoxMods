@@ -38,6 +38,8 @@ namespace BrannyTestMods
 		public static List<LeaderboardEntry> killLeaderboard = new List<LeaderboardEntry>();
 		public static List<LeaderboardEntry> childrenLeaderboard = new List<LeaderboardEntry>();
 
+		public static Dictionary<string, List<LeaderboardEntry>> leaderboards = new Dictionary<string, List<LeaderboardEntry>>();
+
 		public static int GetPositionOnLeaderboard(string type, int numStat) 
 		{
 			List<LeaderboardEntry> targetLeaderboard = GetLeaderboardFromType(type);
@@ -83,6 +85,17 @@ namespace BrannyTestMods
 
 		public static List<LeaderboardEntry> GetLeaderboardFromType(string type) 
 		{
+			if (leaderboards.ContainsKey(type))
+			{
+				List<LeaderboardEntry> result;
+				leaderboards.TryGetValue(type, out result);
+				return result;
+			}
+			else 
+			{
+				return CreateNewLeaderboard(type);
+			}
+
 			List<LeaderboardEntry> targetLeaderboard;
 
 			switch (type)
@@ -99,6 +112,13 @@ namespace BrannyTestMods
 			}
 
 			return targetLeaderboard;
+		}
+
+		public static List<LeaderboardEntry> CreateNewLeaderboard(string type) 
+		{
+			List <LeaderboardEntry> l = new List<LeaderboardEntry>();
+			leaderboards.Add(type, l);
+			return l;
 		}
 
 		public static bool tryAddToLeaderboard(string type, string actorId, int numStat) 

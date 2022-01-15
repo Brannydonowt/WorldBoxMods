@@ -23,31 +23,16 @@ namespace BrannyTestMods
 			Debug.Log("PostFix stats_patch DONE");
 		}
 
+		// Who eats the most?
 		public static void consumeCityFoodItem_postfix(Actor __instance) 
 		{
 			var data = Helper.Reflection.GetActorData(__instance);
 		}
 
+		// Who kills the most?
 		public static void increaseKillCount_postfix(Actor __instance)
 		{
-			var data = Helper.Reflection.GetActorData(__instance);
-			int kills = data.kills;
-
-			if (tryAddToLeaderboard("Kills", data.actorID, kills)) 
-			{
-				string _id = BrannyActorManager.RememberActor(__instance);
-				BrannyActorManager.AddTraitToActor("Bloodthirsty", _id);
-			}
-
-			//// Compare this killer to our new kill leader
-			//if (CompareStatToLeaderboards("Kills", kills)) 
-			//{
-			//	logNewKillLead(__instance);
-			//	// Add the tyrant trait to the new kill leader
-			//	__instance.addTrait("Tyrant");
-			//	string id = BrannyActorManager.RememberActor(__instance);
-			//	UpdateMostRuthless(id, 0);
-			//}
+			CompareToKillLeaderboard(__instance);
 		}
 	}
 }
