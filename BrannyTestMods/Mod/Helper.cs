@@ -35,55 +35,6 @@ namespace Helper
         }
     }
 
-    class HisHud
-    {
-        public static void newText(string message, Color color, Sprite icon = null)
-        {
-            GameObject gameObject = HistoryHud.instance.GetObject();
-            gameObject.name = "HistoryItem " + (object)(HistoryHud.historyItems.Count + 1);
-            gameObject.SetActive(true);
-
-            gameObject.transform.Find("CText").GetComponent<Text>();
-            gameObject.transform.SetParent(HistoryHud.contentGroup);
-            RectTransform component = gameObject.GetComponent<RectTransform>();
-            component.localScale = Vector3.one;
-            component.localPosition = Vector3.zero;
-            component.SetLeft(0.0f);
-
-            float top = (float)HistoryHud.instance.CallMethod("recalcPositions");
-
-            component.SetTop(top);
-            component.sizeDelta = new Vector2(component.sizeDelta.x, 15f);
-            gameObject.GetComponent<HistoryHudItem>().targetBottom = top;
-
-            gameObject.GetComponent<HistoryHudItem>().textField.color = color;
-            gameObject.GetComponent<HistoryHudItem>().textField.text = message;
-            HistoryHud.historyItems.Add(gameObject.GetComponent<HistoryHudItem>());
-            Reflection.SetField<bool>(HistoryHud.instance, "recalc", true);
-
-            if (icon != null)
-            {
-                gameObject.transform.Find("Icon").GetComponent<Image>().sprite = icon;
-            }
-
-            gameObject.SetActive(true);
-        }
-    }
-
-    class KingdomThings
-    {
-        public static void newText(string message, Color color)
-        {
-            HisHud.newText(message, color);
-        }
-
-        public static Color GetKingdomColor(Kingdom kingdom)
-        {
-            var kingdomColor = (KingdomColor)Reflection.GetField(kingdom.GetType(), kingdom, "kingdomColor");
-            return kingdomColor.colorBorderOut;
-        }
-    }
-
     class Utils
     {
         public static void HarmonyPatching(Harmony harmony, string type, MethodInfo original, MethodInfo patch)
