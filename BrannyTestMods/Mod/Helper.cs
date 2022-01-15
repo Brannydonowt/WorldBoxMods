@@ -79,6 +79,24 @@ namespace Helper
         }
     }
 
+    class UnityHelpers : MonoBehaviour 
+    {
+        public static void LogGameObjectHierachy(Transform target, int depth = 0) 
+        {
+            if (target.childCount > 0)
+            {
+                // For every child
+                foreach (Transform t in target) 
+                {
+                    string prepend = String.Concat(Enumerable.Repeat("--", depth));
+                    Debug.Log(prepend + t.name);
+
+                    LogGameObjectHierachy(t, depth + 1);
+                }
+            }
+        }
+    }
+
     public static partial class Reflection 
     {
         public static ActorStatus GetActorData(Actor actor) 

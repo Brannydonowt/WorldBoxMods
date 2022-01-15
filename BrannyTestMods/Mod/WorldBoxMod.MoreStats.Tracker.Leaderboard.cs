@@ -155,45 +155,35 @@ namespace BrannyTestMods
 		// TODO - Break pieces of code from this method and tryAddStatToLeaderbaord into more reusable methods //less dupe code por favor
 		public bool TryAddStat(string type, string actorId, int numStat) 
 		{
-			if (CompareStatToLeaderboards(type, numStat)) 
-			{
-				int pos = GetPositionOnLeaderboard(type, numStat);
+			List<LeaderboardEntry> leaderboard = GetLeaderboardFromType(type);
+			bool onLeaderboard = false;
 
-				Debug.Log("Stat pos = " + pos);
 
-				if (pos == 999) 
-				{
-					return false;
-				}
+			if (leaderboard.Count <= 0)
+				onLeaderboard = true;
+			else if (numStat > leaderboard[0].statValue)
+				onLeaderboard = true;
 
-				Actor mActor = MapBox.instance.getActorByID(actorId);
+			if (!onLeaderboard)
+				return false;
 
-				string _id = BrannyActorManager.RememberActor(mActor);
+			Actor mActor = MapBox.instance.getActorByID(actorId);
 
-				List<LeaderboardEntry> leaderboard = GetLeaderboardFromType(type);
+			string _id = BrannyActorManager.RememberActor(mActor);
 
-				LeaderboardEntry newEntry = new LeaderboardEntry(_id, pos, numStat);
+			LeaderboardEntry l = new LeaderboardEntry(_id, 0, numStat);
 
-				if (CheckActorOnLeaderboard(newEntry, leaderboard))
-				{
-					RemoveActorFromLeaderboard(newEntry.actorId, leaderboard);
-				}
+			if (leaderboard.Count == 0)
+				leaderboard.Add(l);
+			else
+				leaderboard[0] = l;
 
-				leaderboard.Insert(0, newEntry);
+			leaderboards.Remove(type);
+			leaderboards.Add(type, leaderboard);
 
-				foreach (LeaderboardEntry e in leaderboard)
-				{
-					e.UpdatePosition(leaderboard.IndexOf(e));
-				}
+			UpdateStatLeaderboard(type, leaderboard);
 
-				leaderboards.Remove(type);
-				leaderboards.Add(type, leaderboard);
-
-				UpdateStatLeaderboard(type, leaderboard);
-				return true;
-			}
-
-			return false;
+			return true;
 		}
 
 		public bool CheckActorOnLeaderboard(LeaderboardEntry entry, List<LeaderboardEntry> leaderboard) 
