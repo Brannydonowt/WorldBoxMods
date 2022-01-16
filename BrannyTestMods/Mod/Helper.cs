@@ -118,6 +118,11 @@ namespace Helper
         {
             return GetField(instance.GetType(), instance, "list") as List<WorldLogMessage>;
         }
+
+        public static Race GetActorRace(Actor actor) 
+        {
+            return (Race)GetField(actor.GetType(), actor, "race");
+        }
     }
 
     // Thanks to CodyP https://github.com/itsmecodyp/WorldBox/blob/main/MapSizes/Reflection.cs

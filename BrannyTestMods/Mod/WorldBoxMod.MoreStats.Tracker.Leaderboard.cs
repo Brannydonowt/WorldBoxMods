@@ -102,7 +102,7 @@ namespace BrannyTestMods
 			return l;
 		}
 
-		public bool tryAddToLeaderboard(string type, string actorId, int numStat) 
+		public bool tryAddToLeaderboard(string type, string actorId, int numStat)
 		{
 			if (CompareStatToLeaderboards(type, numStat)) 
 			{
@@ -114,9 +114,7 @@ namespace BrannyTestMods
 					return false;
 				}
 
-				Actor mActor = MapBox.instance.getActorByID(actorId);
-
-				string _id = BrannyActorManager.RememberActor(mActor);
+				string _id = BrannyActorManager.RememberID(actorId);
 
 				List<LeaderboardEntry> leaderboard = GetLeaderboardFromType(type);
 				

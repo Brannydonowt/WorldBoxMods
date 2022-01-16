@@ -32,6 +32,32 @@ namespace BrannyTestMods
 				BrannyActorManager.AddTraitToActor("tyrant", _id);
 				BrannyActorManager.AddTraitToActor("immortal", _id);
 			}
+
+			Race race = Helper.Reflection.GetActorRace(__instance);
+
+			if (race == null)
+				return;
+
+			Debug.Log(race.nameLocale);
+
+			switch (race.nameLocale) 
+			{
+				case "Humans":
+					tryAddToLeaderboard("human_killers", data.actorID, kills);
+					break;
+				case "Orcs":
+					tryAddToLeaderboard("dwarf_killers", data.actorID, kills);
+					break;
+				case "Elves":
+					tryAddToLeaderboard("orc_killers", data.actorID, kills);
+					break;
+				case "Dwarves":
+					tryAddToLeaderboard("elf_killers", data.actorID, kills);
+					break;
+				default:
+					tryAddToLeaderboard("misc_killers", data.actorID, kills);
+					break;
+			}
 		}
 	}
 }

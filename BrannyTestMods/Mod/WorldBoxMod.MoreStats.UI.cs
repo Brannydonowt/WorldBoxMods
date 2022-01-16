@@ -64,8 +64,6 @@ namespace BrannyTestMods
 
         void UpdateStatLeaderboard(string type, List<LeaderboardEntry> leaderboard) 
         {
-            Helper.UnityHelpers.LogGameObjectHierachy(statParent);
-
             if (statParent.transform.Find(type))
             {
                 GameObject list = statParent.transform.Find(type).gameObject;
@@ -91,7 +89,7 @@ namespace BrannyTestMods
                 {
                     int pos = child.GetSiblingIndex();
                     UpdateEntry(child, type, leaderboard[pos]);
-                    child.GetComponent<TrackActor>().trackActor(leaderboard[pos].actorId);
+                    child.GetComponent<TrackTarget>().trackTarget(leaderboard[pos].actorId);
                 }
 
                 if (myList.open)
@@ -137,8 +135,8 @@ namespace BrannyTestMods
 
             GameObject entry = Instantiate(statListEntry);
 
-            TrackActor track = entry.AddComponent<TrackActor>();
-            track.trackActor(l.actorId);
+            TrackTarget track = entry.AddComponent<TrackTarget>();
+            track.trackTarget(l.actorId);
             ButtonInteraction button = entry.AddComponent<ButtonInteraction>();
             button.Setup();
             button.AddListener(entry);
@@ -180,6 +178,31 @@ namespace BrannyTestMods
                     details.text = "Grants the \"Tyrant\" Trait";
                     alive.text = "";
                     break;
+                case "human_killers":
+                    title.text = "Human Most Kills";
+                    details.text = "The most ruthless Humans in history";
+                    alive.text = "";
+                    break;
+                case "elf_killers":
+                    title.text = "Elves Most Kills";
+                    details.text = "The most ruthless Elves in history";
+                    alive.text = "";
+                    break;
+                case "dwarf_killers":
+                    title.text = "Dwarves Most Kills";
+                    details.text = "The most ruthless Dwarves in history";
+                    alive.text = "";
+                    break;
+                case "orc_killers":
+                    title.text = "Orcs Most Kills";
+                    details.text = "The most ruthless Orcs in history";
+                    alive.text = "";
+                    break;
+                case "misc_killers":
+                    title.text = "Misc Most Kills";
+                    details.text = "The most vicious creatures in history";
+                    alive.text = "";
+                    break;
                 default:
                     title.text = "broken";
                     details.text = "This is broken, please let the dev know what you expect it to be.";
@@ -200,12 +223,27 @@ namespace BrannyTestMods
                 case "most_ruthless":
                     statDisplayName = "Most Ruthless";
                     break;
+                case "human_killers":
+                    statDisplayName = "Human Kills";
+                    break;
+                case "elf_killers":
+                    statDisplayName = "Elf Kills";
+                    break;
+                case "dwarf_killers":
+                    statDisplayName = "Dwarf Kills";
+                    break;
+                case "orc_killers":
+                    statDisplayName = "Orc Kills";
+                    break;
                 default:
                     statDisplayName = "Something has gone wrong...";
                     break;
             }
 
             BrannyActor bActor = BrannyActorManager.GetRememberedActor(l.actorId);
+            if (bActor == null)
+                return;
+
             ActorStatus data = bActor.getActorStatus();
 
             Text rank = listEntry.GetChild(0).gameObject.GetComponent<Text>();

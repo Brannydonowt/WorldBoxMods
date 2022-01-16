@@ -25,20 +25,40 @@ namespace BrannyTestMods
 
 		static Dictionary<string, BrannyActor> memorableActors = new Dictionary<string, BrannyActor>();
 
-		static Dictionary<string, string> trackedLiveActors = new Dictionary<string, string>();
+		static Dictionary<string, string> trackedLiveObject = new Dictionary<string, string>();
 
 		static List<string> trackedIds = new List<string>();
+
+		public static string RememberID(string toRemember) 
+		{
+			string result = "";
+
+			Actor mActor = MapBox.instance.getActorByID(toRemember);
+
+			if (mActor != null)
+				return RememberActor(mActor);
+
+			Kingdom k = MapBox.instance.kingdoms.getKingdomByID(toRemember);
+
+			if (k != null) 
+			{
+				return toRemember;
+			}
+
+
+			return result;
+		}
 
 		public static string RememberActor(Actor toRemember) 
 		{
 			BrannyActor savedActor;
 			ActorStatus stat = Helper.Reflection.GetActorData(toRemember);
 
-			if (trackedLiveActors.ContainsKey(stat.actorID))
+			if (trackedLiveObject.ContainsKey(stat.actorID))
 			{
 				// We are already tracking this actor, maybe update the information?
 				string t = "";
-				trackedLiveActors.TryGetValue(stat.actorID, out t);
+				trackedLiveObject.TryGetValue(stat.actorID, out t);
 				memorableActors.TryGetValue(t, out savedActor);
 				// TODO - This might not be necessary
 				savedActor = new BrannyActor(toRemember);
@@ -48,7 +68,7 @@ namespace BrannyTestMods
 			else
 			{
 				savedActor = new BrannyActor(toRemember);
-				trackedLiveActors.Add(stat.actorID, savedActor._id);
+				trackedLiveObject.Add(stat.actorID, savedActor._id);
 				memorableActors.Add(savedActor._id, savedActor);
 			}
 
@@ -95,11 +115,21 @@ namespace BrannyTestMods
 		{
 			BrannyActor toKill = GetRememberedActor(id);
 
-			trackedLiveActors.Remove(toKill.actorID);
+			trackedLiveObject.Remove(toKill.actorID);
 
 			// I may have to place the data back inside of the dictionary, we will see.
 			toKill.alive = false;
 			toKill.yod = MapBox.instance.mapStats.year;
+		}
+
+		public static string GenerateID()
+		{
+			string i = Toolbox.randomInt(1000, 10000).ToString();
+
+			if (HasID(i))
+				return GenerateID();
+			else
+				return i;
 		}
 
 		// Add a trait to an actor, if they are alive.
@@ -123,10 +153,10 @@ namespace BrannyTestMods
 			ActorStatus data = Helper.Reflection.GetActorData(__instance);
 
 			// Did somebody we were tracking just die?
-			if (trackedLiveActors.ContainsKey(data.actorID)) 
+			if (trackedLiveObject.ContainsKey(data.actorID)) 
 			{
 				string bId = "";
-				trackedLiveActors.TryGetValue(data.actorID, out bId);
+				trackedLiveObject.TryGetValue(data.actorID, out bId);
 				KillRememberedActor(bId);
 			}
 		}
@@ -176,18 +206,8 @@ namespace BrannyTestMods
 			alive = true;
 
 			status = getActorStatus();
-			_id = GenerateID();
+			_id = BrannyActorManager.GenerateID();
 			BrannyActorManager.AddTrackedID(_id);
-		}
-
-		string GenerateID() 
-		{
-			string i = Toolbox.randomInt(1000, 10000).ToString();
-
-			if (BrannyActorManager.HasID(i))
-				return GenerateID();
-			else
-				return i;
 		}
 
 		public Actor getActor()

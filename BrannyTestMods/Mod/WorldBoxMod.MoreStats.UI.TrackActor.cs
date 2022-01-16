@@ -5,20 +5,40 @@ using UnityEngine.UI;
 
 namespace BrannyTestMods
 {
-    public class TrackActor : MonoBehaviour
+    public class TrackTarget : MonoBehaviour
     {
-        public string myActorID;
+        public string myTargetId;
         private Actor myActor;
+        private Vector3 targetPos = new Vector3();
 
-        private bool hasActor;
+        private bool hasTarget;
 
-        public void trackActor(string toTrack)
+        string trackingType;
+
+        public void trackTarget(string toTrack)
         {
-            myActorID = toTrack;
-            string actorId = "";
+            myTargetId = toTrack;
 
-            BrannyActor b = BrannyActorManager.GetRememberedActor(myActorID);
+            trackingType = FindTrackingType(toTrack);
 
+            switch (trackingType)
+            {
+                case "actor":
+                    TrackActor(toTrack);
+            break;
+                case "kingdom":
+                    Kingdom k = MapBox.instance.kingdoms.getKingdomByID(toTrack);
+                    TrackCapital(k.capital);
+                    break;
+                default:
+                    Debug.Log("Trying to track an unknown target type");
+                    break;
+            }
+        }
+
+        void TrackActor(string actorId) 
+        {
+            BrannyActor b = BrannyActorManager.GetRememberedActor(myTargetId);
             if (b.alive)
             {
                 actorId = b.actorID;
@@ -30,26 +50,76 @@ namespace BrannyTestMods
             }
 
             myActor = MapBox.instance.getActorByID(actorId);
-            hasActor = true;
+            hasTarget = true;
+        }
+
+        void TrackCapital(City toTrack) 
+        {
+            Vector3 cityPos = new Vector3();
+            cityPos = (Vector3)Helper.Reflection.GetField(cityPos.GetType(), toTrack, "cityCenter");
+            targetPos = cityPos;
+            hasTarget = true;
+        }
+
+        string FindTrackingType(string id) 
+        {
+            string result = "";
+
+            BrannyActor b = BrannyActorManager.GetRememberedActor(myTargetId);
+
+            if (b != null)
+            {
+                result = "actor";
+                return result;
+            }
+
+            Kingdom k = MapBox.instance.kingdoms.getKingdomByID(id);
+
+            if (k != null)
+            {
+                result = "kingdom";
+                return result;
+            }
+
+            return result;
         }
 
         bool isActorAlive() 
         {
-            BrannyActor b = BrannyActorManager.GetRememberedActor(myActorID);
+            BrannyActor b = BrannyActorManager.GetRememberedActor(myTargetId);
             return b.alive;
         }
 
         public void watchActor()
         {
-            if (!hasActor || !isActorAlive()) { return; }
+            if (!hasTarget || !isActorAlive()) { return; }
 
             MapBox.instance.locateAndFollow(myActor, null, null);
             WorldBoxMod.instance.CloseAllUI();
         }
 
+        public void moveToTarget() 
+        {
+            if (!hasTarget) { return; }
+
+            MapBox.instance.locatePosition(targetPos);
+            WorldBoxMod.instance.CloseAllUI();
+        }
+
         public void OnInteract() 
         {
-            watchActor();
+            switch (trackingType)
+            {
+                case "actor":
+                    watchActor();
+                    break;
+                case "kingdom":
+                    moveToTarget();
+                    break;
+                default:
+                    break;
+            }
+            
         }
     }
 }
