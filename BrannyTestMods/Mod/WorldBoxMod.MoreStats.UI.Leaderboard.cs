@@ -60,7 +60,7 @@ namespace BrannyTestMods
         {
             numChildren = itemParent.childCount;
 
-            float totalHeight = GetChildHeight() * (numChildren - 1);
+            float totalHeight = GetChildHeight() * numChildren;
             totalHeight += GetAdditionalHeight();
 
             SetTransformHeight(totalHeight + baseHeight);

@@ -72,23 +72,40 @@ namespace BrannyTestMods
                 Debug.Log("Acquired List: " + list.name);
                 UnfoldList myList = list.transform.GetChild(0).gameObject.GetComponent<UnfoldList>();
 
-                // Do we need to make more entries?
-                if (leaderboard.Count > (list.transform.childCount - 1)) 
+                //foreach (Transform child in list.transform.GetChild(1))
+                //{
+                //    Destroy(child.gameObject);
+                //}
+
+                //foreach (LeaderboardEntry l in leaderboard)
+                //{
+                //    l.UpdatePosition(leaderboard.IndexOf(l));
+                //    GameObject entry = CreateNewStatLeaderboardEntry(l, type);
+                //    entry.transform.SetParent(list.transform.GetChild(1));
+                //    entry.transform.SetSiblingIndex(l.position);
+                //    entry.SetActive(true);
+                //}
+
+                int childCount = list.transform.GetChild(1).childCount;
+                
+                // Does the leaderboard have more entries than we have UI entries?
+                if (childCount < leaderboard.Count && childCount < 10) 
                 {
-                    Destroy(list);
-                    CreateNewStatLeaderboard(type, leaderboard);
-                    return;
+                    for (int i = childCount; i < leaderboard.Count; i++) 
+                    {
+                        GameObject entry = CreateNewStatLeaderboardEntry(leaderboard[i], type);
+                        entry.transform.SetParent(list.transform.GetChild(1));
+                        entry.name = entry.transform.GetSiblingIndex().ToString();
+                        entry.SetActive(true);
+                    }
                 }
 
                 // Get all children and update them to the values of the new leaderboard
-                foreach (Transform child in list.transform.GetChild(1)) 
+                foreach (Transform child in list.transform.GetChild(1))
                 {
-                    if (child.name != "StatListEntry")
-                    {
-                        int pos = int.Parse(child.name);
-                        UpdateEntry(child, type, leaderboard[pos]);
-                        child.GetComponent<TrackActor>().trackActor(leaderboard[pos].actorId);
-                    }
+                    int pos = child.GetSiblingIndex();
+                    UpdateEntry(child, type, leaderboard[pos]);
+                    child.GetComponent<TrackActor>().trackActor(leaderboard[pos].actorId);
                 }
 
                 if (myList.open)
@@ -117,7 +134,8 @@ namespace BrannyTestMods
                 l.UpdatePosition(leaderboard.IndexOf(l));
                 GameObject entry = CreateNewStatLeaderboardEntry(l, type);
                 entry.transform.SetParent(list.transform.GetChild(1));
-                entry.transform.SetSiblingIndex(l.position);
+                entry.name = entry.transform.GetSiblingIndex().ToString();
+                CustomiseStatListEntry(entry.transform, type, l);
                 entry.SetActive(true);
             }
 
@@ -132,8 +150,6 @@ namespace BrannyTestMods
             BrannyActor bActor = BrannyActorManager.GetRememberedActor(l.actorId);
 
             GameObject entry = Instantiate(statListEntry);
-
-            CustomiseStatListEntry(entry.transform, type, l);
 
             TrackActor track = entry.AddComponent<TrackActor>();
             track.trackActor(l.actorId);
@@ -190,8 +206,6 @@ namespace BrannyTestMods
         {
             string statDisplayName = "";
 
-            listEntry.gameObject.name = l.position.ToString();
-
             switch (type)
             {
                 case "top_killers":
@@ -213,7 +227,7 @@ namespace BrannyTestMods
             Text statAmount = listEntry.GetChild(2).gameObject.GetComponent<Text>();
             Text status = listEntry.GetChild(3).gameObject.GetComponent<Text>();
 
-            int rankValue = l.position + 1;
+            int rankValue = int.Parse(listEntry.name) + 1;
             rank.text = "#" + rankValue;
             name.text = data.firstName;
             statAmount.text = l.statValue + " Kills";
