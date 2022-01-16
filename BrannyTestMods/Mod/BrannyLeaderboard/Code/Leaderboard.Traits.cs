@@ -8,12 +8,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using BrannyCore;
 using HarmonyLib;
 
-namespace BrannyTestMods
+namespace BrannyLeaderboard
 {
-    public partial class WorldBoxMod
-    {
+    public partial class Leaderboard
+	{
         void init_traits() 
         {
 			AssetManager.traits.add(new ActorTrait

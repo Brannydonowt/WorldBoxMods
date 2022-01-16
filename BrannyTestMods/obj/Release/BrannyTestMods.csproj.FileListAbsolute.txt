@@ -59,7 +59,6 @@ C:\Users\Brand\GameDev\WorldBoxModding\BrannyMods\TestMod\WorldBoxMods\BrannyTes
 C:\Users\Brand\GameDev\WorldBoxModding\BrannyMods\TestMod\WorldBoxMods\BrannyTestMods\bin\Release\UnityEngine.UIModule.dll
 C:\Users\Brand\GameDev\WorldBoxModding\BrannyMods\TestMod\WorldBoxMods\BrannyTestMods\bin\Release\UnityEngine.VFXModule.dll
 C:\Users\Brand\GameDev\WorldBoxModding\BrannyMods\TestMod\WorldBoxMods\BrannyTestMods\bin\Release\Unity.2D.Sprite.Editor.dll
-C:\Users\Brand\GameDev\WorldBoxModding\BrannyMods\TestMod\WorldBoxMods\BrannyTestMods\bin\Release\UnityEngine.SharedInternalsModule.dll
 C:\Users\Brand\GameDev\WorldBoxModding\BrannyMods\TestMod\WorldBoxMods\BrannyTestMods\bin\Release\Unity.2D.Common.Editor.pdb
 C:\Users\Brand\GameDev\WorldBoxModding\BrannyMods\TestMod\WorldBoxMods\BrannyTestMods\bin\Release\Unity.2D.Common.Runtime.pdb
 C:\Users\Brand\GameDev\WorldBoxModding\BrannyMods\TestMod\WorldBoxMods\BrannyTestMods\bin\Release\Unity.InternalAPIEditorBridge.001.pdb

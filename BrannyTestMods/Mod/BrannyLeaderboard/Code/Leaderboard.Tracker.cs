@@ -8,16 +8,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using BrannyCore;
 using HarmonyLib;
 
-namespace BrannyTestMods
+namespace BrannyLeaderboard
 {
-	public partial class WorldBoxMod
+	public partial class Leaderboard
 	{
 		public void stats_patch(Harmony harmony) 
 		{
-			Helper.Utils.HarmonyPatching(harmony, "postfix", AccessTools.Method(typeof(Actor), "increaseKillCount"), AccessTools.Method(typeof(WorldBoxMod), "increaseKillCount_postfix"));
-			Helper.Utils.HarmonyPatching(harmony, "postfix", AccessTools.Method(typeof(Actor), "consumeCityFoodItem"), AccessTools.Method(typeof(WorldBoxMod), "consumeCityFoodItem_postfix"));
+			Helper.Utils.HarmonyPatching(harmony, "postfix", AccessTools.Method(typeof(Actor), "increaseKillCount"), AccessTools.Method(typeof(Leaderboard), "increaseKillCount_postfix"));
+			Helper.Utils.HarmonyPatching(harmony, "postfix", AccessTools.Method(typeof(Actor), "consumeCityFoodItem"), AccessTools.Method(typeof(Leaderboard), "consumeCityFoodItem_postfix"));
 
 
 			Debug.Log("PostFix stats_patch DONE");
@@ -32,7 +33,7 @@ namespace BrannyTestMods
 		// Who kills the most?
 		public static void increaseKillCount_postfix(Actor __instance)
 		{
-			WorldBoxMod.instance.CompareToKillLeaderboard(__instance);
+			instance.CompareToKillLeaderboard(__instance);
 		}
 	}
 }

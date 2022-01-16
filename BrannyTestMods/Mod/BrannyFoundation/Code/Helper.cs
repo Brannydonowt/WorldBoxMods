@@ -35,7 +35,7 @@ namespace Helper
         }
     }
 
-    class Utils
+    public class Utils
     {
         public static void HarmonyPatching(Harmony harmony, string type, MethodInfo original, MethodInfo patch)
         {

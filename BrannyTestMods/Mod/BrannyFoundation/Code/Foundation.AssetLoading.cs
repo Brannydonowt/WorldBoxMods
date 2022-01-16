@@ -12,20 +12,20 @@ using System.IO;
 using HarmonyLib;
 using static Config;
 
-namespace BrannyTestMods
+namespace BrannyCore
 {
-    public partial class WorldBoxMod
+    public partial class BrannyFoundation
     {
         static AssetBundle loadedAssetBundle;
 
-        static bool assets_initialised;
+        public static bool assets_initialised;
 
         void init_assets() 
         {
-            LoadAssetBundle();
+            instance.LoadAssetBundle();
         }
 
-        public void LoadAssetBundle()
+        void LoadAssetBundle()
         {
             string bundlename = "brannywbox";
             loadedAssetBundle = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, "AssetBundle", bundlename));

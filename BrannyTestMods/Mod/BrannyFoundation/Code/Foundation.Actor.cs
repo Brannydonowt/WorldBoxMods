@@ -12,7 +12,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using HarmonyLib;
 
-namespace BrannyTestMods
+namespace BrannyCore
 {
 	// I need a class that can track any actor that may have existed at one point
 	public static class BrannyActorManager

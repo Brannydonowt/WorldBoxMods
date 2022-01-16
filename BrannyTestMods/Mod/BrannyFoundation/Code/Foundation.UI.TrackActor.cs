@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BrannyCore;
 using UnityEngine.UI;
 
-namespace BrannyTestMods
+namespace BrannyCore
 {
     public class TrackTarget : MonoBehaviour
     {
@@ -95,7 +96,7 @@ namespace BrannyTestMods
             if (!hasTarget || !isActorAlive()) { return; }
 
             MapBox.instance.locateAndFollow(myActor, null, null);
-            WorldBoxMod.instance.CloseAllUI();
+            BrannyFoundation.instance.CloseAllUI();
         }
 
         public void moveToTarget() 
@@ -103,7 +104,7 @@ namespace BrannyTestMods
             if (!hasTarget) { return; }
 
             MapBox.instance.locatePosition(targetPos);
-            WorldBoxMod.instance.CloseAllUI();
+            BrannyFoundation.instance.CloseAllUI();
         }
 
         public void OnInteract() 

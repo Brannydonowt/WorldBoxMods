@@ -28,7 +28,10 @@ Extended World Stats
 		Houses Built
 		Trees Chopped
 		Children
-	
+
+Spawn in random location option	
+	When you have a spawnable selected - add a little button to the screen that selects a random spawnpoint and spawns it.
+
 Reduce Game Time
 	Make the Game Clock run much slower, but still have units fun to watch
 	

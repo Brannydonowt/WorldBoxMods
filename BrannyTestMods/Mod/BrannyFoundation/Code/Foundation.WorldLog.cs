@@ -12,9 +12,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using HarmonyLib;
 
-namespace BrannyTestMods
+namespace BrannyCore
 {
-	public partial class WorldBoxMod
+	public partial class BrannyFoundation
 	{
 		public void logNewKillLead(Actor lead)
 		{

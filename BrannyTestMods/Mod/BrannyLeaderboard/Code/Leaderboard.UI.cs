@@ -9,14 +9,14 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using BrannyCore;
 using HarmonyLib;
 
-namespace BrannyTestMods
+namespace BrannyLeaderboard
 {
-    public partial class WorldBoxMod
+    public partial class Leaderboard
     {
         public GameObject brannyCanvas;
-        //public GameObject statParent;
         public GameObject statEntry;
         public GameObject statList;
         public GameObject statListEntry;
@@ -25,41 +25,23 @@ namespace BrannyTestMods
 
         bool ui_initialized;
 
-        List<GameObject> createdElements = new List<GameObject>();
-
-        void init_ui()
+        public void init_ui()
         {
-            if (!assets_initialised)
+            if (!BrannyFoundation.assets_initialised)
                 return;
 
             Debug.Log("Initialising UI");
 
-            brannyCanvas = GetGameObjectFromAssetBundle("BrannyCanvas");
+            brannyCanvas = GameObject.Find("BrannyCanvas");
+            Debug.Log("Branny Canvas found: " + brannyCanvas.name);
             statParent = brannyCanvas.transform.GetChild(0).GetChild(0).GetChild(0);
-            statEntry = GetGameObjectFromAssetBundle("StatEntry");
-            statList = GetGameObjectFromAssetBundle("StatList");
-            statListEntry = GetGameObjectFromAssetBundle("StatListEntry");
+            statEntry = BrannyFoundation.instance.GetGameObjectFromAssetBundle("StatEntry");
+            statList = BrannyFoundation.instance.GetGameObjectFromAssetBundle("StatList");
+            statListEntry = BrannyFoundation.instance.GetGameObjectFromAssetBundle("StatListEntry");
 
             brannyCanvas.SetActive(false);
 
             ui_initialized = true;
-        }
-
-        void update_ui()
-        {
-            if (!ui_initialized)
-            {
-                Debug.Log("UI not initialized");
-                init_ui();
-                return;
-            }
-
-            if (Input.GetKeyDown(KeyCode.B))
-            {
-                // This will display Branny UI
-                brannyCanvas.SetActive(!brannyCanvas.activeSelf);
-                statParent.gameObject.SetActive(brannyCanvas.activeSelf);
-            }
         }
 
         void UpdateStatLeaderboard(string type, List<LeaderboardEntry> leaderboard) 
@@ -137,14 +119,7 @@ namespace BrannyTestMods
 
             TrackTarget track = entry.AddComponent<TrackTarget>();
             track.trackTarget(l.actorId);
-            ButtonInteraction button = entry.AddComponent<ButtonInteraction>();
-            button.Setup();
-            button.AddListener(entry);
-
-            string[] cData = new string[1];
-            cData[0] = type;
-
-            button.AddCustomData(cData);
+            GetComponent<Button>().onClick.AddListener(track.OnInteract);
 
             return entry;
         }
@@ -213,33 +188,6 @@ namespace BrannyTestMods
 
         void CustomiseStatListEntry(Transform listEntry, string type, LeaderboardEntry l)
         {
-            string statDisplayName = "";
-
-            switch (type)
-            {
-                case "top_killers":
-                    statDisplayName = "Most Kills";
-                    break;
-                case "most_ruthless":
-                    statDisplayName = "Most Ruthless";
-                    break;
-                case "human_killers":
-                    statDisplayName = "Human Kills";
-                    break;
-                case "elf_killers":
-                    statDisplayName = "Elf Kills";
-                    break;
-                case "dwarf_killers":
-                    statDisplayName = "Dwarf Kills";
-                    break;
-                case "orc_killers":
-                    statDisplayName = "Orc Kills";
-                    break;
-                default:
-                    statDisplayName = "Something has gone wrong...";
-                    break;
-            }
-
             BrannyActor bActor = BrannyActorManager.GetRememberedActor(l.actorId);
             if (bActor == null)
                 return;
