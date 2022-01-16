@@ -64,11 +64,21 @@ namespace BrannyTestMods
 
         void UpdateStatLeaderboard(string type, List<LeaderboardEntry> leaderboard) 
         {
+            Helper.UnityHelpers.LogGameObjectHierachy(statParent);
+
             if (statParent.transform.Find(type))
             {
                 GameObject list = statParent.transform.Find(type).gameObject;
-                Helper.UnityHelpers.LogGameObjectHierachy(list.transform);
+                Debug.Log("Acquired List: " + list.name);
                 UnfoldList myList = list.transform.GetChild(0).gameObject.GetComponent<UnfoldList>();
+
+                // Do we need to make more entries?
+                if (leaderboard.Count > (list.transform.childCount - 1)) 
+                {
+                    Destroy(list);
+                    CreateNewStatLeaderboard(type, leaderboard);
+                    return;
+                }
 
                 // Get all children and update them to the values of the new leaderboard
                 foreach (Transform child in list.transform.GetChild(1)) 
@@ -94,17 +104,14 @@ namespace BrannyTestMods
 
         GameObject CreateNewStatLeaderboard(string type, List<LeaderboardEntry> leaderboard)
         {
-            GameObject list = Instantiate(statList, statParent.transform);
-            ButtonInteraction button = list.transform.GetChild(0).gameObject.AddComponent<ButtonInteraction>();
-            button.Setup();
+            GameObject list = Instantiate(statList.gameObject, statParent.transform);
+            list.name = "LIST - " + type;
             UnfoldList myList = list.transform.GetChild(0).gameObject.AddComponent<UnfoldList>();
+            list.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(myList.TogglePanel); // += myList.TogglePanel;
             myList.Setup();
-            button.AddListener(myList.gameObject);
             list.SetActive(true);
             CustomiseStatList(list.transform, type);
-            
-            createdElements.Add(list);
-            
+                        
             foreach (LeaderboardEntry l in leaderboard) 
             {
                 l.UpdatePosition(leaderboard.IndexOf(l));
@@ -112,10 +119,7 @@ namespace BrannyTestMods
                 entry.transform.SetParent(list.transform.GetChild(1));
                 entry.transform.SetSiblingIndex(l.position);
                 entry.SetActive(true);
-                Debug.Log("ENTRY NAME: " + entry.gameObject.name);
             }
-
-            Helper.UnityHelpers.LogGameObjectHierachy(list.transform);
 
             return list;
         }
@@ -128,14 +132,14 @@ namespace BrannyTestMods
             BrannyActor bActor = BrannyActorManager.GetRememberedActor(l.actorId);
 
             GameObject entry = Instantiate(statListEntry);
+
+            CustomiseStatListEntry(entry.transform, type, l);
+
             TrackActor track = entry.AddComponent<TrackActor>();
             track.trackActor(l.actorId);
             ButtonInteraction button = entry.AddComponent<ButtonInteraction>();
             button.Setup();
             button.AddListener(entry);
-            entry.SetActive(true);
-
-            CustomiseStatListEntry(entry.transform, type, l);
 
             string[] cData = new string[1];
             cData[0] = type;
@@ -190,8 +194,11 @@ namespace BrannyTestMods
 
             switch (type)
             {
-                case "Kills":
+                case "top_killers":
                     statDisplayName = "Most Kills";
+                    break;
+                case "most_ruthless":
+                    statDisplayName = "Most Ruthless";
                     break;
                 default:
                     statDisplayName = "Something has gone wrong...";

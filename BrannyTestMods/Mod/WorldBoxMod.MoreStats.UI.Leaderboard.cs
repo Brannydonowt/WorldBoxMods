@@ -7,16 +7,16 @@ namespace BrannyTestMods
 {
     public class UnfoldList : MonoBehaviour
     {
-        public static RectTransform myRect = null;
-        public static RectTransform parentRect = null;
-
-        public static float baseHeight;
-
-        public static Transform itemParent;
-
-        public static VerticalLayoutGroup layoutGroup;
-
-        public static int numChildren;
+        public RectTransform myRect = null;
+        public RectTransform parentRect = null;
+               
+        public float baseHeight;
+               
+        public Transform itemParent;
+               
+        public VerticalLayoutGroup layoutGroup;
+               
+        public int numChildren;
 
         public bool open = false;
 

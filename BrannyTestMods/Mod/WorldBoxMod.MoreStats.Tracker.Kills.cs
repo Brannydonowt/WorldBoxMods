@@ -24,12 +24,9 @@ namespace BrannyTestMods
 			{
 				string _id = BrannyActorManager.RememberActor(__instance);
 				BrannyActorManager.AddTraitToActor("Bloodthirsty", _id);
-
-				if (TryAddStat("most_ruthless", data.actorID, kills)) 
-				{
-					Debug.Log("Added most ruthless!");
-				}
 			}
+
+			TryAddStat("most_ruthless", data.actorID, kills);
 		}
 	}
 }

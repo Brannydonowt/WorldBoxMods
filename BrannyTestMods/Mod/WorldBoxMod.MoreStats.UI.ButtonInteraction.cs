@@ -40,14 +40,16 @@ namespace BrannyTestMods
 
         public void AddListener(GameObject g) 
         {
-            Debug.Log("Adding Listener to object:  " + g.name);
             listeners.Add(g);
         }
 
         void Interact()
-        { 
+        {
+            Debug.Log(gameObject.name + " button clicked!");
+
             foreach (GameObject g in listeners) 
             {
+                Debug.Log("Sending message to: " + g.name);
                 g.SendMessage("OnInteract");
             }
         }
