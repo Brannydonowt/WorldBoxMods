@@ -23,10 +23,15 @@ namespace BrannyTestMods
 			if (tryAddToLeaderboard("top_killers", data.actorID, kills))
 			{
 				string _id = BrannyActorManager.RememberActor(__instance);
-				BrannyActorManager.AddTraitToActor("Bloodthirsty", _id);
+				BrannyActorManager.AddTraitToActor("bloodthirsty", _id);
 			}
 
-			TryAddStat("most_ruthless", data.actorID, kills);
+			if (TryAddStat("most_ruthless", data.actorID, kills)) 
+			{
+				string _id = BrannyActorManager.RememberActor(__instance);
+				BrannyActorManager.AddTraitToActor("tyrant", _id);
+				BrannyActorManager.AddTraitToActor("immortal", _id);
+			}
 		}
 	}
 }

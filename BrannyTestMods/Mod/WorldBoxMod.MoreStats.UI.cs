@@ -72,20 +72,6 @@ namespace BrannyTestMods
                 Debug.Log("Acquired List: " + list.name);
                 UnfoldList myList = list.transform.GetChild(0).gameObject.GetComponent<UnfoldList>();
 
-                //foreach (Transform child in list.transform.GetChild(1))
-                //{
-                //    Destroy(child.gameObject);
-                //}
-
-                //foreach (LeaderboardEntry l in leaderboard)
-                //{
-                //    l.UpdatePosition(leaderboard.IndexOf(l));
-                //    GameObject entry = CreateNewStatLeaderboardEntry(l, type);
-                //    entry.transform.SetParent(list.transform.GetChild(1));
-                //    entry.transform.SetSiblingIndex(l.position);
-                //    entry.SetActive(true);
-                //}
-
                 int childCount = list.transform.GetChild(1).childCount;
                 
                 // Does the leaderboard have more entries than we have UI entries?

@@ -18,29 +18,29 @@ namespace BrannyTestMods
         {
 			AssetManager.traits.add(new ActorTrait
 			{
-				id = "Bloodthirsty",
+				id = "bloodthirsty",
 				icon = "iconVeteran",
 				group = TraitGroup.Personality,
 				type = TraitType.Positive
 			});
-			var killLeaderTrait = AssetManager.traits.get("Bloodthirsty");
+			var killLeaderTrait = AssetManager.traits.get("bloodthirsty");
 			killLeaderTrait.baseStats.damage = 25;
 			killLeaderTrait.baseStats.speed = 10;
 			killLeaderTrait.baseStats.scale = 0.2f;
-			Helper.Localization.addLocalization("trait_Bloodthirsty", "Bloodthirsty");
+			Helper.Localization.addLocalization("trait_bloodthirsty", "Bloodthirsty");
 
 			AssetManager.traits.add(new ActorTrait
 			{
-				id = "Tryant Killer",
+				id = "tyrant",
 				icon = "iconVeteran",
 				group = TraitGroup.Personality,
 				type = TraitType.Positive
 			});
-			var tyrantKillerTrait = AssetManager.traits.get("Tryant Killer");
-			tyrantKillerTrait.baseStats.damage = 35;
+			var tyrantKillerTrait = AssetManager.traits.get("tyrant");
+			tyrantKillerTrait.baseStats.damage = 45;
 			tyrantKillerTrait.baseStats.speed = 20;
-			tyrantKillerTrait.baseStats.scale = 0.3f;
-			Helper.Localization.addLocalization("trait_Tyrant Killer", "Tyrant Killer");
+			tyrantKillerTrait.baseStats.scale = 0.4f;
+			Helper.Localization.addLocalization("trait_tyrant", "Tyrant");
 		}
 	}
 }
