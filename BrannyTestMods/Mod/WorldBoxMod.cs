@@ -18,9 +18,9 @@ namespace BrannyTestMods
     [ModEntry]
     public partial class WorldBoxMod : MonoBehaviour
     {
-        public const string pluginName = "Branny's Test Mod";
+        public const string pluginName = "Branny's Expansion Mod";
         public const string pluginVersion = "0.1";
-        public const string id = "branny.testmod";
+        public const string id = "branny.wbox.expansion";
 
         public Harmony harmony;
 

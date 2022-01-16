@@ -46,13 +46,13 @@ namespace BrannyTestMods
 					tryAddToLeaderboard("human_killers", data.actorID, kills);
 					break;
 				case "Orcs":
-					tryAddToLeaderboard("dwarf_killers", data.actorID, kills);
-					break;
-				case "Elves":
 					tryAddToLeaderboard("orc_killers", data.actorID, kills);
 					break;
-				case "Dwarves":
+				case "Elves":
 					tryAddToLeaderboard("elf_killers", data.actorID, kills);
+					break;
+				case "Dwarves":
+					tryAddToLeaderboard("dwarf_killers", data.actorID, kills);
 					break;
 				default:
 					tryAddToLeaderboard("misc_killers", data.actorID, kills);
