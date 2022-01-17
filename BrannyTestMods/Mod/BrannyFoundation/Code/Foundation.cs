@@ -29,29 +29,30 @@ namespace BrannyCore
         public bool initialized = false;
 
         public static BrannyFoundation instance;
+        public Leaderboard leaderboard;
 
         public void Awake()
         {
             // We want the mod to have an instance
-            instance = this;
-
-            harmony = new Harmony(id);
-            Patching(harmony);
-
             init();
         }
 
-        void Update() 
+        public void Update() 
         {
             if (!gameLoaded) return;
 
             if (!initialized) return;
 
-            initialized = true;
+            leaderboard.Update();
         }
 
-        void init()
+        public void init()
         {
+            instance = this;
+
+            harmony = new Harmony(id);
+            Patching(harmony);
+
             Debug.Log("Initializing Branny Core");
             init_assets();
             init_ui();
@@ -66,7 +67,8 @@ namespace BrannyCore
 
         void init_extensions() 
         {
-            Leaderboard.init();
+            leaderboard = new Leaderboard();
+            leaderboard.init(this);
         }
 
         public void CloseAllUI()

@@ -11,7 +11,6 @@ using UnityEngine;
 using System.IO;
 using HarmonyLib;
 using BrannyCore;
-using static Config;
 
 namespace BrannyLeaderboard
 {
@@ -23,27 +22,19 @@ namespace BrannyLeaderboard
         public const string id = "branny.wbox.expansion.leaderboard";
 
         public Harmony harmony;
-        static bool initialized = false;
+        public static bool initialized = false;
 
         public static Leaderboard instance;
-        public static BrannyFoundation foundation;
+        public BrannyFoundation foundation;
 
         void Awake() 
         {
-            instance = this;
-
-            harmony = new Harmony(id);
-            Patching(harmony);
+ 
         }
 
-        void Update() 
+        public void Update() 
         {
-            if (!gameLoaded) return;
-
-            if (foundation == null)
-                return;
-
-            if (!initialized) { return; }
+            if (!initialized) { Debug.Log("Leaderboard not yet initialized"); return; }
 
             update_ui();
         }
@@ -65,11 +56,16 @@ namespace BrannyLeaderboard
             }
         }
 
-        public static void init()
+        public void init(BrannyFoundation bf)
         {
             Debug.Log("Initializing Branny Leaderboard");
 
-            foundation = BrannyFoundation.instance;
+            instance = this;
+
+            harmony = new Harmony(id);
+            Patching(harmony);
+
+            foundation = bf;
 
             instance.init_traits();
             instance.init_ui();

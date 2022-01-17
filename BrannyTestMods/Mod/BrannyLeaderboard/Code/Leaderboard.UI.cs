@@ -33,7 +33,7 @@ namespace BrannyLeaderboard
 
             Debug.Log("Initialising UI");
 
-            brannyCanvas = GameObject.Find("BrannyCanvas");
+            brannyCanvas = foundation.GetGameObjectFromAssetBundle("BrannyCanvas");
             Debug.Log("Branny Canvas found: " + brannyCanvas.name);
             statParent = brannyCanvas.transform.GetChild(0).GetChild(0).GetChild(0);
             statEntry = foundation.GetGameObjectFromAssetBundle("StatEntry");

@@ -11,10 +11,9 @@ namespace BrannyCore
 
         void init_ui()
         {
-            brannyCanvas = instance.GetGameObjectFromAssetBundle("BrannyCanvas");
-            brannyCanvas.name = "BrannyCanvas";
-
-            
+            //brannyCanvas = instance.GetGameObjectFromAssetBundle("BrannyCanvas");
+            //brannyCanvas.name = "BrannyCanvas";
+            //brannyCanvas.SetActive(true);
         }
     }
 }

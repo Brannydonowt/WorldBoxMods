@@ -144,12 +144,14 @@
     <Compile Include="Mod\BrannyLeaderboard\Code\Leaderboard.Traits.cs" />
     <Compile Include="Mod\BrannyLeaderboard\Code\Leaderboard.cs" />
     <Compile Include="Mod\BrannyFoundation\Code\Foundation.cs" />
+    <Compile Include="Mod\BrannyMods\Code\BrannyModManager.cs" />
     <Compile Include="Mod\WorldLog\WorldLogExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Mod\BrannyFoundation\icon.png" />
     <Content Include="Mod\BrannyLeaderboard\icon.png" />
+    <Content Include="Mod\BrannyMods\icon.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Mod\BrannyFoundation\AssetBundle\brannywbox" />
@@ -158,6 +160,7 @@
     <None Include="Mod\BrannyLeaderboard\AssetBundle\brannywbox" />
     <None Include="Mod\BrannyLeaderboard\AssetBundle\brannywbox.manifest" />
     <None Include="Mod\BrannyLeaderboard\mod.json" />
+    <None Include="Mod\BrannyMods\mod.json" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
