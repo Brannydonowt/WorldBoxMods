@@ -27,17 +27,18 @@ namespace BrannyLeaderboard
 
         public void init_ui()
         {
-            if (!BrannyFoundation.assets_initialised)
-                return;
+            if (!foundation.initialized) { Debug.Log("BrannyFoundation not initialized."); return; }
+
+            if (!foundation.assets_initialised) { Debug.Log("Assets not initialized."); return; }
 
             Debug.Log("Initialising UI");
 
             brannyCanvas = GameObject.Find("BrannyCanvas");
             Debug.Log("Branny Canvas found: " + brannyCanvas.name);
             statParent = brannyCanvas.transform.GetChild(0).GetChild(0).GetChild(0);
-            statEntry = BrannyFoundation.instance.GetGameObjectFromAssetBundle("StatEntry");
-            statList = BrannyFoundation.instance.GetGameObjectFromAssetBundle("StatList");
-            statListEntry = BrannyFoundation.instance.GetGameObjectFromAssetBundle("StatListEntry");
+            statEntry = foundation.GetGameObjectFromAssetBundle("StatEntry");
+            statList = foundation.GetGameObjectFromAssetBundle("StatList");
+            statListEntry = foundation.GetGameObjectFromAssetBundle("StatListEntry");
 
             brannyCanvas.SetActive(false);
 

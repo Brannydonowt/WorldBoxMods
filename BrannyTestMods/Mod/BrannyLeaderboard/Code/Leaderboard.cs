@@ -26,6 +26,7 @@ namespace BrannyLeaderboard
         static bool initialized = false;
 
         public static Leaderboard instance;
+        public BrannyFoundation foundation;
 
         void Awake() 
         {
@@ -36,7 +37,10 @@ namespace BrannyLeaderboard
         {
             if (!gameLoaded) return;
 
-            if (!initialized) return;
+            if (foundation == null)
+                return;
+
+            if (!initialized) { return; }
 
             update_ui();
         }
@@ -58,12 +62,10 @@ namespace BrannyLeaderboard
             }
         }
 
-        public void init()
+        public void init(BrannyFoundation bf)
         {
             instance = this;
-
-            harmony = BrannyFoundation.instance.harmony;
-            Patching(harmony);
+            foundation = bf;
 
             Debug.Log("Initializing Branny Leaderboard");
             init_traits();

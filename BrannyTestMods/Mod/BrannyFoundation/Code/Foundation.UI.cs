@@ -13,6 +13,8 @@ namespace BrannyCore
         {
             brannyCanvas = instance.GetGameObjectFromAssetBundle("BrannyCanvas");
             brannyCanvas.name = "BrannyCanvas";
+
+            
         }
     }
 }

@@ -18,7 +18,7 @@ namespace BrannyCore
     {
         static AssetBundle loadedAssetBundle;
 
-        public static bool assets_initialised;
+        public bool assets_initialised;
 
         void init_assets() 
         {

@@ -26,7 +26,7 @@ namespace BrannyCore
 
         public Harmony harmony;
 
-        static bool initialized = false;
+        public bool initialized = false;
 
         public static BrannyFoundation instance;
 
@@ -38,7 +38,7 @@ namespace BrannyCore
             harmony = new Harmony(id);
             Patching(harmony);
 
-            instance.init();
+            init();
         }
 
         void Update() 
@@ -61,14 +61,14 @@ namespace BrannyCore
             Debug.Log("Branny Core, initialized!");
         }
 
-        public void CloseAllUI()
-        {
-            //brannyCanvas.SetActive(false);
-        }
-
         void init_extensions() 
         {
-            Leaderboard.instance.init();
+            Leaderboard.instance.foundation = instance;
+        }
+
+        public void CloseAllUI()
+        {
+            brannyCanvas.SetActive(false);
         }
 
         private void Patching(Harmony harmony)
