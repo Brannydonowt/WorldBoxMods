@@ -56,14 +56,17 @@ namespace BrannyCore
             init_assets();
             init_ui();
 
-            init_extensions();
+            initialized = true;
 
             Debug.Log("Branny Core, initialized!");
+            Debug.Log("Branny Core : Initializaing extensions");
+
+            init_extensions();
         }
 
         void init_extensions() 
         {
-            Leaderboard.instance.foundation = instance;
+            Leaderboard.init();
         }
 
         public void CloseAllUI()

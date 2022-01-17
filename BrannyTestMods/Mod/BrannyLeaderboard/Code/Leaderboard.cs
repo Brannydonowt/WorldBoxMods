@@ -26,11 +26,14 @@ namespace BrannyLeaderboard
         static bool initialized = false;
 
         public static Leaderboard instance;
-        public BrannyFoundation foundation;
+        public static BrannyFoundation foundation;
 
         void Awake() 
         {
             instance = this;
+
+            harmony = new Harmony(id);
+            Patching(harmony);
         }
 
         void Update() 
@@ -62,16 +65,16 @@ namespace BrannyLeaderboard
             }
         }
 
-        public void init(BrannyFoundation bf)
+        public static void init()
         {
-            instance = this;
-            foundation = bf;
-
             Debug.Log("Initializing Branny Leaderboard");
-            init_traits();
-            init_ui();
-            Debug.Log("Branny Leaderboard, initialized!");
 
+            foundation = BrannyFoundation.instance;
+
+            instance.init_traits();
+            instance.init_ui();
+
+            Debug.Log("Branny Leaderboard, initialized!");
             initialized = true;
         }
 
