@@ -15,15 +15,6 @@ namespace BrannyLeaderboard
 {
 	public partial class Leaderboard
 	{
-		public void stats_patch(Harmony harmony) 
-		{
-			Helper.Utils.HarmonyPatching(harmony, "postfix", AccessTools.Method(typeof(Actor), "increaseKillCount"), AccessTools.Method(typeof(Leaderboard), "increaseKillCount_postfix"));
-			Helper.Utils.HarmonyPatching(harmony, "postfix", AccessTools.Method(typeof(Actor), "consumeCityFoodItem"), AccessTools.Method(typeof(Leaderboard), "consumeCityFoodItem_postfix"));
-
-
-			Debug.Log("PostFix stats_patch DONE");
-		}
-
 		// Who eats the most?
 		public static void consumeCityFoodItem_postfix(Actor __instance) 
 		{

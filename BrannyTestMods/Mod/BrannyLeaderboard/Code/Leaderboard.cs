@@ -61,10 +61,6 @@ namespace BrannyLeaderboard
             Debug.Log("Initializing Branny Leaderboard");
 
             instance = this;
-
-            harmony = new Harmony(id);
-            Patching(harmony);
-
             foundation = bf;
 
             instance.init_traits();
@@ -74,9 +70,12 @@ namespace BrannyLeaderboard
             initialized = true;
         }
 
-        private void Patching(Harmony harmony)
+        public static void Patching(Harmony harmony)
         {
-            
+            Helper.Utils.HarmonyPatching(harmony, "postfix", AccessTools.Method(typeof(Actor), "increaseKillCount"), AccessTools.Method(typeof(Leaderboard), "increaseKillCount_postfix"));
+            Helper.Utils.HarmonyPatching(harmony, "postfix", AccessTools.Method(typeof(Actor), "consumeCityFoodItem"), AccessTools.Method(typeof(Leaderboard), "consumeCityFoodItem_postfix"));
+
+            Debug.Log("PostFix stats_patch DONE");
         }
     }
 }

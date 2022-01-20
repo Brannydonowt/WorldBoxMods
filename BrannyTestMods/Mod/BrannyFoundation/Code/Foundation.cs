@@ -11,8 +11,6 @@ using UnityEngine;
 using System.IO;
 using HarmonyLib;
 
-using BrannyLeaderboard;
-
 using static Config;
 
 namespace BrannyCore
@@ -29,7 +27,6 @@ namespace BrannyCore
         public bool initialized = false;
 
         public static BrannyFoundation instance;
-        public Leaderboard leaderboard;
 
         public void Awake()
         {
@@ -42,33 +39,25 @@ namespace BrannyCore
             if (!gameLoaded) return;
 
             if (!initialized) return;
-
-            leaderboard.Update();
         }
 
-        public void init()
+        public bool init()
         {
             instance = this;
-
-            harmony = new Harmony(id);
-            Patching(harmony);
 
             Debug.Log("Initializing Branny Core");
             init_assets();
             init_ui();
 
-            initialized = true;
-
             Debug.Log("Branny Core, initialized!");
-            Debug.Log("Branny Core : Initializaing extensions");
 
-            init_extensions();
+            initialized = true;
+            return true;
         }
 
         void init_extensions() 
         {
-            leaderboard = new Leaderboard();
-            leaderboard.init(this);
+
         }
 
         public void CloseAllUI()
@@ -76,9 +65,8 @@ namespace BrannyCore
             brannyCanvas.SetActive(false);
         }
 
-        private void Patching(Harmony harmony)
+        public static void Patching(Harmony harmony)
         {
-            //stats_patch(harmony);
             BrannyActorManager.Branny_Actor_Patch(harmony);
         }
     }

@@ -29,6 +29,8 @@ Extended World Stats
 		Trees Chopped
 		Children
 
+Gravestones where people of interest have died
+
 Spawn in random location option	
 	When you have a spawnable selected - add a little button to the screen that selects a random spawnpoint and spawns it.
 
