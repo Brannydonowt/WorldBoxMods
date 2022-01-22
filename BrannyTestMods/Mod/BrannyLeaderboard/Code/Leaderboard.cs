@@ -70,7 +70,7 @@ namespace BrannyLeaderboard
             initialized = true;
         }
 
-        public static void Patching(Harmony harmony)
+        public void Patching(Harmony harmony)
         {
             Helper.Utils.HarmonyPatching(harmony, "postfix", AccessTools.Method(typeof(Actor), "increaseKillCount"), AccessTools.Method(typeof(Leaderboard), "increaseKillCount_postfix"));
             Helper.Utils.HarmonyPatching(harmony, "postfix", AccessTools.Method(typeof(Actor), "consumeCityFoodItem"), AccessTools.Method(typeof(Leaderboard), "consumeCityFoodItem_postfix"));

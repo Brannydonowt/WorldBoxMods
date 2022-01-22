@@ -62,10 +62,15 @@ namespace BrannyCore
 
         public void CloseAllUI()
         {
+            if (brannyCanvas == null)
+            {
+                
+            }
+
             brannyCanvas.SetActive(false);
         }
 
-        public static void Patching(Harmony harmony)
+        public void Patching(Harmony harmony)
         {
             BrannyActorManager.Branny_Actor_Patch(harmony);
         }

@@ -32,22 +32,28 @@ namespace BrannyLeaderboard
 
         void Awake()
         {
+            setup_mod();
+
             harmony = new Harmony(id);
             Patching(harmony);
 
             init_core();
         }
 
+        void setup_mod() 
+        {
+            foundation = new BrannyFoundation();
+            leaderboard = new Leaderboard();
+        }
+
         void Patching(Harmony harmony) 
         {
-            BrannyFoundation.Patching(harmony);
-            Leaderboard.Patching(harmony);
+            foundation.Patching(harmony);
+            leaderboard.Patching(harmony);
         }
 
         void init_core()
         {
-            foundation = new BrannyFoundation();
-
             if (!foundation.init())
                 return;
 
@@ -58,8 +64,9 @@ namespace BrannyLeaderboard
 
         void init_extensions() 
         {
-            leaderboard = new Leaderboard();
             leaderboard.init(foundation);
+
+            e_initialized = true;
         }
 
         // Call update on any enabled extensions;
@@ -67,8 +74,6 @@ namespace BrannyLeaderboard
         {
             if (!b_initialized)
                 init_core();
-
-
 
             foundation.Update();
             leaderboard.Update();

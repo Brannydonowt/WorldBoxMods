@@ -7,7 +7,7 @@ namespace BrannyCore
 {
     public partial class BrannyFoundation
     {
-        public static GameObject brannyCanvas;
+        public GameObject brannyCanvas;
 
         void init_ui()
         {

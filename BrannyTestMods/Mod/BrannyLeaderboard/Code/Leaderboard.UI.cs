@@ -34,6 +34,7 @@ namespace BrannyLeaderboard
             Debug.Log("Initialising UI");
 
             brannyCanvas = foundation.GetGameObjectFromAssetBundle("BrannyCanvas");
+            foundation.brannyCanvas = brannyCanvas;
             Debug.Log("Branny Canvas found: " + brannyCanvas.name);
             statParent = brannyCanvas.transform.GetChild(0).GetChild(0).GetChild(0);
             statEntry = foundation.GetGameObjectFromAssetBundle("StatEntry");
@@ -120,7 +121,8 @@ namespace BrannyLeaderboard
 
             TrackTarget track = entry.AddComponent<TrackTarget>();
             track.trackTarget(l.actorId);
-            GetComponent<Button>().onClick.AddListener(track.OnInteract);
+
+            entry.GetComponent<Button>().onClick.AddListener(track.OnInteract);
 
             return entry;
         }

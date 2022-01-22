@@ -31,6 +31,8 @@ Extended World Stats
 
 Gravestones where people of interest have died
 
+Add an option to only track conflict between races (orcs/humans/elves/dwarves)
+
 Spawn in random location option	
 	When you have a spawnable selected - add a little button to the screen that selects a random spawnpoint and spawns it.
 
